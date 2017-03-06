@@ -15,8 +15,8 @@ If you also find election result information along the way my current thinking i
 
 ### Possible Sources:
 
-- State elections officials
-- Local (county) election officials
+- State elections officials (eg [secretary of state](http://www.nass.org/))
+- Local (county) election officials (eg registrar of voters)
 - [Open Elections](http://www.openelections.net/) – a [Github-based project](https://github.com/openelections) by journalists Serdar Tumgoren and Derek Willis
 - Data hackers and data journalists, like [LA Times](https://github.com/datadesk/california-2016-election-precinct-maps)
 

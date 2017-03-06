@@ -1,53 +1,53 @@
-State,Alpha code,Numeric code,Status,Rank,Population,House Seats,Elect.Votes,Pop. per House Seat,Pop. per Elect. Vote,Pop. per Senate Seat
-Alabama,AL,01,State; counties,23,4849377,7,9,688860,535780,2424689
-Alaska,AK,02,State; boroughs,48,737732,1,3,736732,243816,368866
-Arizona,AZ,04,State; counties,15,6731484,9,11,728139,595750,3365742
-Arkansas,AR,05,State; counties,31,2994079,4,6,737283,491522,1497040
-California,CA,06,State; counties,1,38802500,53,55,717763,691662,19401250
-Colorado,CO,08,State; counties,22,5355856,7,9,741083,576398,2677928
-Connecticut,CT,09,State; counties,29,3596677,5,7,718059,512907,1798339
-Delaware,DE,10,State; counties,45,935614,1,3,917092,305697,467807
-District of Columbia,DC,11,Federal district,,,,,,,
-Florida,FL,12,State; counties,3,19893297,27,29,715465,666123,9946649
-Georgia,GA,13,State; counties,8,10097343,14,16,708568,619997,5048672
-Hawaii,HI,15,State; counties,40,1419561,2,4,696157,348078,709781
-Idaho,ID,16,State; counties,39,1634464,2,4,797864,398932,817232
-Illinois,IL,17,State; counties,5,12880580,18,20,715292,643763,6440290
-Indiana,IN,18,State; counties,16,6596855,9,11,726370,594303,3298428
-Iowa,IA,19,State; counties,30,3107126,4,6,768547,513364,1553563
-Kansas,KS,20,State; counties,34,2904021,4,6,721476,480984,1452011
-Kentucky,KY,21,State; counties,26,4413457,6,8,730069,547552,2206729
-Louisiana,LA,22,State; parishes,25,4649676,6,8,766982,575237,2324838
-Maine,ME,23,State; counties,41,1330089,2,4,664596,332298,665045
-Maryland,MD,24,State; counties,19,5976407,8,10,735570,588456,2988204
-Massachusetts,MA,25,State; counties,14,6745408,9,11,738460,604195,3372704
-Michigan,MI,26,State; counties,10,9909877,14,16,705954,617710,4954939
-Minnesota,MN,27,State; counties,21,5457173,8,10,672392,537914,2728587
-Mississippi,MS,28,State; counties,32,2984926,4,6,746232,497488,1492463
-Missouri,MO,29,State; counties,18,6063589,8,10,752749,602199,3031795
-Montana,MT,30,State; counties,44,1023579,1,3,1005141,335047,511790
-Nebraska,NE,31,State; counties,37,1881503,3,5,618508,371105,940752
-Nevada,NV,32,State; counties,35,2839099,4,6,689733,459822,1419550
-New Hampshire,NH,33,State; counties,42,1326813,2,4,660359,330180,663407
-New Jersey,NJ,34,State; counties,11,8938175,12,14,738716,633185,4469088
-New Mexico,NM,35,State; counties,36,2085572,3,5,695179,417108,1042786
-New York,NY,36,State; counties,4,19746227,27,29,724824,674837,9873114
-North Carolina,NC,37,State; counties,9,9943964,13,15,750159,650138,4971982
-North Dakota,ND,38,State; counties,47,739482,1,3,699628,233209,369741
-Ohio,OH,39,State; counties,7,11594163,16,18,721514,641346,5797082
-Oklahoma,OK,40,State; counties,28,3878051,5,7,762964,544974,1939026
-Oregon,OR,41,State; counties,27,3970239,5,7,779871,557050,1985120
-Pennsylvania,PA,42,State; counties,6,12787209,18,20,709085,638177,6393605
-Puerto Rico,PR,72,Outlying area under U.S. sovereignty,,,,,,,
-Rhode Island,RI,44,State; counties,43,1055173,2,4,525146,262273,527587
-South Carolina,SC,45,State; counties,24,4832482,7,9,674818,524858,2416241
-South Dakota,SD,46,State; counties,46,853175,1,3,833354,277785,426588
-Tennessee,TN,47,State; counties,17,6549352,9,11,717360,586931,3274676
-Texas,TX,48,State; counties,2,26956958,36,38,723867,685769,13478479
-Utah,UT,49,State; counties,33,2942902,4,6,713822,475881,1471451
-Vermont,VT,50,State; counties,49,626011,1,3,626562,208670,313006
-Virginia,VA,51,State; counties,12,8326289,11,13,744170,629682,4163145
-Washington,WA,53,State; counties,13,7061530,10,12,689701,574751,3530765
-West Virginia,WV,54,State; counties,38,1850326,3,5,618471,371083,925163
-Wisconsin,WI,55,State; counties,20,5757564,8,10,715800,572640,2878782
-Wyoming,WY,56,State; counties,50,584153,1,3,576412,192137,292077
+State	Alpha code	Numeric code	Status	Rank	Population	House Seats	Elect.Votes	Pop. per House Seat	Pop. per Elect. Vote	Pop. per Senate Seat	Priority
+Alabama	AL	1	State; counties	23	4849377	7	9	688860	535780	2424689	3
+Alaska	AK	2	State; boroughs	48	737732	1	3	736732	243816	368866	4
+Arizona	AZ	4	State; counties	15	6731484	9	11	728139	595750	3365742	2
+Arkansas	AR	5	State; counties	31	2994079	4	6	737283	491522	1497040	3
+California	CA	6	State; counties	1	38802500	53	55	717763	691662	19401250	2
+Colorado	CO	8	State; counties	22	5355856	7	9	741083	576398	2677928	3
+Connecticut	CT	9	State; counties	29	3596677	5	7	718059	512907	1798339	3
+Delaware	DE	10	State; counties	45	935614	1	3	917092	305697	467807	4
+District of Columbia	DC	11	Federal district[4]								4
+Florida	FL	12	State; counties	3	19893297	27	29	715465	666123	9946649	1
+Georgia	GA	13	State; counties	8	10097343	14	16	708568	619997	5048672	2
+Hawaii	HI	15	State; counties	40	1419561	2	4	696157	348078	709781	4
+Idaho	ID	16	State; counties	39	1634464	2	4	797864	398932	817232	1
+Illinois	IL	17	State; counties	5	12880580	18	20	715292	643763	6440290	2
+Indiana	IN	18	State; counties	16	6596855	9	11	726370	594303	3298428	1
+Iowa	IA	19	State; counties	30	3107126	4	6	768547	513364	1553563	3
+Kansas	KS	20	State; counties	34	2904021	4	6	721476	480984	1452011	1
+Kentucky	KY	21	State; counties	26	4413457	6	8	730069	547552	2206729	3
+Louisiana	LA	22	State; parishes	25	4649676	6	8	766982	575237	2324838	3
+Maine	ME	23	State; counties	41	1330089	2	4	664596	332298	665045	4
+Maryland	MD	24	State; counties	19	5976407	8	10	735570	588456	2988204	2
+Massachusetts	MA	25	State; counties	14	6745408	9	11	738460	604195	3372704	2
+Michigan	MI	26	State; counties	10	9909877	14	16	705954	617710	4954939	1
+Minnesota	MN	27	State; counties	21	5457173	8	10	672392	537914	2728587	2
+Mississippi	MS	28	State; counties	32	2984926	4	6	746232	497488	1492463	3
+Missouri	MO	29	State; counties	18	6063589	8	10	752749	602199	3031795	3
+Montana	MT	30	State; counties	44	1023579	1	3	1005141	335047	511790	1
+Nebraska	NE	31	State; counties	37	1881503	3	5	618508	371105	940752	4
+Nevada	NV	32	State; counties	35	2839099	4	6	689733	459822	1419550	3
+New Hampshire	NH	33	State; counties	42	1326813	2	4	660359	330180	663407	4
+New Jersey	NJ	34	State; counties	11	8938175	12	14	738716	633185	4469088	2
+New Mexico	NM	35	State; counties	36	2085572	3	5	695179	417108	1042786	4
+New York	NY	36	State; counties	4	19746227	27	29	724824	674837	9873114	2
+North Carolina	NC	37	State; counties	9	9943964	13	15	750159	650138	4971982	1
+North Dakota	ND	38	State; counties	47	739482	1	3	699628	233209	369741	4
+Ohio	OH	39	State; counties	7	11594163	16	18	721514	641346	5797082	1
+Oklahoma	OK	40	State; counties	28	3878051	5	7	762964	544974	1939026	1
+Oregon	OR	41	State; counties	27	3970239	5	7	779871	557050	1985120	3
+Pennsylvania	PA	42	State; counties	6	12787209	18	20	709085	638177	6393605	2
+Puerto Rico	PR	72	Outlying area under U.S. sovereignty								4
+Rhode Island	RI	44	State; counties	43	1055173	2	4	525146	262273	527587	4
+South Carolina	SC	45	State; counties	24	4832482	7	9	674818	524858	2416241	3
+South Dakota	SD	46	State; counties	46	853175	1	3	833354	277785	426588	4
+Tennessee	TN	47	State; counties	17	6549352	9	11	717360	586931	3274676	2
+Texas	TX	48	State; counties	2	26956958	36	38	723867	685769	13478479	2
+Utah	UT	49	State; counties	33	2942902	4	6	713822	475881	1471451	3
+Vermont	VT	50	State; counties	49	626011	1	3	626562	208670	313006	4
+Virginia	VA	51	State; counties	12	8326289	11	13	744170	629682	4163145	1
+Washington	WA	53	State; counties	13	7061530	10	12	689701	574751	3530765	2
+West Virginia	WV	54	State; counties	38	1850326	3	5	618471	371083	925163	4
+Wisconsin	WI	55	State; counties	20	5757564	8	10	715800	572640	2878782	1
+Wyoming	WY	56	State; counties	50	584153	1	3	576412	192137	292077	1

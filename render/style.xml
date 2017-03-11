@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Map>
+<Map background-color="#FCF5E3" srs="+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs">
+    <Style name="states">
+        <Rule>
+            <PolygonSymbolizer fill="#EDE7D5" />
+            <LineSymbolizer stroke="#FCF5E3" stroke-width="2" />
+        </Rule>
+    </Style>
+    <Style name="precincts">
+        <Rule>
+            <PolygonSymbolizer fill="#ffffff" />
+            <LineSymbolizer stroke="#2E8BCE" stroke-width="0.3" />
+        </Rule>
+    </Style>
+    <Layer name="states" status="on" srs="+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs">
+        <StyleName>states</StyleName>
+        <Datasource>
+            <Parameter name="type">shape</Parameter>
+            <Parameter name="file">cb_2013_us_state_20m-2163.shp</Parameter>
+        </Datasource>
+    </Layer>
+    <Layer name="precincts" status="on" srs="+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs">
+        <StyleName>precincts</StyleName>
+        <Datasource>
+            <Parameter name="type">shape</Parameter>
+            <Parameter name="file">precincts-2163.shp</Parameter>
+        </Datasource>
+    </Layer>
+</Map>

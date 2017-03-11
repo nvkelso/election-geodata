@@ -25,11 +25,11 @@ out/18-indiana/state.gpkg: data/18-indiana/157-tippecanoe/precincts.geojson
 		-overwrite -f GPKG out/18-indiana/157-tippecanoe/county.gpkg data/18-indiana/157-tippecanoe/precincts.geojson
 	ogr2ogr -f GPKG -nln state -overwrite $@ out/18-indiana/157-tippecanoe/county.gpkg
 
-out/20-kansas/state.gpkg: data/20-kansas/20045-douglas/precincts.geojson
+out/20-kansas/state.gpkg: data/20-kansas/2016/20045-douglas/precincts.geojson
 	mkdir -p out/20-kansas
 	mkdir -p out/20-kansas/045-douglas
 	ogr2ogr -sql "SELECT '2016' AS year, 'Kansas' AS state, 'Douglas' AS county, CONCAT(CAST(precinctid AS character(255)), ' ', CAST(subprecinctid AS character(255))) AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON" \
-		-t_srs EPSG:4326 -overwrite -f GPKG out/20-kansas/045-douglas/county.gpkg data/20-kansas/20045-douglas/precincts.geojson
+		-t_srs EPSG:4326 -overwrite -f GPKG out/20-kansas/045-douglas/county.gpkg data/20-kansas/2016/20045-douglas/precincts.geojson
 	ogr2ogr -f GPKG -nln state -overwrite $@ out/20-kansas/045-douglas/county.gpkg
 
 out/24-maryland/state.gpkg: data/24-maryland/statewide/2010/maryland.geojson

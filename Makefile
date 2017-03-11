@@ -1,3 +1,9 @@
+out/render.png: render/precincts-2163.shp
+	render/draw.py $@
+
+render/precincts-2163.shp: out/nation.gpkg
+	ogr2ogr -t_srs EPSG:2163 -overwrite -skipfailures $@ $<
+
 out/nation.gpkg: \
         out/18-indiana/state.gpkg out/20-kansas/state.gpkg \
         out/24-maryland/state.gpkg out/26-michigan/state.gpkg \
@@ -23,7 +29,7 @@ out/20-kansas/state.gpkg: data/20-kansas/20045-douglas/precincts.geojson
 	mkdir -p out/20-kansas
 	mkdir -p out/20-kansas/045-douglas
 	ogr2ogr -sql "SELECT '2016' AS year, 'Kansas' AS state, 'Douglas' AS county, CONCAT(CAST(precinctid AS character(255)), ' ', CAST(subprecinctid AS character(255))) AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON" \
-		-overwrite -f GPKG out/20-kansas/045-douglas/county.gpkg data/20-kansas/20045-douglas/precincts.geojson
+		-t_srs EPSG:4326 -overwrite -f GPKG out/20-kansas/045-douglas/county.gpkg data/20-kansas/20045-douglas/precincts.geojson
 	ogr2ogr -f GPKG -nln state -overwrite $@ out/20-kansas/045-douglas/county.gpkg
 
 out/24-maryland/state.gpkg: data/24-maryland/statewide/2010/maryland.geojson

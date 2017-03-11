@@ -31,6 +31,7 @@ out/18-indiana/state.gpkg: data/18-indiana/157-tippecanoe/precincts.geojson
 	ogr2ogr -f GPKG -nln state -overwrite $@ out/18-indiana/157-tippecanoe/county.gpkg
 
 out/20-kansas/state.gpkg: data/20-kansas/statewide/2010/KLRD_2010VotingDistricts.geojson.gz data/20-kansas/2016/20045-douglas/precincts.geojson
+	mkdir -p out/20-kansas
 	mv `scripts/20-kansas.sh` $@
 
 out/24-maryland/state.gpkg: data/24-maryland/statewide/2010/maryland.geojson

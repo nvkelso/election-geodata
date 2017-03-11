@@ -1,3 +1,8 @@
+all: out/render.png
+
+clean:
+	rm -rf out
+
 out/render.png: render/precincts-2163.shp
 	render/draw.py $@
 
@@ -25,12 +30,18 @@ out/18-indiana/state.gpkg: data/18-indiana/157-tippecanoe/precincts.geojson
 		-overwrite -f GPKG out/18-indiana/157-tippecanoe/county.gpkg data/18-indiana/157-tippecanoe/precincts.geojson
 	ogr2ogr -f GPKG -nln state -overwrite $@ out/18-indiana/157-tippecanoe/county.gpkg
 
-out/20-kansas/state.gpkg: data/20-kansas/20045-douglas/precincts.geojson
+out/20-kansas/state.gpkg: data/20-kansas/statewide/2010/KLRD_2010VotingDistricts.geojson.gz data/20-kansas/2016/20045-douglas/precincts.geojson
 	mkdir -p out/20-kansas
+	gunzip --stdout data/20-kansas/statewide/2010/KLRD_2010VotingDistricts.geojson.gz > out/20-kansas/temporary.geojson
+	# Select statewide data, except for Douglas county (FIPS 045).
+	ogr2ogr -sql "SELECT '2010' AS year, 'Kansas' AS state, SUBSTR(VTD_2012, 3, 3) AS county, VTD_2012 AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON WHERE SUBSTR(VTD_2012, 3, 3) != '045'" \
+		-t_srs EPSG:4326 -overwrite -nln state -nlt MultiPolygon -f GPKG $@ out/20-kansas/temporary.geojson
+	rm -f out/20-kansas/temporary.geojson
+	# Make another file for just Douglas county.
 	mkdir -p out/20-kansas/045-douglas
 	ogr2ogr -sql "SELECT '2016' AS year, 'Kansas' AS state, 'Douglas' AS county, CONCAT(CAST(precinctid AS character(255)), ' ', CAST(subprecinctid AS character(255))) AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON" \
-		-t_srs EPSG:4326 -overwrite -f GPKG out/20-kansas/045-douglas/county.gpkg data/20-kansas/20045-douglas/precincts.geojson
-	ogr2ogr -f GPKG -nln state -overwrite $@ out/20-kansas/045-douglas/county.gpkg
+		-t_srs EPSG:4326 -overwrite -f GPKG out/20-kansas/045-douglas/county.gpkg data/20-kansas/2016/20045-douglas/precincts.geojson
+	ogr2ogr -f GPKG -nln state -append $@ out/20-kansas/045-douglas/county.gpkg
 
 out/24-maryland/state.gpkg: data/24-maryland/statewide/2010/maryland.geojson
 	mkdir -p out/24-maryland

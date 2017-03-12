@@ -8,7 +8,8 @@ out/nation.gpkg: \
         out/18-indiana/state.gpkg out/20-kansas/state.gpkg \
         out/24-maryland/state.gpkg out/26-michigan/state.gpkg \
         out/37-north-carolina/state.gpkg out/42-pennsylvania/state.gpkg \
-        out/53-washington/state.gpkg out/55-wisconsin/state.gpkg
+        out/53-washington/state.gpkg out/55-wisconsin/state.gpkg \
+        out/56-wyoming/state.gpkg
 	rm -f $@
 	ogr2ogr -f GPKG -nln nation -nlt MultiPolygon -overwrite $@ out/18-indiana/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/20-kansas/state.gpkg
@@ -18,6 +19,7 @@ out/nation.gpkg: \
 	ogr2ogr -f GPKG -nln nation -append $@ out/42-pennsylvania/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/53-washington/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/55-wisconsin/state.gpkg
+	ogr2ogr -f GPKG -nln nation -append $@ out/56-wyoming/state.gpkg
 
 out/18-indiana/state.gpkg: data/18-indiana/157-tippecanoe/precincts.geojson
 	mkdir -p out/18-indiana
@@ -69,3 +71,10 @@ out/55-wisconsin/state.gpkg: data/55-wisconsin/statewide/2016/polling_place_loca
 	mkdir -p out/55-wisconsin
 	ogr2ogr -sql "SELECT '2016' AS year, 'Wisconsin' AS state_fips, County AS county, ReportingUnit AS precinct, accuracy FROM OGRGeoJSON" \
 		-overwrite -f GPKG $@ $<
+
+out/56-wyoming/state.gpkg: data/56-wyoming/statewide/2010/2010_wy_precincts.zip
+	mkdir -p out/56-wyoming/source
+	unzip -d out/56-wyoming/source data/56-wyoming/statewide/2010/2010_wy_precincts.zip
+	ogr2ogr -sql "SELECT '2010' AS year, 'Wyoming' AS state, COUNTYFP10 AS county, NAMELSAD10 AS precinct, 'polygon' AS accuracy FROM WY_final" \
+		-s_srs EPSG:4326 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/56-wyoming/source/WY_final.shp'
+	rm -rf 'out/56-wyoming/source'

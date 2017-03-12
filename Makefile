@@ -8,8 +8,8 @@ out/nation.gpkg: \
         out/18-indiana/state.gpkg out/20-kansas/state.gpkg \
         out/24-maryland/state.gpkg out/26-michigan/state.gpkg \
         out/37-north-carolina/state.gpkg out/42-pennsylvania/state.gpkg \
-        out/53-washington/state.gpkg out/55-wisconsin/state.gpkg \
-        out/56-wyoming/state.gpkg
+        out/53-washington/state.gpkg out/54-west-virginia/state.gpkg \
+        out/55-wisconsin/state.gpkg out/56-wyoming/state.gpkg
 	rm -f $@
 	ogr2ogr -f GPKG -nln nation -nlt MultiPolygon -overwrite $@ out/18-indiana/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/20-kansas/state.gpkg
@@ -18,6 +18,7 @@ out/nation.gpkg: \
 	ogr2ogr -f GPKG -nln nation -append $@ out/37-north-carolina/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/42-pennsylvania/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/53-washington/state.gpkg
+	ogr2ogr -f GPKG -nln nation -append $@ out/54-west-virginia/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/55-wisconsin/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/56-wyoming/state.gpkg
 
@@ -66,6 +67,13 @@ out/53-washington/state.gpkg: data/53-washington/statewide-prec-2016-nowater.geo
 	mkdir -p out/53-washington
 	ogr2ogr -sql "SELECT '2016' AS year, 'Washington' AS state, COUNTY AS county, ST_CODE AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON" \
 		-overwrite -f GPKG $@ $<
+
+out/54-west-virginia/state.gpkg: data/54-west-virginia/statewide/2011/VotingDistrict_Census_201105_GCS83.zip
+	mkdir -p out/54-west-virginia/source
+	unzip -d out/54-west-virginia/source data/54-west-virginia/statewide/2011/VotingDistrict_Census_201105_GCS83.zip
+	ogr2ogr -sql "SELECT '2011' AS year, 'West Virginia' AS state, COUNTYFP10 AS county, VTDST10 AS precinct, 'polygon' AS accuracy FROM VotingDistrict_Census_201105_GCS83" \
+		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/54-west-virginia/source/VotingDistrict_Census_201105_GCS83.shp'
+	rm -rf 'out/54-west-virginia/source'
 
 out/55-wisconsin/state.gpkg: data/55-wisconsin/statewide/2016/polling_place_locations_2016_nov_general_xlsx_81288_polygons.geojson
 	mkdir -p out/55-wisconsin

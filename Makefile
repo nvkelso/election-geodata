@@ -8,6 +8,7 @@ out/nation.gpkg: \
         out/13-georgia/state.gpkg \
         out/18-indiana/state.gpkg \
         out/20-kansas/state.gpkg \
+        out/21-kentucky/state.gpkg \
         out/24-maryland/state.gpkg \
         out/26-michigan/state.gpkg \
         out/37-north-carolina/state.gpkg \
@@ -21,6 +22,7 @@ out/nation.gpkg: \
 	ogr2ogr -f GPKG -nln nation -nlt MultiPolygon -overwrite $@ out/13-georgia/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/18-indiana/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/20-kansas/state.gpkg
+	ogr2ogr -f GPKG -nln nation -append $@ out/21-kentucky/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/24-maryland/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/26-michigan/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/37-north-carolina/state.gpkg
@@ -54,6 +56,17 @@ out/20-kansas/state.gpkg: data/20-kansas/2016/20045-douglas/precincts.geojson
 	ogr2ogr -sql "SELECT '2016' AS year, 'Kansas' AS state, 'Douglas' AS county, CONCAT(CAST(precinctid AS character(255)), ' ', CAST(subprecinctid AS character(255))) AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON" \
 		-t_srs EPSG:4326 -overwrite -f GPKG out/20-kansas/045-douglas/county.gpkg data/20-kansas/2016/20045-douglas/precincts.geojson
 	ogr2ogr -f GPKG -nln state -overwrite $@ out/20-kansas/045-douglas/county.gpkg
+
+out/21-kentucky/state.gpkg: data/21-kentucky/statewide/2016/kyprecinctsmergedfinal.zip
+	mkdir -p out/21-kentucky/source
+	unzip -d out/21-kentucky/source data/21-kentucky/statewide/2016/kyprecinctsmergedfinal.zip
+	# Write to temporary GeoJSON because OGR SQL and GPKG driver
+	# don't like spaces in shapefile layer name.
+	rm -f out/21-kentucky/source/temporary.geojson
+	ogr2ogr -sql "SELECT '2016' AS year, 'Kentucky' AS state, COUNTY AS county, VTD AS precinct, 'polygon' AS accuracy FROM "'"KY Precincts Merged Final"' \
+		-t_srs EPSG:4326 -overwrite -f GeoJSON out/21-kentucky/source/temporary.geojson 'out/21-kentucky/source/KY Precincts Merged Final.shp'
+	ogr2ogr -overwrite -f GPKG $@ out/21-kentucky/source/temporary.geojson
+	rm -rf out/21-kentucky/source
 
 out/24-maryland/state.gpkg: data/24-maryland/statewide/2010/maryland.geojson
 	mkdir -p out/24-maryland

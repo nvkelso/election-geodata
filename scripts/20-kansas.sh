@@ -7,11 +7,9 @@
 CURDIR=`dirname $0`
 TEMPDIR=`$CURDIR/tmpdir.py kansas-`
 
-gunzip --stdout data/20-kansas/statewide/2010/KLRD_2010VotingDistricts.geojson.gz > $TEMPDIR/state.geojson
-
-ogr2ogr -sql "SELECT '2010' AS year, 'Kansas' AS state, SUBSTR(VTD_2012, 3, 3) AS county, VTD_2012 AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON WHERE SUBSTR(VTD_2012, 3, 3) != '045'" \
+ogr2ogr -sql "SELECT '2012' AS year, 'Kansas' AS state, SUBSTR(VTD_2012, 3, 3) AS county, VTD_2012 AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON WHERE SUBSTR(VTD_2012, 3, 3) != '045'" \
 	-t_srs EPSG:4326 -nln state -nlt MultiPolygon -f GPKG \
-	$TEMPDIR/state.gpkg $TEMPDIR/state.geojson
+	$TEMPDIR/state.gpkg data/20-kansas/statewide/2012/kansas-state-voting-precincts-2012.geojson
 
 #
 # Add Douglas County (FIPS 045) to the statewide Geopackage file.

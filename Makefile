@@ -5,10 +5,15 @@ render/precincts-2163.shp: out/nation.gpkg
 	ogr2ogr -t_srs EPSG:2163 -overwrite -skipfailures $@ $<
 
 out/nation.gpkg: \
-        out/18-indiana/state.gpkg out/20-kansas/state.gpkg \
-        out/24-maryland/state.gpkg out/26-michigan/state.gpkg \
-        out/37-north-carolina/state.gpkg out/42-pennsylvania/state.gpkg \
-        out/53-washington/state.gpkg out/55-wisconsin/state.gpkg \
+        out/18-indiana/state.gpkg \
+        out/20-kansas/state.gpkg \
+        out/24-maryland/state.gpkg \
+        out/26-michigan/state.gpkg \
+        out/37-north-carolina/state.gpkg \
+        out/42-pennsylvania/state.gpkg \
+        out/51-virginia/state.gpkg \
+        out/53-washington/state.gpkg \
+        out/55-wisconsin/state.gpkg \
         out/56-wyoming/state.gpkg
 	rm -f $@
 	ogr2ogr -f GPKG -nln nation -nlt MultiPolygon -overwrite $@ out/18-indiana/state.gpkg
@@ -17,6 +22,7 @@ out/nation.gpkg: \
 	ogr2ogr -f GPKG -nln nation -append $@ out/26-michigan/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/37-north-carolina/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/42-pennsylvania/state.gpkg
+	ogr2ogr -f GPKG -nln nation -append $@ out/51-virginia/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/53-washington/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/55-wisconsin/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/56-wyoming/state.gpkg
@@ -61,6 +67,11 @@ out/42-pennsylvania/state.gpkg: data/42-pennsylvania/statewide/2011/2011-Voting-
 	ogr2ogr -sql "SELECT '2011' AS year, 'Pennsylvania' AS state, COUNTYFP11 AS county, NAMELSAD AS precinct, 'polygon' AS accuracy FROM VTDS" \
 		-t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/42-pennsylvania/2011 Voting District Boundary Shapefiles/VTDS.shp'
 	rm -rf 'out/42-pennsylvania/2011 Voting District Boundary Shapefiles'
+
+out/51-virginia/state.gpkg: data/51-virginia/statewide/2016/vaprecincts2016.shp
+	mkdir -p out/51-virginia
+	ogr2ogr -sql "SELECT 2016 AS year, 'Virginia' AS state, locality AS county, id AS precinct, 'polygon' AS accuracy FROM vaprecincts2016" \
+		-s_srs EPSG:3857 -t_srs EPSG:4326 -overwrite -f GPKG $@ $<
 
 out/53-washington/state.gpkg: data/53-washington/statewide-prec-2016-nowater.geojson
 	mkdir -p out/53-washington

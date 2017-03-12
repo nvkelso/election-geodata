@@ -6,3 +6,7 @@ dependencies:
   override:
     - sudo apt-get update -y
     - sudo apt-get install -y python-mapnik python-gdal gdal-bin
+
+test:
+  override:
+    - make

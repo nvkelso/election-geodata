@@ -1,11 +1,11 @@
 State,Alpha code,Numeric code,Status,Rank,Population,House Seats,Elect.Votes,Pop. per House Seat,Pop. per Elect. Vote,Pop. per Senate Seat,Priority
-Alabama,AL,1,State; counties,23,4849377,7,9,688860,535780,2424689,3
-Alaska,AK,2,State; boroughs,48,737732,1,3,736732,243816,368866,4
-Arizona,AZ,4,State; counties,15,6731484,9,11,728139,595750,3365742,2
-Arkansas,AR,5,State; counties,31,2994079,4,6,737283,491522,1497040,3
-California,CA,6,State; counties,1,38802500,53,55,717763,691662,19401250,2
-Colorado,CO,8,State; counties,22,5355856,7,9,741083,576398,2677928,3
-Connecticut,CT,9,State; counties,29,3596677,5,7,718059,512907,1798339,3
+Alabama,AL,01,State; counties,23,4849377,7,9,688860,535780,2424689,3
+Alaska,AK,02,State; boroughs,48,737732,1,3,736732,243816,368866,4
+Arizona,AZ,04,State; counties,15,6731484,9,11,728139,595750,3365742,2
+Arkansas,AR,05,State; counties,31,2994079,4,6,737283,491522,1497040,3
+California,CA,06,State; counties,1,38802500,53,55,717763,691662,19401250,2
+Colorado,CO,08,State; counties,22,5355856,7,9,741083,576398,2677928,3
+Connecticut,CT,09,State; counties,29,3596677,5,7,718059,512907,1798339,3
 Delaware,DE,10,State; counties,45,935614,1,3,917092,305697,467807,4
 District of Columbia,DC,11,Federal district[4],,,,,,,,4
 Florida,FL,12,State; counties,3,19893297,27,29,715465,666123,9946649,1

@@ -25,6 +25,7 @@ out/nation.gpkg: \
 	ogr2ogr -f GPKG -nln nation -append $@ out/26-michigan/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/37-north-carolina/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/42-pennsylvania/state.gpkg
+	ogr2ogr -f GPKG -nln nation -append $@ out/48-texas/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/51-virginia/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/53-washington/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/54-west-virginia/state.gpkg
@@ -80,6 +81,13 @@ out/42-pennsylvania/state.gpkg: data/42-pennsylvania/statewide/2011/2011-Voting-
 	ogr2ogr -sql "SELECT '2011' AS year, 'Pennsylvania' AS state, COUNTYFP11 AS county, NAMELSAD AS precinct, 'polygon' AS accuracy FROM VTDS" \
 		-t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/42-pennsylvania/2011 Voting District Boundary Shapefiles/VTDS.shp'
 	rm -rf 'out/42-pennsylvania/2011 Voting District Boundary Shapefiles'
+
+out/48-texas/state.gpkg: data/48-texas/statewide/2011/Precincts.zip
+	mkdir -p out/48-texas
+	unzip -d out/48-texas/source data/48-texas/statewide/2011/Precincts.zip
+	ogr2ogr -sql "SELECT '2011' AS year, 'Texas' AS state, CNTY AS county, PREC AS precinct, 'polygon' AS accuracy FROM Precincts" \
+		-s_srs EPSG:3081 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/48-texas/source/Precincts.shp'
+	rm -rf 'out/48-texas/source'
 
 out/51-virginia/state.gpkg: data/51-virginia/statewide/2016/vaprecincts2016.shp
 	mkdir -p out/51-virginia

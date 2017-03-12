@@ -5,6 +5,7 @@ render/precincts-2163.shp: out/nation.gpkg
 	ogr2ogr -t_srs EPSG:2163 -overwrite -skipfailures $@ $<
 
 out/nation.gpkg: \
+        out/13-georgia/state.gpkg \
         out/18-indiana/state.gpkg \
         out/20-kansas/state.gpkg \
         out/24-maryland/state.gpkg \
@@ -13,10 +14,12 @@ out/nation.gpkg: \
         out/42-pennsylvania/state.gpkg \
         out/51-virginia/state.gpkg \
         out/53-washington/state.gpkg \
+        out/54-west-virginia/state.gpkg \
         out/55-wisconsin/state.gpkg \
         out/56-wyoming/state.gpkg
 	rm -f $@
-	ogr2ogr -f GPKG -nln nation -nlt MultiPolygon -overwrite $@ out/18-indiana/state.gpkg
+	ogr2ogr -f GPKG -nln nation -nlt MultiPolygon -overwrite $@ out/13-georgia/state.gpkg
+	ogr2ogr -f GPKG -nln nation -append $@ out/18-indiana/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/20-kansas/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/24-maryland/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/26-michigan/state.gpkg
@@ -24,8 +27,18 @@ out/nation.gpkg: \
 	ogr2ogr -f GPKG -nln nation -append $@ out/42-pennsylvania/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/51-virginia/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/53-washington/state.gpkg
+	ogr2ogr -f GPKG -nln nation -append $@ out/54-west-virginia/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/55-wisconsin/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/56-wyoming/state.gpkg
+
+out/13-georgia/state.gpkg: data/13-georgia/statewide/2016/VTD2016-Shape.shp
+	mkdir -p out/13-georgia
+	rm -f out/13-georgia/temporary.geojson
+	ogr2ogr -sql "SELECT '2016' AS year, 'Georgia' AS state, COUNTY AS county, DISTRICT AS precinct, 'polygon' AS accuracy FROM "'"VTD2016-Shape"' \
+		-s_srs EPSG:4019 -t_srs EPSG:4326 -overwrite \
+		-f GeoJSON out/13-georgia/temporary.geojson $<
+	ogr2ogr -overwrite -f GPKG $@ out/13-georgia/temporary.geojson
+	rm out/13-georgia/temporary.geojson
 
 out/18-indiana/state.gpkg: data/18-indiana/157-tippecanoe/precincts.geojson
 	mkdir -p out/18-indiana
@@ -77,6 +90,13 @@ out/53-washington/state.gpkg: data/53-washington/statewide-prec-2016-nowater.geo
 	mkdir -p out/53-washington
 	ogr2ogr -sql "SELECT '2016' AS year, 'Washington' AS state, COUNTY AS county, ST_CODE AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON" \
 		-overwrite -f GPKG $@ $<
+
+out/54-west-virginia/state.gpkg: data/54-west-virginia/statewide/2011/VotingDistrict_Census_201105_GCS83.zip
+	mkdir -p out/54-west-virginia/source
+	unzip -d out/54-west-virginia/source data/54-west-virginia/statewide/2011/VotingDistrict_Census_201105_GCS83.zip
+	ogr2ogr -sql "SELECT '2011' AS year, 'West Virginia' AS state, COUNTYFP10 AS county, VTDST10 AS precinct, 'polygon' AS accuracy FROM VotingDistrict_Census_201105_GCS83" \
+		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/54-west-virginia/source/VotingDistrict_Census_201105_GCS83.shp'
+	rm -rf 'out/54-west-virginia/source'
 
 out/55-wisconsin/state.gpkg: data/55-wisconsin/statewide/2016/polling_place_locations_2016_nov_general_xlsx_81288_polygons.geojson
 	mkdir -p out/55-wisconsin

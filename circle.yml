@@ -1,7 +1,3 @@
-machine:
-  python:
-    version: 2.7.11
-
 dependencies:
   override:
     - sudo add-apt-repository -y ppa:ubuntugis/ppa
@@ -11,4 +7,4 @@ dependencies:
 
 test:
   override:
-    - make
+    - env PATH=/bin:/usr/bin make out/render.png out/nation.gpkg

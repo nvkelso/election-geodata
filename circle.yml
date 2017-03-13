@@ -11,7 +11,7 @@ test:
 
 deployment:
   published:
-    branch: [master, migurski/configure-circle-render]
+    branch: master
     commands:
       - aws s3 cp --acl public-read --cache-control 'max-age=300 public' out/render.png s3://$S3_BUCKET/branches/$CIRCLE_BRANCH/render.png
       - ogr2ogr out/nation.shp out/nation.gpkg

@@ -8,3 +8,5 @@ dependencies:
 test:
   override:
     - env PATH=/bin:/usr/bin make out/render.png out/nation.gpkg
+  post:
+    - aws s3 cp --acl public-read out/render.png s3://$S3_BUCKET/branches/$CIRCLE_BRANCH/render.png

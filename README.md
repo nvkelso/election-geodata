@@ -1,6 +1,8 @@
 # election-geodata
 Precinct shapes (and vote results) for US elections past, present, and future
 
+![Preview render](https://s3.amazonaws.com/nvkelso-election-geodata/branches/master/render.png)
+
 I've been reading Mike Migurski's excellent blog series [1](http://mike.teczno.com/notes/redistricting.html) and [2](http://mike.teczno.com/notes/redistricting/measuring-efficiency-gap.html), on US election data and redistricting and this repo is in repsonse to his call for better data.
 
 For analysis to be rigorous, **geographic shape data** is needed at the precinct level, and **vote results** for local races like state house, state senate, and federal representative to the U.S. Congress is essential. They must be matched up per year, as precinct voting districts often change each election.

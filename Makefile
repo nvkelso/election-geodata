@@ -133,7 +133,7 @@ out/54-west-virginia/state.gpkg: data/54-west-virginia/statewide/2011/VotingDist
 
 out/55-wisconsin/state.gpkg: data/55-wisconsin/statewide/2016/polling_place_locations_2016_nov_general_xlsx_81288_polygons.geojson
 	mkdir -p out/55-wisconsin
-	ogr2ogr -sql "SELECT '2016' AS year, 'Wisconsin' AS state_fips, County AS county, ReportingUnit AS precinct, accuracy FROM OGRGeoJSON" \
+	ogr2ogr -sql "SELECT '2016' AS year, 'Wisconsin' AS state, County AS county, ReportingUnit AS precinct, accuracy FROM OGRGeoJSON" \
 		-overwrite -f GPKG $@ $<
 
 out/56-wyoming/state.gpkg: data/56-wyoming/statewide/2010/2010_wy_precincts.zip

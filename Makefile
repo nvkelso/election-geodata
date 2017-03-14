@@ -12,6 +12,7 @@ render/precincts-2163.shp: out/nation.gpkg
 out/nation.gpkg: \
         out/05-arkansas/state.gpkg \
         out/13-georgia/state.gpkg \
+        out/15-hawaii/state.gpkg \
         out/18-indiana/state.gpkg \
         out/19-iowa/state.gpkg \
         out/20-kansas/state.gpkg \
@@ -32,6 +33,7 @@ out/nation.gpkg: \
 	rm -f $@
 	ogr2ogr -f GPKG -nln nation -nlt MultiPolygon -overwrite $@ out/05-arkansas/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/13-georgia/state.gpkg
+	ogr2ogr -f GPKG -nln nation -append $@ out/15-hawaii/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/18-indiana/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/19-iowa/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/20-kansas/state.gpkg
@@ -65,6 +67,15 @@ out/13-georgia/state.gpkg: data/13-georgia/statewide/2016/VTD2016-Shape.shp
 		-f GeoJSON out/13-georgia/temporary.geojson $<
 	ogr2ogr -overwrite -f GPKG $@ out/13-georgia/temporary.geojson
 	rm out/13-georgia/temporary.geojson
+
+out/15-hawaii/state.gpkg: data/15-hawaii/statewide/2014/Election_Precincts_Polygon.zip
+	mkdir -p out/15-hawaii/source
+	unzip -d out/15-hawaii/source data/15-hawaii/statewide/2014/Election_Precincts_Polygon.zip
+	# GPKG are weird
+	rm -f $@
+	ogr2ogr -sql "SELECT '2014' AS year, 'Hawaii' AS state, county, dp AS precinct, 'polygon' AS accuracy FROM Election_Precincts" \
+		-t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/15-hawaii/source/Election_Precincts.shp'
+	rm -rf 'out/15-hawaii/source'
 
 out/18-indiana/state.gpkg: data/18-indiana/157-tippecanoe/precincts.geojson
 	mkdir -p out/18-indiana

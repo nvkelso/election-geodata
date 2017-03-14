@@ -13,6 +13,7 @@ out/nation.gpkg: \
         out/05-arkansas/state.gpkg \
         out/13-georgia/state.gpkg \
         out/18-indiana/state.gpkg \
+        out/19-iowa/state.gpkg \
         out/20-kansas/state.gpkg \
         out/21-kentucky/state.gpkg \
         out/24-maryland/state.gpkg \
@@ -30,6 +31,7 @@ out/nation.gpkg: \
 	ogr2ogr -f GPKG -nln nation -nlt MultiPolygon -overwrite $@ out/05-arkansas/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/13-georgia/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/18-indiana/state.gpkg
+	ogr2ogr -f GPKG -nln nation -append $@ out/19-iowa/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/20-kansas/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/21-kentucky/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/24-maryland/state.gpkg
@@ -66,6 +68,13 @@ out/18-indiana/state.gpkg: data/18-indiana/157-tippecanoe/precincts.geojson
 	ogr2ogr -sql "SELECT '2016' AS year, 'Indiana' AS state, 'Tippecanoe' AS county, P12_STFID AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON" \
 		-overwrite -f GPKG out/18-indiana/157-tippecanoe/county.gpkg data/18-indiana/157-tippecanoe/precincts.geojson
 	ogr2ogr -f GPKG -nln state -overwrite $@ out/18-indiana/157-tippecanoe/county.gpkg
+
+out/19-iowa/state.gpkg: data/19-iowa/statewide/2016/pcts_04172014_0908am.zip
+	mkdir -p out/19-iowa/source
+	unzip -d out/19-iowa/source data/19-iowa/statewide/2016/pcts_04172014_0908am.zip
+	ogr2ogr -sql "SELECT '2016' AS year, 'Iowa' AS state, '' AS county, DISTRICT AS precinct, 'polygon' AS accuracy FROM Precincts041714" \
+		-t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/19-iowa/source/pcts_04172014_0908am/Precincts041714.shp'
+	rm -rf 'out/19-iowa/source'
 
 out/20-kansas/state.gpkg: data/20-kansas/statewide/2012/kansas-state-voting-precincts-2012.geojson data/20-kansas/2016/20045-douglas/precincts.geojson
 	mkdir -p out/20-kansas

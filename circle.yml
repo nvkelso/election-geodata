@@ -21,7 +21,7 @@ deployment:
   published:
     branch: master
     commands:
-      - aws s3 cp --acl public-read --cache-control 'max-age=300 public' out/render.png s3://$S3_BUCKET/branches/$CIRCLE_BRANCH/render.png
+      - aws s3 cp --acl public-read --cache-control 'max-age=60 public' out/render.png s3://$S3_BUCKET/branches/$CIRCLE_BRANCH/render.png
       - ogr2ogr out/nation.shp out/nation.gpkg
       - gzip -9 out/nation.gpkg
       - aws s3 cp --acl public-read --content-encoding gzip --content-type application/geopackage out/nation.gpkg.gz s3://$S3_BUCKET/branches/$CIRCLE_BRANCH/nation.gpkg

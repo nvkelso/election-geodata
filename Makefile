@@ -10,6 +10,7 @@ render/precincts-2163.shp: out/nation.gpkg
 	ogr2ogr -t_srs EPSG:2163 -overwrite -skipfailures $@ $<
 
 out/nation.gpkg: \
+        out/02-alaska/state.gpkg \
         out/05-arkansas/state.gpkg \
         out/04-arizona/state.gpkg \
         out/06-california/state.gpkg \
@@ -35,8 +36,9 @@ out/nation.gpkg: \
         out/55-wisconsin/state.gpkg \
         out/56-wyoming/state.gpkg
 	rm -f $@
-	ogr2ogr -f GPKG -nln nation -nlt MultiPolygon -overwrite $@ out/05-arkansas/state.gpkg
+	ogr2ogr -f GPKG -nln nation -nlt MultiPolygon -overwrite $@ out/02-alaska/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/04-arizona/state.gpkg
+	ogr2ogr -f GPKG -nln nation -append $@ out/05-arkansas/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/06-california/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/08-colorado/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/09-connecticut/state.gpkg
@@ -59,6 +61,13 @@ out/nation.gpkg: \
 	ogr2ogr -f GPKG -nln nation -append $@ out/54-west-virginia/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/55-wisconsin/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/56-wyoming/state.gpkg
+
+out/02-alaska/state.gpkg: data/02-alaska/statewide/2010/tl_2012_02_vtd10.zip
+	mkdir -p out/02-alaska/source
+	unzip -d out/02-alaska/source data/02-alaska/statewide/2010/tl_2012_02_vtd10.zip
+	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_02_vtd10" \
+		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/02-alaska/source/tl_2012_02_vtd10.shp'
+	rm -rf 'out/02-alaska/source'
 
 out/04-arizona/state.gpkg: data/04-arizona/statewide/2010/tl_2012_04_vtd10.zip
 	mkdir -p out/04-arizona/source

@@ -14,6 +14,7 @@ out/nation.gpkg: \
         out/04-arizona/state.gpkg \
         out/06-california/state.gpkg \
         out/08-colorado/state.gpkg \
+        out/09-connecticut/state.gpkg \
         out/13-georgia/state.gpkg \
         out/15-hawaii/state.gpkg \
         out/18-indiana/state.gpkg \
@@ -38,6 +39,7 @@ out/nation.gpkg: \
 	ogr2ogr -f GPKG -nln nation -append $@ out/04-arizona/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/06-california/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/08-colorado/state.gpkg
+	ogr2ogr -f GPKG -nln nation -append $@ out/09-connecticut/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/13-georgia/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/15-hawaii/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/18-indiana/state.gpkg
@@ -65,6 +67,13 @@ out/04-arizona/state.gpkg: data/04-arizona/statewide/2010/tl_2012_04_vtd10.zip
 		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/04-arizona/source/tl_2012_04_vtd10.shp'
 	rm -rf 'out/04-arizona/source'
 
+out/05-arkansas/state.gpkg: data/05-arkansas/statewide/2016/ELECTION_PRECINCTS.zip
+	mkdir -p out/05-arkansas/source
+	unzip -d out/05-arkansas/source data/05-arkansas/statewide/2016/ELECTION_PRECINCTS.zip
+	ogr2ogr -sql "SELECT '2016' AS year, 'Arkansas' AS state, county_fip AS county, precinct AS precinct, 'polygon' AS accuracy FROM boundaries_ELECTION_PRECINCTS" \
+		-s_srs EPSG:26915 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/05-arkansas/source/boundaries_ELECTION_PRECINCTS.shp'
+	rm -rf 'out/05-arkansas/source'
+
 out/06-california/state.gpkg: data/06-california/statewide/2010/tl_2012_06_vtd10.zip
 	mkdir -p out/06-california/source
 	unzip -d out/06-california/source data/06-california/statewide/2010/tl_2012_06_vtd10.zip
@@ -79,12 +88,12 @@ out/08-colorado/state.gpkg: data/08-colorado/statewide/2010/tl_2012_08_vtd10.zip
 		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/08-colorado/source/tl_2012_08_vtd10.shp'
 	rm -rf 'out/08-colorado/source'
 
-out/05-arkansas/state.gpkg: data/05-arkansas/statewide/2016/ELECTION_PRECINCTS.zip
-	mkdir -p out/05-arkansas/source
-	unzip -d out/05-arkansas/source data/05-arkansas/statewide/2016/ELECTION_PRECINCTS.zip
-	ogr2ogr -sql "SELECT '2016' AS year, 'Arkansas' AS state, county_fip AS county, precinct AS precinct, 'polygon' AS accuracy FROM boundaries_ELECTION_PRECINCTS" \
-		-s_srs EPSG:26915 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/05-arkansas/source/boundaries_ELECTION_PRECINCTS.shp'
-	rm -rf 'out/05-arkansas/source'
+out/09-connecticut/state.gpkg: data/09-connecticut/statewide/2010/tl_2012_09_vtd10.zip
+	mkdir -p out/09-connecticut/source
+	unzip -d out/09-connecticut/source data/09-connecticut/statewide/2010/tl_2012_09_vtd10.zip
+	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_09_vtd10" \
+		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/09-connecticut/source/tl_2012_09_vtd10.shp'
+	rm -rf 'out/09-connecticut/source'
 
 out/13-georgia/state.gpkg: data/13-georgia/statewide/2016/VTD2016-Shape.shp
 	mkdir -p out/13-georgia

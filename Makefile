@@ -18,6 +18,7 @@ out/nation.gpkg: \
         out/24-maryland/state.gpkg \
         out/26-michigan/state.gpkg \
         out/37-north-carolina/state.gpkg \
+        out/41-oregon/state.gpkg \
         out/42-pennsylvania/state.gpkg \
         out/48-texas/state.gpkg \
         out/51-virginia/state.gpkg \
@@ -34,6 +35,7 @@ out/nation.gpkg: \
 	ogr2ogr -f GPKG -nln nation -append $@ out/24-maryland/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/26-michigan/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/37-north-carolina/state.gpkg
+	ogr2ogr -f GPKG -nln nation -append $@ out/41-oregon/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/42-pennsylvania/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/48-texas/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/51-virginia/state.gpkg
@@ -99,6 +101,13 @@ out/37-north-carolina/state.gpkg: data/37-north-carolina/statewide/2016/precinct
 	mkdir -p out/37-north-carolina
 	ogr2ogr -sql "SELECT '2016' AS year, 'North Carolina' AS state, COUNTY_NAM AS county, PREC_ID AS precinct, 'polygon' AS accuracy FROM precincts" \
 		-overwrite -f GPKG $@ $<
+
+out/41-oregon/state.gpkg: data/41-oregon/metro-portland/2016/precinct.zip
+	mkdir -p out/41-oregon/source
+	unzip -d out/41-oregon/source data/41-oregon/metro-portland/2016/precinct.zip
+	ogr2ogr -sql "SELECT '2016' AS year, 'Oregon' AS state, COUNTY AS county, PRECINCT AS precinct, 'polygon' AS accuracy FROM precinct" \
+		-t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/41-oregon/source/precinct.shp'
+	rm -rf 'out/41-oregon/source'
 
 out/42-pennsylvania/state.gpkg: data/42-pennsylvania/statewide/2011/2011-Voting-District-Boundary-Shapefiles.zip
 	mkdir -p out/42-pennsylvania

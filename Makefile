@@ -18,6 +18,7 @@ out/nation.gpkg: \
         out/21-kentucky/state.gpkg \
         out/24-maryland/state.gpkg \
         out/26-michigan/state.gpkg \
+        out/29-missouri/state.gpkg \
         out/37-north-carolina/state.gpkg \
         out/41-oregon/state.gpkg \
         out/42-pennsylvania/state.gpkg \
@@ -36,6 +37,7 @@ out/nation.gpkg: \
 	ogr2ogr -f GPKG -nln nation -append $@ out/21-kentucky/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/24-maryland/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/26-michigan/state.gpkg
+	ogr2ogr -f GPKG -nln nation -append $@ out/29-missouri/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/37-north-carolina/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/41-oregon/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/42-pennsylvania/state.gpkg
@@ -105,6 +107,13 @@ out/26-michigan/state.gpkg: data/26-michigan/statewide/2016/2016_Voting_Precinct
 		-f GeoJSON out/26-michigan/temporary.geojson $<
 	ogr2ogr -overwrite -f GPKG $@ out/26-michigan/temporary.geojson
 	rm out/26-michigan/temporary.geojson
+
+out/29-missouri/state.gpkg: data/29-missouri/statewide/2010/MO_2010_Census_Voting_Districts_shp.zip
+	mkdir -p out/29-missouri/source
+	unzip -d out/29-missouri/source data/29-missouri/statewide/2010/MO_2010_Census_Voting_Districts_shp.zip
+	ogr2ogr -sql "SELECT '2010' AS year, 'Missouri' AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM MO_2010_Census_Voting_Districts_shp" \
+		-s_srs EPSG:26915 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/29-missouri/source/MO_2010_Census_Voting_Districts_shp.shp'
+	rm -rf 'out/29-missouri/source'
 
 out/37-north-carolina/state.gpkg: data/37-north-carolina/statewide/2016/precincts.shp
 	mkdir -p out/37-north-carolina

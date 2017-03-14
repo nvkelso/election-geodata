@@ -18,6 +18,7 @@ out/nation.gpkg: \
         out/21-kentucky/state.gpkg \
         out/24-maryland/state.gpkg \
         out/26-michigan/state.gpkg \
+        out/27-minnesota/state.gpkg \
         out/29-missouri/state.gpkg \
         out/37-north-carolina/state.gpkg \
         out/41-oregon/state.gpkg \
@@ -37,6 +38,7 @@ out/nation.gpkg: \
 	ogr2ogr -f GPKG -nln nation -append $@ out/21-kentucky/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/24-maryland/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/26-michigan/state.gpkg
+	ogr2ogr -f GPKG -nln nation -append $@ out/27-minnesota/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/29-missouri/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/37-north-carolina/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/41-oregon/state.gpkg
@@ -108,6 +110,15 @@ out/26-michigan/state.gpkg: data/26-michigan/statewide/2016/2016_Voting_Precinct
 	ogr2ogr -overwrite -f GPKG $@ out/26-michigan/temporary.geojson
 	rm out/26-michigan/temporary.geojson
 
+out/27-minnesota/state.gpkg: data/27-minnesota/statewide/2016/elec2016.zip
+	mkdir -p out/27-minnesota/source
+	unzip -d out/27-minnesota/source data/27-minnesota/statewide/2016/elec2016.zip
+	# GPKG are weird
+	rm -f $@
+	ogr2ogr -sql "SELECT '2016' AS year, 'Minnesota' AS state, COUNTYFIPS AS county, VTD AS precinct, 'polygon' AS accuracy FROM elec2016" \
+		-s_srs EPSG:26915 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/27-minnesota/source/elec2016.shp'
+	rm -rf 'out/27-minnesota/source'
+
 out/29-missouri/state.gpkg: data/29-missouri/statewide/2010/MO_2010_Census_Voting_Districts_shp.zip
 	mkdir -p out/29-missouri/source
 	unzip -d out/29-missouri/source data/29-missouri/statewide/2010/MO_2010_Census_Voting_Districts_shp.zip
@@ -146,7 +157,7 @@ out/51-virginia/state.gpkg: data/51-virginia/statewide/2016/vaprecincts2016.shp
 	ogr2ogr -sql "SELECT 2016 AS year, 'Virginia' AS state, locality AS county, id AS precinct, 'polygon' AS accuracy FROM vaprecincts2016" \
 		-s_srs EPSG:3857 -t_srs EPSG:4326 -overwrite -f GPKG $@ $<
 
-out/53-washington/state.gpkg: data/53-washington/statewide-prec-2016-nowater.geojson
+out/53-washington/state.gpkg: data/53-washington/statewide/2016/statewide-prec-2016-nowater.geojson
 	mkdir -p out/53-washington
 	ogr2ogr -sql "SELECT '2016' AS year, 'Washington' AS state, COUNTY AS county, ST_CODE AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON" \
 		-overwrite -f GPKG $@ $<

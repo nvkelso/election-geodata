@@ -11,17 +11,17 @@
         <Rule>
             <Filter>[year] = '2016'</Filter>
             <PolygonSymbolizer fill="#ffffff" />
-            <LineSymbolizer stroke="#2E8BCE" stroke-width="0.3" />
+            <LineSymbolizer stroke="rgb(0,109,44)" stroke-width="0.3" />
         </Rule>
         <Rule>
             <Filter>[year] = '2015' or [year] = '2014' or [year] = '2013' or [year] = '2012'</Filter>
             <PolygonSymbolizer fill="#ffffff" />
-            <LineSymbolizer stroke="#D13A82" stroke-width="0.3" />
+            <LineSymbolizer stroke="rgb(49,163,84)" stroke-width="0.3" />
         </Rule>
         <Rule>
             <ElseFilter/>
             <PolygonSymbolizer fill="#ffffff" />
-            <LineSymbolizer stroke="#DA3435" stroke-width="0.3" />
+            <LineSymbolizer stroke="#93A1A1" stroke-width="0.3" />
         </Rule>
     </Style>
     <Layer name="states" status="on" srs="+proj=laea +lat_0=45 +lon_0=-100 +x_0=0 +y_0=0 +a=6370997 +b=6370997 +units=m +no_defs">

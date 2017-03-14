@@ -16,6 +16,8 @@ out/nation.gpkg: \
         out/06-california/state.gpkg \
         out/08-colorado/state.gpkg \
         out/09-connecticut/state.gpkg \
+        out/11-district-of-columbia/state.gpkg \
+        out/12-florida/state.gpkg \
         out/13-georgia/state.gpkg \
         out/15-hawaii/state.gpkg \
         out/18-indiana/state.gpkg \
@@ -42,6 +44,8 @@ out/nation.gpkg: \
 	ogr2ogr -f GPKG -nln nation -append $@ out/06-california/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/08-colorado/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/09-connecticut/state.gpkg
+	ogr2ogr -f GPKG -nln nation -append $@ out/11-district-of-columbia/state.gpkg
+	ogr2ogr -f GPKG -nln nation -append $@ out/12-florida/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/13-georgia/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/15-hawaii/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/18-indiana/state.gpkg
@@ -103,6 +107,20 @@ out/09-connecticut/state.gpkg: data/09-connecticut/statewide/2010/tl_2012_09_vtd
 	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_09_vtd10" \
 		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/09-connecticut/source/tl_2012_09_vtd10.shp'
 	rm -rf 'out/09-connecticut/source'
+
+out/11-district-of-columbia/state.gpkg: data/11-district-of-columbia/statewide/2010/tl_2012_11_vtd10.zip
+	mkdir -p out/11-district-of-columbia/source
+	unzip -d out/11-district-of-columbia/source data/11-district-of-columbia/statewide/2010/tl_2012_11_vtd10.zip
+	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_11_vtd10" \
+		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/11-district-of-columbia/source/tl_2012_11_vtd10.shp'
+	rm -rf 'out/11-district-of-columbia/source'
+
+out/12-florida/state.gpkg: data/12-florida/statewide/2010/tl_2012_12_vtd10.zip
+	mkdir -p out/12-florida/source
+	unzip -d out/12-florida/source data/12-florida/statewide/2010/tl_2012_12_vtd10.zip
+	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_12_vtd10" \
+		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/12-florida/source/tl_2012_12_vtd10.shp'
+	rm -rf 'out/12-florida/source'
 
 out/13-georgia/state.gpkg: data/13-georgia/statewide/2016/VTD2016-Shape.shp
 	mkdir -p out/13-georgia

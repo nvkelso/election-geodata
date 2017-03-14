@@ -1,3 +1,8 @@
+machine:
+  environment:
+    # Do not use pyenv Python so apt-get installs work
+    PATH: /bin:/usr/bin:/usr/local/bin
+
 dependencies:
   override:
     - sudo add-apt-repository -y ppa:ubuntugis/ppa
@@ -7,10 +12,10 @@ dependencies:
 
 test:
   override:
-    - env PATH=/bin:/usr/bin make out/render.png out/nation.gpkg
+    - make out/render.png out/nation.gpkg
   post:
     - aws s3 cp --acl public-read out/render.png s3://$S3_BUCKET/commits/$CIRCLE_SHA1/render.png
-    - env PATH=/bin:/usr/bin scripts/update-status.py https://s3.amazonaws.com/$S3_BUCKET/commits/$CIRCLE_SHA1/render.png
+    - scripts/update-status.py https://s3.amazonaws.com/$S3_BUCKET/commits/$CIRCLE_SHA1/render.png
 
 deployment:
   published:

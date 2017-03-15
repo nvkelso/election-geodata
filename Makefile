@@ -303,9 +303,14 @@ out/32-nevada/state.gpkg: data/32-nevada/statewide/2010/tl_2012_32_vtd10.zip
 
 out/33-new-hampshire/state.gpkg: data/33-new-hampshire/statewide/2010/tl_2012_33_vtd10.zip
 	mkdir -p out/33-new-hampshire/source
+	# GPKG are weird
+	rm -f $@
 	unzip -d out/33-new-hampshire/source data/33-new-hampshire/statewide/2010/tl_2012_33_vtd10.zip
-	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_33_vtd10" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/33-new-hampshire/source/tl_2012_33_vtd10.shp'
+	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_33_vtd10 WHERE (FUNCSTAT10='S' AND VTDST10 NOT IN ('ZZZZZZ'))" \
+		-s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ 'out/33-new-hampshire/source/tl_2012_33_vtd10.shp'
+	unzip -d out/33-new-hampshire/source data/33-new-hampshire/statewide/2016/nh_political_boundaries_2016.zip
+	ogr2ogr -sql "SELECT '2016' AS year, '33' AS state, COUNTY AS county, CONCAT('33', CAST(FIPS AS character(3))) AS precinct, 'polygon' AS accuracy FROM nh_political_boundaries WHERE FIPS NOT IN (1035,1040,5045,7020,9110,11085,11110,13040,13060,15040,15145,17010,17050,17060,19015)" \
+		-t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/33-new-hampshire/source/nh_political_boundaries.shp'
 	rm -rf 'out/33-new-hampshire/source'
 
 out/34-new-jersey/state.gpkg: data/34-new-jersey/statewide/2010/tl_2012_34_vtd10.zip

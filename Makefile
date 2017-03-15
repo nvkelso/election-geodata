@@ -10,17 +10,20 @@ render/precincts-2163.shp: out/nation.gpkg
 	ogr2ogr -t_srs EPSG:2163 -overwrite -skipfailures $@ $<
 
 out/nation.gpkg: \
+        out/01-alabama/state.gpkg \
         out/02-alaska/state.gpkg \
         out/05-arkansas/state.gpkg \
         out/04-arizona/state.gpkg \
         out/06-california/state.gpkg \
         out/08-colorado/state.gpkg \
         out/09-connecticut/state.gpkg \
+        out/10-delaware/state.gpkg \
         out/11-district-of-columbia/state.gpkg \
         out/12-florida/state.gpkg \
         out/13-georgia/state.gpkg \
         out/15-hawaii/state.gpkg \
         out/16-idaho/state.gpkg \
+        out/17-illinois/state.gpkg \
         out/18-indiana/state.gpkg \
         out/19-iowa/state.gpkg \
         out/20-kansas/state.gpkg \
@@ -43,6 +46,7 @@ out/nation.gpkg: \
         out/37-north-carolina/state.gpkg \
         out/38-north-dakota/state.gpkg \
         out/39-ohio/state.gpkg \
+        out/40-oklahoma/state.gpkg \
         out/41-oregon/state.gpkg \
         out/42-pennsylvania/state.gpkg \
         out/45-south-carolina/state.gpkg \
@@ -58,17 +62,20 @@ out/nation.gpkg: \
         out/56-wyoming/state.gpkg \
         out/72-puerto-rico/state.gpkg
 	rm -f $@
-	ogr2ogr -f GPKG -nln nation -nlt MultiPolygon -overwrite $@ out/02-alaska/state.gpkg
+	ogr2ogr -f GPKG -nln nation -nlt MultiPolygon -overwrite $@ out/01-alabama/state.gpkg
+	ogr2ogr -f GPKG -nln nation -append $@ out/02-alaska/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/04-arizona/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/05-arkansas/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/06-california/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/08-colorado/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/09-connecticut/state.gpkg
+	ogr2ogr -f GPKG -nln nation -append $@ out/10-delaware/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/11-district-of-columbia/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/12-florida/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/13-georgia/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/15-hawaii/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/16-idaho/state.gpkg
+	ogr2ogr -f GPKG -nln nation -append $@ out/17-illinois/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/18-indiana/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/19-iowa/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/20-kansas/state.gpkg
@@ -91,6 +98,7 @@ out/nation.gpkg: \
 	ogr2ogr -f GPKG -nln nation -append $@ out/37-north-carolina/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/38-north-dakota/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/39-ohio/state.gpkg
+	ogr2ogr -f GPKG -nln nation -append $@ out/40-oklahoma/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/41-oregon/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/42-pennsylvania/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/45-south-carolina/state.gpkg
@@ -105,6 +113,13 @@ out/nation.gpkg: \
 	ogr2ogr -f GPKG -nln nation -append $@ out/55-wisconsin/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/56-wyoming/state.gpkg
 	ogr2ogr -f GPKG -nln nation -append $@ out/72-puerto-rico/state.gpkg
+
+out/01-alabama/state.gpkg: data/01-alabama/statewide/2010/tl_2012_01_vtd10.zip
+	mkdir -p out/01-alabama/source
+	unzip -d out/01-alabama/source data/01-alabama/statewide/2010/tl_2012_01_vtd10.zip
+	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_01_vtd10" \
+		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/01-alabama/source/tl_2012_01_vtd10.shp'
+	rm -rf 'out/01-alabama/source'
 
 out/02-alaska/state.gpkg: data/02-alaska/statewide/2010/tl_2012_02_vtd10.zip
 	mkdir -p out/02-alaska/source
@@ -148,6 +163,13 @@ out/09-connecticut/state.gpkg: data/09-connecticut/statewide/2010/tl_2012_09_vtd
 		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/09-connecticut/source/tl_2012_09_vtd10.shp'
 	rm -rf 'out/09-connecticut/source'
 
+out/10-delaware/state.gpkg: data/10-delaware/statewide/2010/tl_2012_10_vtd10.zip
+	mkdir -p out/10-delaware/source
+	unzip -d out/10-delaware/source data/10-delaware/statewide/2010/tl_2012_10_vtd10.zip
+	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_10_vtd10" \
+		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/10-delaware/source/tl_2012_10_vtd10.shp'
+	rm -rf 'out/10-delaware/source'
+
 out/11-district-of-columbia/state.gpkg: data/11-district-of-columbia/statewide/2010/tl_2012_11_vtd10.zip
 	mkdir -p out/11-district-of-columbia/source
 	unzip -d out/11-district-of-columbia/source data/11-district-of-columbia/statewide/2010/tl_2012_11_vtd10.zip
@@ -186,6 +208,13 @@ out/16-idaho/state.gpkg: data/16-idaho/statewide/2010/tl_2012_16_vtd10.zip
 	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_16_vtd10" \
 		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/16-idaho/source/tl_2012_16_vtd10.shp'
 	rm -rf 'out/16-idaho/source'
+
+out/17-illinois/state.gpkg: data/17-illinois/statewide/2010/tl_2012_17_vtd10.zip
+	mkdir -p out/17-illinois/source
+	unzip -d out/17-illinois/source data/17-illinois/statewide/2010/tl_2012_17_vtd10.zip
+	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_17_vtd10" \
+		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/17-illinois/source/tl_2012_17_vtd10.shp'
+	rm -rf 'out/17-illinois/source'
 
 out/18-indiana/state.gpkg: data/18-indiana/statewide/2010/tl_2012_18_vtd10.zip #data/18-indiana/157-tippecanoe/precincts.geojson
 	mkdir -p out/18-indiana/source
@@ -371,6 +400,13 @@ out/39-ohio/state.gpkg: data/39-ohio/statewide/2010/tl_2012_39_vtd10.zip
 	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_39_vtd10" \
 		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/39-ohio/source/tl_2012_39_vtd10.shp'
 	rm -rf 'out/39-ohio/source'
+
+out/40-oklahoma/state.gpkg: data/40-oklahoma/statewide/2010/tl_2012_40_vtd10.zip
+	mkdir -p out/40-oklahoma/source
+	unzip -d out/40-oklahoma/source data/40-oklahoma/statewide/2010/tl_2012_40_vtd10.zip
+	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_40_vtd10" \
+		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/40-oklahoma/source/tl_2012_40_vtd10.shp'
+	rm -rf 'out/40-oklahoma/source'
 
 out/41-oregon/state.gpkg: data/41-oregon/metro-portland/2016/precinct.zip
 	mkdir -p out/41-oregon/source

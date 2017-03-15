@@ -329,9 +329,28 @@ out/35-new-mexico/state.gpkg: data/35-new-mexico/statewide/2010/tl_2012_35_vtd10
 
 out/36-new-york/state.gpkg: data/36-new-york/statewide/2010/tl_2012_36_vtd10.zip
 	mkdir -p out/36-new-york/source
+	# GPKG are weird
+	rm -f $@
+	# Baseline Census 2010 for state (excluding cutouts)
 	unzip -d out/36-new-york/source data/36-new-york/statewide/2010/tl_2012_36_vtd10.zip
-	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_36_vtd10" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/36-new-york/source/tl_2012_36_vtd10.shp'
+	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_36_vtd10 WHERE COUNTYFP10 NOT IN ('005','047','061','069','081','083','085')" \
+		-s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ 'out/36-new-york/source/tl_2012_36_vtd10.shp'
+	# Add New York City (includes multiple counties, hmm)
+	unzip -d out/36-new-york/source data/36-new-york/061-new-york/2017/nyed_17a.zip
+	ogr2ogr -sql "SELECT '2017' AS year, '36' AS state, '061' AS county, CONCAT('36061', CAST(ElectDist AS character(5))) AS precinct, 'polygon' AS accuracy FROM nyed" \
+		-s_srs '+proj=lcc +lat_1=40.66666666666666 +lat_2=41.03333333333333 +lat_0=40.16666666666666 +lon_0=-74 +x_0=300000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=us-ft +no_defs' \
+		-t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/36-new-york/source/nyed_17a/nyed.shp'
+	# Add 069-ontario (note how cnty_ed isn't unique, so setup special source dir)
+	mkdir -p out/36-new-york/source/069-ontario
+	unzip -d out/36-new-york/source/069-ontario data/36-new-york/069-ontario/2016/BOE_Election_Districts_201605180903412713.zip
+	ogr2ogr -sql "SELECT '2016' AS year, '36' AS state, '069' AS county, CONCAT('36069', CAST(JOINCODE AS character(10))) AS precinct, 'polygon' AS accuracy FROM BOE_Election_Districts" \
+		-s_srs '+proj=tmerc +lat_0=40 +lon_0=-76.58333333333333 +k=0.9999375 +x_0=250000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=us-ft +no_defs' \
+		-t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/36-new-york/source/069-ontario/BOE_Election_Districts.shp'
+	# Add 083-rensselaer (note how cnty_ed isn't unique, so setup special source dir)
+	mkdir -p out/36-new-york/source/083-rensselaer
+	unzip -d out/36-new-york/source/083-rensselaer data/36-new-york/083-rensselaer/2016/ren-cnty_ed.zip
+	ogr2ogr -sql "SELECT '2016' AS year, '36' AS state, '083' AS county, CONCAT('36083', CAST(ED AS character(20))) AS precinct, 'polygon' AS accuracy FROM cnty_ed" \
+		-s_srs EPSG:2260 -t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/36-new-york/source/083-rensselaer/cnty_ed.shp'
 	rm -rf 'out/36-new-york/source'
 
 out/37-north-carolina/state.gpkg: data/37-north-carolina/statewide/2016/precincts.shp

@@ -9,7 +9,7 @@
     </Style>
     <Style name="precincts">
         <Rule>
-            <Filter>[year] = '2016'</Filter>
+            <Filter>[year] = '2016' or [year] = '2017'</Filter>
             <PolygonSymbolizer fill="#ffffff" />
             <LineSymbolizer stroke="rgb(0,109,44)" stroke-width="0.3" />
         </Rule>

@@ -252,11 +252,15 @@ out/21-kentucky/state.gpkg: data/21-kentucky/statewide/2016/kyprecinctsmergedfin
 	ogr2ogr -overwrite -f GPKG $@ out/21-kentucky/source/temporary.geojson
 	rm -rf out/21-kentucky/source
 
-out/22-louisiana/state.gpkg: data/22-louisiana/statewide/2010/tl_2012_22_vtd10.zip
+out/22-louisiana/state.gpkg: data/22-louisiana/statewide/2016/2016_LA_Precincts.zip
 	mkdir -p out/22-louisiana/source
-	unzip -d out/22-louisiana/source data/22-louisiana/statewide/2010/tl_2012_22_vtd10.zip
-	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_22_vtd10" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/22-louisiana/source/tl_2012_22_vtd10.shp'
+	unzip -d out/22-louisiana/source data/22-louisiana/statewide/2016/2016_LA_Precincts.zip
+	rm -f out/22-louisiana/source/temporary.geojson
+	ogr2ogr -sql "SELECT '2016' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM "'"2016_LA_Precincts"' \
+		-s_srs EPSG:4019 -t_srs EPSG:4326 -overwrite -f GeoJSON out/22-louisiana/source/temporary.geojson out/22-louisiana/source/2016_LA_Precincts.shp
+	# GPKG are weird
+	rm -f $@
+	ogr2ogr -overwrite -f GPKG $@ out/22-louisiana/source/temporary.geojson
 	rm -rf 'out/22-louisiana/source'
 
 out/23-maine/state.gpkg: data/23-maine/statewide/2010/tl_2012_23_vtd10.zip

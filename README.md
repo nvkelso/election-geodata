@@ -10,9 +10,11 @@ Precinct shapes (and vote results) for US elections past, present, and future
 
 #### MAP KEY
 
-- _Dark green_ = newer 2016/2017 precincts
-- _Light green_ = 2011-2015 precincts
-- _Grey_ = older 2010 precincts
+- _Dark green_ = newer 2016-2017 precincts
+- _Medium green_ = 2014-2015 precincts
+- _Light green_ = 2011-2012-2013 precincts
+- _Light brown_ = older 2010 precincts
+- _Medium brown_ = missing precincts
 
 ### Background
 

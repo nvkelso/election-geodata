@@ -462,11 +462,13 @@ out/47-tennessee/state.gpkg: data/47-tennessee/statewide/2010/tl_2012_47_vtd10.z
 		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/47-tennessee/source/tl_2012_47_vtd10.shp'
 	rm -rf 'out/47-tennessee/source'
 
-out/48-texas/state.gpkg: data/48-texas/statewide/2011/Precincts.zip
+out/48-texas/state.gpkg: data/48-texas/statewide/2014/Precincts.zip
 	mkdir -p out/48-texas
-	unzip -d out/48-texas/source data/48-texas/statewide/2011/Precincts.zip
-	ogr2ogr -sql "SELECT '2011' AS year, 'Texas' AS state, CNTY AS county, PREC AS precinct, 'polygon' AS accuracy FROM Precincts" \
-		-s_srs EPSG:3081 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/48-texas/source/Precincts.shp'
+	unzip -d out/48-texas/source data/48-texas/statewide/2014/Precincts.zip
+	# GPKG are weird
+	rm -f $@
+	ogr2ogr -sql "SELECT '2014' AS year, '48' AS state, CNTY AS county, CONCAT('48', CAST(CNTY AS character(3)), CAST(PREC AS character(10))) AS precinct, 'polygon' AS accuracy FROM Prec_14G" \
+		-s_srs EPSG:3081 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/48-texas/source/Prec_14G.shp'
 	rm -rf 'out/48-texas/source'
 
 out/49-utah/state.gpkg: data/49-utah/statewide/2010/tl_2012_49_vtd10.zip

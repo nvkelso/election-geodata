@@ -471,11 +471,13 @@ out/48-texas/state.gpkg: data/48-texas/statewide/2014/Precincts.zip
 		-s_srs EPSG:3081 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/48-texas/source/Prec_14G.shp'
 	rm -rf 'out/48-texas/source'
 
-out/49-utah/state.gpkg: data/49-utah/statewide/2010/tl_2012_49_vtd10.zip
+out/49-utah/state.gpkg: data/49-utah/statewide/2016/VistaBallotAreas_shp.zip
 	mkdir -p out/49-utah/source
-	unzip -d out/49-utah/source data/49-utah/statewide/2010/tl_2012_49_vtd10.zip
-	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_49_vtd10" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/49-utah/source/tl_2012_49_vtd10.shp'
+	unzip -d out/49-utah/source data/49-utah/statewide/2016/VistaBallotAreas_shp.zip
+	# GPKG are weird
+	rm -f $@
+	ogr2ogr -sql "SELECT '2016' AS year, '49' AS state, CountyID AS county, CONCAT('49', CAST(CountyID AS character(3)), CAST(VistaID AS character(10))) AS precinct, 'polygon' AS accuracy FROM VistaBallotAreas" \
+		-s_srs EPSG:26912 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/49-utah/source/VistaBallotAreas/VistaBallotAreas.shp'
 	rm -rf 'out/49-utah/source'
 
 out/50-vermont/state.gpkg: data/50-vermont/statewide/2010/tl_2012_50_vtd10.zip

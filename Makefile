@@ -3,7 +3,7 @@ all: out/render.png
 clean:
 	rm -rf out
 
-out/render.png: render/precincts-2163.shp
+out/render.png: render/precincts-2163.shp render/style.xml
 	render/draw.py $@
 
 render/precincts-2163.shp: out/nation.gpkg
@@ -220,6 +220,8 @@ out/18-indiana/state.gpkg: data/18-indiana/statewide/2010/tl_2012_18_vtd10.zip #
 	mkdir -p out/18-indiana/source
 	unzip -d out/18-indiana/source data/18-indiana/statewide/2010/tl_2012_18_vtd10.zip
 	# Skip Tippecanoe County (FIPS 157) since it'll come from another file.
+	# GPKG are weird
+	rm -f $@
 	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_18_vtd10 WHERE COUNTYFP10 != '157'" \
 		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -nln state -nlt MultiPolygon -f GPKG out/18-indiana/state.gpkg out/18-indiana/source/tl_2012_18_vtd10.shp
 	# Add Tippecanoe County (FIPS 157) to the statewide Geopackage file.
@@ -425,20 +427,6 @@ out/41-oregon/state.gpkg: data/41-oregon/metro-portland/2016/precinct.zip
 		$@ 'out/41-oregon/source/precinct.shp'
 	#-t_srs EPSG:4326 -overwrite -f GPKG -nln state -append \
 	rm -rf 'out/41-oregon/source'
-
-out/18-indiana/state.gpkg: data/18-indiana/statewide/2010/tl_2012_18_vtd10.zip #data/18-indiana/157-tippecanoe/precincts.geojson
-	mkdir -p out/18-indiana/source
-	unzip -d out/18-indiana/source data/18-indiana/statewide/2010/tl_2012_18_vtd10.zip
-	# Skip Tippecanoe County (FIPS 157) since it'll come from another file.
-	# GPKG are weird
-	rm -f $@
-	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_18_vtd10 WHERE COUNTYFP10 != '157'" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -nln state -nlt MultiPolygon -f GPKG out/18-indiana/state.gpkg out/18-indiana/source/tl_2012_18_vtd10.shp
-	# Add Tippecanoe County (FIPS 157) to the statewide Geopackage file.
-	ogr2ogr -sql "SELECT '2016' AS year, '18' AS state, '157' AS county, P12_STFID AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON" \
-		-t_srs EPSG:4326 -f GPKG -nln state -append \
-		out/18-indiana/state.gpkg data/18-indiana/157-tippecanoe/2016/precincts.geojson
-	rm -rf 'out/18-indiana/source'
 
 out/42-pennsylvania/state.gpkg: data/42-pennsylvania/statewide/2011/2011-Voting-District-Boundary-Shapefiles.zip
 	mkdir -p out/42-pennsylvania

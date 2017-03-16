@@ -301,11 +301,13 @@ out/27-minnesota/state.gpkg: data/27-minnesota/statewide/2016/elec2016.zip
 		-s_srs EPSG:26915 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/27-minnesota/source/elec2016.shp'
 	rm -rf 'out/27-minnesota/source'
 
-out/28-mississippi/state.gpkg: data/28-mississippi/statewide/2010/tl_2012_28_vtd10.zip
+out/28-mississippi/state.gpkg: data/28-mississippi/statewide/2012/precincts_2012.zip
 	mkdir -p out/28-mississippi/source
-	unzip -d out/28-mississippi/source data/28-mississippi/statewide/2010/tl_2012_28_vtd10.zip
-	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_28_vtd10" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/28-mississippi/source/tl_2012_28_vtd10.shp'
+	# GPKG are weird
+	rm -f $@
+	unzip -d out/28-mississippi/source data/28-mississippi/statewide/2012/precincts_2012.zip
+	ogr2ogr -sql "SELECT '2012' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM precincts_12" \
+		-s_srs EPSG:3814 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/28-mississippi/source/precincts_12.shp'
 	rm -rf 'out/28-mississippi/source'
 
 out/29-missouri/state.gpkg: data/29-missouri/statewide/2010/MO_2010_Census_Voting_Districts_shp.zip

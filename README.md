@@ -1,4 +1,4 @@
-# election-geodata
+# Election Geodata
 Precinct shapes (and vote results) for US elections past, present, and future
 
 ### Download data
@@ -37,7 +37,7 @@ If you also find election result information along the way my current thinking i
 - [Open Elections](http://www.openelections.net/) – a [Github-based project](https://github.com/openelections) by journalists Serdar Tumgoren and Derek Willis
 - Data hackers and data journalists, like [LA Times](https://github.com/datadesk/california-2016-election-precinct-maps)
 - Census 2010 ([src](https://www.census.gov/geo/reference/gtc/gtc_vtd.html))
-    - `For the 2010 Census, only Rhode Island did not participate in Phase 2 (the Voting District/Block Boundary Suggestion Project) of the 2010 Census Redistricting Data Program.  Kentucky chose not to provide VTDs as part of their participation in Phase 2, and the states of Montana and Oregon provided VTDs for some counties.  Therefore, for 2010 Census data products, no VTDs exist in select counties in Montana and Oregon or for the states of Rhode Island and Kentucky in their entirety.`
+    - For the 2010 Census, only Rhode Island did not participate in Phase 2 (the Voting District/Block Boundary Suggestion Project) of the 2010 Census Redistricting Data Program.  Kentucky chose not to provide VTDs as part of their participation in Phase 2, and the states of Montana and Oregon provided VTDs for some counties.  Therefore, for 2010 Census data products, no VTDs exist in select counties in Montana and Oregon or for the states of Rhode Island and Kentucky in their entirety.
 
 ### See also:
 

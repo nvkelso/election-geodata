@@ -1,10 +1,17 @@
 # Texas
 
-- **2010** redistricting are at:
+- **2010** from US Census
+    - Downloaded 2017-03-11.
+- **2014** from Texas state source via aaron-strauss
+    - From https://github.com/aaron-strauss/precinct-shapefiles/tree/master/tx
     - ftp://ftpgis1.tlc.state.tx.us/2011_Redistricting_Data/Precincts/Geography/Precincts.zip
     - Downloaded 2017-03-11.
-- **2011** from https://github.com/aaron-strauss/precinct-shapefiles/tree/master/tx
-- **2014** from https://github.com/aaron-strauss/precinct-shapefiles/tree/master/tx
+- **2016** from Texas state source
+    - These are marked as 2011 on https://github.com/aaron-strauss/precinct-shapefiles/tree/master/tx
+    - But opened them up shows metadata for 2016 (with last update in 2017)
+    - They were re-downloaded fresh from Texas gov't site:
+        - 2016 Precincts are here: ftp://ftpgis1.tlc.state.tx.us/2011_Redistricting_Data/Precincts/
+        - 2016 VTDs are here: ftp://ftpgis1.tlc.state.tx.us/2011_Redistricting_Data/VTDs/
 
 **More here:**
 

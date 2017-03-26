@@ -1,0 +1,34 @@
+MON	1	Jaycee Clubhouse	3825 Flagler Avenue		Key West	33040
+MON	2	Key West High School Auditorium	2100 Flagler Avenue		Key West	33040
+MON	3	Key West High School Auditorium	2100 Flagler Avenue		Key West	33040
+MON	4	Martin Luther King Community Pool	300 Catherine Street		Key West	33040
+MON	5	Old City Hall	510 Greene Street		Key West	33040
+MON	6	Gato Building	1100 Simonton St		Key West	33040
+MON	7	Moose Club	700 Eisenhower Drive		Key West	33040
+MON	8	Glad Tiding Tabernacle Assembly of God	1209 United Street		Key West	33040
+MON	9	Senior Citizens Plaza Center Auditorium	1400 Kennedy Drive		Key West	33040
+MON	10	Senior Citizens Plaza Center Auditorium	1400 Kennedy Drive		Key West	33040
+MON	11	Stock Island Fire Station	5655 MacDonald Ave		Key West/Stock Is	33040
+MON	12	Big Coppitt Fire Station	28 Emerald Drive		Key West/Big Coppit	33040
+MON	13	Sugarloaf Baptist Church	260 Crane Blvd		Upper Sugarloaf Key	33042
+MON	14	Sugarloaf Baptist Church	260 Crane Blvd		Upper Sugarloaf Key	33042
+MON	15	Boy Scouts of America Summerland	23800 Overseas Hwy		Summerland	33042
+MON	16	First Baptist Church	300 Key Deer Boulevard		Big Pine Key	33043
+MON	17	Big Pine Key Community Park	31009 Atlantis Dr		Big Pine Key	33043
+MON	18	American Legion	4115 Overseas Highway		Marathon	33050
+MON	19	First Baptist Church	200 62nd Street - Ocean		Marathon	33050
+MON	20	Presbyterian Kirk of the Keys	8877 Overseas Highway		Marathon	33050
+MON	21	Marathon Moose Lodge	11601 1st Avenue - Gulf		Marathon	33050
+MON	22	Key Colony Beach City Hall	600 W Ocean Dr		Key Colony Beach	33051
+MON	23	Marathon Moose Lodge	11601 1st Avenue - Gulf		Marathon	33050
+MON	24	Islamorada Branch Library	81830 Overseas Highway		Islamorada	33036
+MON	25	Plantation Key Courtroom B	88770 Overseas Highway		Plantation Key	33070
+MON	26	Immanuel Lutheran Church	108 Ocean Drive		Tavernier	33070
+MON	27	Elks Club	92600 Overseas Highway		Tavernier	33070
+MON	28	Key Largo Civic Club	209 Ocean Bay Drive		Key Largo	33037
+MON	29	Key Largo Civic Club	209 Ocean Bay Drive		Key Largo	33037
+MON	30	Monroe County Library	101485 Overseas Highway		Key Largo	33037
+MON	31	Monroe County Library	101485 Overseas Highway		Key Largo	33037
+MON	32	Key Largo Baptist Church	835 Largo Road		Key Largo	33037
+MON	33	The Academy at Ocean Reef	395 South Harbor Drive		Key Largo	33037
+						

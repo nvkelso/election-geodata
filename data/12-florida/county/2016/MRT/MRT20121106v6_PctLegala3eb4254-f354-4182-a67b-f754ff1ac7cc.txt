@@ -1,0 +1,40 @@
+MRT	18	120850011022004	A	Includes all of Block 2004 except the parcels in Pinelakes Gardens Subdivision
+MRT	15	120850011022004	B	Includes only the parcels in Pinelakes Gardens Subdivision
+MRT	15	120850011022004	C	Includes only the parcels in Pinelakes Gardens Subdivision
+MRT	15	120850011022014	A	"""A"" is the portion of block 2014 in the Pinelakes Garden Subdivision"
+MRT	18	120850011022014	B	"""B"" is all parts of block 2014 except those in the Pinelakes Garden Subdivision"
+MRT	18	120850011022014	C	"""C"" is all parts of block 2014 except those in the Pinelakes Garden Subdivision"
+MRT	31	120850011022019	A	Portion of the block east and south of the northern and western boundaries of parcel 343842725000000023
+MRT	15	120850011022019	B	Portion of the block west and north of the northern and western boundaries of parcel 343842725000000023
+MRT	18	120850011022021	A	Block is split so all parcels to the east of Atlantic Ridge Drive are in Precinct 18
+MRT	22	120850011022021	B	All parts of Block 2021 except the parcels to the east of Atlantic Ridge Drive
+MRT	31	120850011023000	A	"Split along the western boundary of parcel 343842725000000023, A is in 31"
+MRT	15	120850011023000	B	"Split along the western boundary of parcel 343842725000000023, B is in 15"
+MRT	31	120850011023001	A	Portion of Block 3001 east of FPL easement (western boundary of parcels 343842725000000023 and 343842750000000067).
+MRT	31	120850011023001	B	Portion of Block 3001 east of FPL easement (western boundary of parcels 343842725000000023 and 343842750000000067).
+MRT	15	120850011023001	C	Portion of Block 3001 west of FPL easement (western boundary of parcels 343842725000000023 and 343842750000000067).
+MRT	31	120850011023008	A	Portion of the block east of the eastern boundary of parcel 073942000000000103
+MRT	15	120850011023008	B	Portion of the block west of the eastern boundary of parcel 073942000000000103
+MRT	31	120850011023010	A	All parts of the block to the east of the FPL easement
+MRT	15	120850011023010	B	All parts of the block to the west of the FPL easement
+MRT	31	120850011023016	A	"Block is split along the western boundary of Parcel 343842750000000067, eastern part of the block is in 31"
+MRT	15	120850011023016	B	"Block is split along the western boundary of Parcel 343842750000000067, western part of the block is in 15"
+MRT	17	120850014042019	A	"Block 2019 ""A"" contains all of the block not in parcels: 333942000000000350, 333942000000000314, 333942000000000323, 333942000000000332, 333942000000000109, 333942000000000305, 333942000000000341, 333942000000000360."
+MRT	19	120850014042019	B	"Block 2019 ""B"" contains all of the block in parcels: 333942000000000350, 333942000000000314, 333942000000000323, 333942000000000332, 333942000000000109, 333942000000000305, 333942000000000341, 333942000000000360."
+MRT	31	120850014071013	A	All parts of Block 1013 except the pacels with frontage along SE Continental Dr and SE Independence Ave between SE Hummingbird Ter and SE Constitution Blvd.
+MRT	20	120850014071013	B	"Block is split so all parcels with frontage along SE Continental Dr and SE Independence Ave between SE Hummingbird Ter and SE Constitution Blvd are included in part ""A""."
+MRT	20	120850014071013	C	All parts of block 1013 with frontage along SE Continental Dr and SE Independence Ave between SE Hummingbird Ter and SE Constitution Blvd.
+MRT	20	120850014072014	A	"Block is split so all parcels with frontage along SE Continental Dr and SE Independence Ave between SE Hummingbird Ter and SE Constitution Blvd are included in part ""A""."
+MRT	31	120850014072014	B	All parts of Block 2014 except the pacels with frontage along SE Continental Dr and SE Independence Ave between SE Hummingbird Ter and SE Constitution Blvd.
+MRT	31	120850014072014	C	All of block 2014 except those parcels in Pinelake Gardens subdivision
+MRT	18	120850014091007	A	Portion of Block 1007 not in Pinelake Gardens Subdivision.
+MRT	15	120850014091007	B	Portion of Block 1007 in Pinelake Gardens Subdivision.
+MRT	15	120850014091007	C	Portion of Block 1007 in Pinelake Gardens Subdivision.
+MRT	15	120850014091012	A	Portion of Block 1012 in Pinelake Gardens Subdivision.
+MRT	18	120850014091012	B	Portion of Block 1012 not in Pinelake Gardens Subdivision.
+MRT	18	120850014091012	C	Portion of Block 1012 not in Pinelake Gardens Subdivision.
+MRT	18	120850014091012	D	Portion of Block 1012 not in Pinelake Gardens Subdivision.
+MRT	20	120850015001051	A	Block 1051 is split along the southern boundary of parcels 343842140000000039 and 343842140000000048.  The northern portion is in 20
+MRT	12	120850015001051	B	Block 1051 is split along the southern boundary of parcels 343842140000000039 and 343842140000000048.  The southern portion is in 20
+MRT	29	120850017002075	A	All parts of block 2075 except parcels with frontage on Trailside Path and Trailside run
+MRT	23	120850017002075	B	"Block is split so all parcels with frontage along Trailside Path and Trailside Run are in part ""B"""

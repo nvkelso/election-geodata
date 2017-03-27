@@ -4,11 +4,12 @@ clean:
 	rm -rf out
 
 out/render.png: render/precincts-2163.shp render/style.xml
-	render/draw.py out/conus.png out/alaska.png out/hawaii.png $@
+	render/draw.py out/conus.png out/alaska.png out/hawaii.png out/pr.png $@
 	convert -size 1780x1250 xc:skyblue \
 		out/conus.png -geometry +0+0 -composite \
 		out/alaska.png -geometry +0+770 -composite \
 		out/hawaii.png -geometry +580+960 -composite \
+		out/pr.png -geometry +580+960 -composite \
 		$@
 
 render/precincts-2163.shp: out/nation.gpkg

@@ -1,0 +1,19 @@
+MON	26	120879708001030	A	Portion of the block northeast of the southwesterly extension of Indiam Mound Trl to the northeastern boundary of parcel 0863 38 00419295002603
+MON	25	120879708001030	B	Portion of the block southwest of the southwesterly extension of Indiam Mound Trl to the northeastern boundary of parcel 0863 38 00419295002603
+MON	19	120879711002083	A	"Portion of block consisting of parcels west of Marathon Airport, fronting on Bluefin Dr, fronting on Gulfstream Blvd west of intersection with Porgy Dr, plus parcel no. 01663200328670000000 (across from intersection of Gulfstream Blvd with Porgy Dr )"
+MON	20	120879711002083	B	"Portion of block consisting of parcels fronting on Margate Dr, Wahoo Dr, and Gulfstream Blvd east of intersection with Porgy Dr (excluding parcel no. 01663200328670000000"
+MON	16	120879714021126	A	Portion of water block north of line extending northeast from spoil bank near Geraldine Street and Canal Street on Big Pine Key
+MON	17	120879714021126	B	Portion of water block south of line extending northeast from spoil bank near Geraldine Street and Canal Street on Big Pine Key
+MON	12	120879717001021	A	Western portion of water block surrounding islands that are in precinct 12
+MON	13	120879717001021	B	Eastern portion of water block surrounding islands that are in precinct 13
+MON	12	120879717001026	A	"Two small islands near Geiger Key (multipart block, which includes 5 islands, was exploded, precincts and splits were assigned to the parts, shapes were dissolved (on precincts and splits), and two blocks were reinserted)"
+MON	13	120879717001026	B	"Bird Key and two small islands near Bird Key and Saddlehill Key  (multipart block, which includes 5 islands, was exploded, precincts and splits were assigned to the parts, shapes were dissolved (on precincts and splits), and two blocks were reinserted)"
+MON	1	120879718001030	A	Western portion block including power substation
+MON	11	120879718001030	B	Eastern portion of block including property west of Key Haven Trail
+MON	9	120879721001045	A	Portion of the block northeast of the intersection of 5th St and N Roosevelt Blvd
+MON	7	120879721001045	B	Portion of the block along seawall adjacent to Palm Avenue Causeway
+MON	8	120879721001045	C	Portion of the block along seawall adjacent to N Roosevelt Blvd between 1st St and 5th St
+MON	3	120879725001107	A	Portion of the block east of the split along a southeasterly extension of the eastern boundary of parcel 0668 25 00026590000000
+MON	5	120879725001107	B	Portion of the block west of the split along a southeasterly extension of the eastern boundary of parcel 0668 25 00026590000000
+MON	4	120879725001108	A	Portion of the block that includes parcel 0668 25 00026570000000
+MON	5	120879725001108	B	"Portion of the block that includes parcels 0668 25 00026610000100, 0668 25 00026580000000, and 0668 25 00026590000000"

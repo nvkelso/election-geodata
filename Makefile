@@ -147,12 +147,9 @@ out/05-arkansas/state.gpkg: data/05-arkansas/statewide/2016/ELECTION_PRECINCTS.z
 		-s_srs EPSG:26915 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/05-arkansas/source/boundaries_ELECTION_PRECINCTS.shp'
 	rm -rf 'out/05-arkansas/source'
 
-out/06-california/state.gpkg: data/06-california/statewide/2010/tl_2012_06_vtd10.zip
-	mkdir -p out/06-california/source
-	unzip -d out/06-california/source data/06-california/statewide/2010/tl_2012_06_vtd10.zip
-	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_06_vtd10" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/06-california/source/tl_2012_06_vtd10.shp'
-	rm -rf 'out/06-california/source'
+out/06-california/state.gpkg: data/06-california/statewide/2016/merged.shp
+	ogr2ogr -sql "SELECT '2016' AS year, '06' AS state, '' AS county, CONCAT('06', pct16) AS precinct, 'polygon' AS accuracy FROM merged" \
+		-s_srs EPSG:4326 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'data/06-california/statewide/2016/merged.shp'
 
 out/08-colorado/state.gpkg: data/08-colorado/statewide/2010/tl_2012_08_vtd10.zip
 	mkdir -p out/08-colorado/source

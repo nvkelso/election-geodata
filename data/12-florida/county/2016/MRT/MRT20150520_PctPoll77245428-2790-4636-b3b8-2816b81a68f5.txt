@@ -1,0 +1,31 @@
+MRT	01	Hoke Library	1150 NE Jack Williams Way	Jensen Beach	34957
+MRT	02	North Stuart Baptist Church	1950 NW Federal Hwy	Stuart	34994
+MRT	03	St Martin De Porres Parish Center	2555 NE Savannah Rd	Jensen Beach 	34957
+MRT	04	Langford Park	2369 NE Dixie Hwy	Jensen Beach	34957
+MRT	05	Blake Library	2351 SE Monterey Rd	Stuart 	34996
+MRT	06	Covenant Fellowship Church	2880 SE Aster Lane	Stuart	34994
+MRT	07	Women’s Club of Stuart	729 SE Ocean Blvd	Stuart	34994
+MRT	08	10th Street Recreation Center	724 SE 10th St	Stuart	34994
+MRT	09	Florida Oceanographic Center	890 NE Ocean Blvd	Stuart	34996
+MRT	10	Sewall's Point Town Hall	1 S. Sewall's Point Rd	Stuart	34996
+MRT	11	Robert Morgade Library	5851 SE Community Dr	Stuart	34997
+MRT	12	Hobe Sound Library	10595 SE Federal Hwy	Hobe Sound	33455
+MRT	13	Peace Presbyterian Church	4881 SE Cove Rd	Stuart	34997
+MRT	14	Port Salerno Church of God	4605 SE Cove Rd	Stuart	34997
+MRT	15	Bethel Lutheran Church	7905 SE Federal Hwy	Hobe Sound	33455
+MRT	16	Martin County Fairgrounds	2616 SE Dixie Hwy	Stuart	34997
+MRT	17	New Hope Fellowship Church	3900 SW Citrus Blvd	Palm City	34990
+MRT	18	The Kane Center	900 SE Salerno Rd	Stuart	34997
+MRT	19	First United Methodist Church	10100 SE Federal Hwy	Hobe Sound	33455
+MRT	20	VFW Post #10132	6101 SE Dixie Hwy	Stuart	34997
+MRT	21	County Line Civic Center	18530 SE County Line Rd	Tequesta	33469
+MRT	22	Knights of Columbus	7251 SW Gaines Ave	Stuart	34997
+MRT	23	Tropical Farms Baptist Church	1555 SW Kanner Hwy	Stuart	34997
+MRT	24	Palm City Community Center	2701 SW Cornell Ave	Palm City	34990
+MRT	25	Immanuel Lutheran Church	2655 SW Immanuel Dr	Palm City	34990
+MRT	26	Cummings Library	2551 SW Matheson Ave	Palm City	34990
+MRT	27	Palm City Presbyterian Church	2700 SW Martin Hwy	Palm City	34990
+MRT	28	Jupiter Island Town Hall	2 Bridge Rd	Hobe Sound	33455
+MRT	29	Elisabeth Lahti Library	15200 SW Adams Ave	Indiantown	34956
+MRT	30	Mt Zion Baptist Church	14789 SW Dr MLK Jr Dr	Indiantown	34956
+MRT	31	Ridgeway Clubhouse	8347 SE Swan Ave	Hobe Sound	33455

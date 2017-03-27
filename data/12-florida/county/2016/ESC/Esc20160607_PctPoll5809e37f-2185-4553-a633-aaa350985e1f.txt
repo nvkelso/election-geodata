@@ -1,0 +1,80 @@
+CountyCode	PrecinctNumber	PollingLocation	Address1	Address2	City	Zip
+ESC	1	Pleasant Grove Baptist Church	9301 Gulf Beach Hwy.		Pensacola	32507
+ESC	3	Myrtle Grove United Methodist Church	1030 North 57th Ave.		Pensacola	32516
+ESC	5	Pine Forest United Methodist Church	2800 Wilde Lake Blvd.		Pensacola	32526
+ESC	6	St. Monica's Episcopal Church	699 South Highway 95A		Cantonment	32533
+ESC	7	Pinewoods Presbyterian Church	2198 Highway 297A 		Cantonment	32533
+ESC	11	Walnut Hill Community Center	7850 Highway 97		Walnut Hill	32568
+ESC	14	Fricker Community Center	900 North F St.		Pensacola	32501
+ESC	15	County Government Complex	221 Palafox Pl.		Pensacola	32502
+ESC	18	Ray's Chapel Baptist Church	"140 W. Bogia Rd, McDavid"		McDavid	32568
+ESC	19	Barrineau Park Community Center & Historical Society	6055 Barrineau Park School Rd.		Molino	32577
+ESC	21	International Paper	375 Muscogee Rd.		Cantonment	32533
+ESC	22	Century City Hall	7995 N. Century Blvd.		Century	32535
+ESC	23	Byrneville Community Center	1701 Highway 4A		Century	32535
+ESC	24	Warrington United Methodist Church	301 E. Winthrop Ave.		Pensacola	32507
+ESC	25	"Azalea Trace, Administration/Info. Building "	10100 Hillview Dr.		Pensacola	32514
+ESC	26	"St. Anne's Catholic Church, Family Life Center"	5200 Saufley Field Rd.		Pensacola	32526
+ESC	28	Damascus Road Missionary Baptist Church	8198 Untreiner Ave.		Pensacola	32534
+ESC	29	Mt. Olive Missionary Baptist Church	500 N. Davis Hwy.		Pensacola	32501
+ESC	30	Vickrey Resource Center	2130 Summit Blvd.		Pensacola	32504
+ESC	31	"Christ Church, Pensacola"	18 W. Wright St.		Pensacola	32501
+ESC	32	Sanders Beach-Corinne Jones Community Center	"913 South ""I"" St."		Pensacola	32502
+ESC	33	First Baptist Church of Bratt	4570 W. Highway 4		Century	32535
+ESC	34	Montclair Elementary School	820 Massachusetts Ave.		Pensacola	32505
+ESC	35	East Pensacola Heights Community Center	3208 E. Gonzalez St.		Pensacola	32503
+ESC	36	Quintette Community Center	2490 Quintette Ln.		Cantonment	32533
+ESC	38	"Gonzalez United Methodist Church, Community Life Ctr."	2026 Pauline St.		Gonzalez	32560
+ESC	40	Bayview Senior Resource Center	2000 E. Lloyd St.		Pensacola	32503
+ESC	41	Bayview Senior Resource Center	2000 E. Lloyd St.		Pensacola	32503
+ESC	42	Cokesbury United Methodist Church at Summit Park	3300 Summit Blvd.		Pensacola	32504
+ESC	43	Beulah Free Will Baptist Church	7561 Mobile Hwy.		Pensacola	32526
+ESC	46	Trinity Presbyterian Church	3400 Bayou Blvd.		Pensacola	32503
+ESC	47	Friendship Missionary Baptist Church	2601 W. Strong St.		Pensacola	32505
+ESC	48	County Central Office Complex	3363 West Park Pl.		Pensacola	32505
+ESC	49	Grace Lutheran Church	6601 North 9th Ave.		Pensacola	32504
+ESC	50	Malcolm Yonge Center	925 E. Jackson St.		Pensacola	32501
+ESC	51	Pensacola Lodge #42 F&AM	2320 E. Johnson Ave.		Pensacola	32504
+ESC	54	"Elks Lodge, BPOE # 2108"	727 South 72nd Ave.		Pensacola	32506
+ESC	55	Blue Angels Elementary School	1551 Dog Track Rd.		Pensacola	32506
+ESC	56	Legion Field Resource Center	1301 W. Gregory St.		Pensacola	32501
+ESC	58	Brit Ahm Messianic Synagogue	6700 Spanish Trail		Pensacola	32504
+ESC	60	Ebonwood Community Center	3511 W. Scott St.		Pensacola	32505
+ESC	61	"Elks Lodge, BPOE # 2108"	727 South 72nd Ave.		Pensacola	32506
+ESC	62	Charity Chapel Church	5820 Montgomery Ave.		Pensacola	32526
+ESC	63	Marie K. Young - Wedgewood Community Center 	6405 Wagner Rd.		Pensacola	32513
+ESC	64	"Cokesbury United Methodist Church, Asbury Place"	5725 North 9th Ave.		Pensacola	32504
+ESC	67	Holy Spirit Catholic Church	10650 Gulf Beach Hwy.		Pensacola	32507
+ESC	68	Pensacola Interstate Fairgrounds	6655 Mobile Hwy.		Pensacola	32534
+ESC	69	St. James Missionary Baptist Church	219 E. Johnson Ave.		Pensacola	32514
+ESC	70	Woodham Middle School	150 E. Burgess Rd.		Pensacola	32503
+ESC	71	Warrington Presbyterian Church	406 S. Navy Blvd.		Pensacola	32507
+ESC	72	St. Christopher's Episcopal Church	3200 N. 12th Ave.		Pensacola	32503
+ESC	73	Jim C. Bailey Middle School	4110 Bauer Rd.		Pensacola	32506
+ESC	74	Escambia County Extension Office	3740 Stefani Rd.		Cantonment	32533
+ESC	75	Pensacola Baptist Temple	5000 Cerny Rd.		Pensacola	32526
+ESC	77	Lexington Terrace Community Center	700 South Old Corry Field Rd.		Pensacola	32507
+ESC	80	Myrtle Grove Baptist Church	5920 Lillian Hwy.		Pensacola	32516
+ESC	82	Friendship Missionary Baptist Church	2601 W. Strong St.		Pensacola	32505
+ESC	83	First Baptist Church of Warrington	105 Gulf Beach Highway		Pensacola	32507
+ESC	86	Pine Summit Baptist Church	2920 Bellview Ave.		Pensacola	32526
+ESC	88	University Pines Retirement	8991 University Pkwy.		Pensacola	32514
+ESC	90	St. John Divine Baptist Church	620 E. Jordan St.		Pensacola	32503
+ESC	91	Olive Baptist Church	1836 E. Olive Rd.		Pensacola	32514
+ESC	94	"Pensacola Beach Community Church, Fellowship Hall"	920 Panferio Dr.		Pensacola Beach	32561
+ESC	95	Perdido Bay Baptist Church	12600 Sorrento Rd.		Pensacola	32507
+ESC	97	Vickrey Resource Center	2130 Summit Blvd.		Pensacola	32504
+ESC	98	Macedonia Baptist Church	3802 North 9th Ave. 		Pensacola	32503
+ESC	99	Myrtle Grove Baptist Church	5920 Lillian Hwy.		Pensacola	32516
+ESC	101	Plainview Baptist Church	1101 W. Nine Mile Rd.		Pensacola	32534
+ESC	102	Marcus Pointe Baptist Church	6205 N. W St.		Pensacola	32505
+ESC	103	Lakeview Baptist Church	1100 W. Michigan Ave.		Pensacola	32505
+ESC	104	Mayfair Community Center	701 S. Madison Dr.		Pensacola	32506
+ESC	105	"Perdido Bay United Methodist Church, Community Center"	13660 Innerarity Point Rd.		Pensacola	32507
+ESC	106	Grace Lutheran Church	6601 North 9th Ave.		Pensacola	32504
+ESC	107	Faith Baptist Church	3600 Creighton Rd.		Pensacola	32504
+ESC	108	Holy Cross Episcopal Church	7979 North 9th Ave.		Pensacola	32514
+ESC	110	"Pensacola Christian College, Rawson Chapel/Fellowship Hall"	5406 Rawson Ln.		Pensacola	32523
+ESC	111	St. Luke United Methodist Church	1394 E. Nine Mile Rd.		Pensacola	32514
+ESC	112	Hillcrest Baptist Church	800 E. Nine Mile Rd.		Pensacola	32514
+ESC	113	Escambia Education Association	6551 N. Palafox St.		Pensacola	32503

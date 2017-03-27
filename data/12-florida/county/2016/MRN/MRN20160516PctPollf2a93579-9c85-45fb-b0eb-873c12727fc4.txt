@@ -1,0 +1,125 @@
+MRN	0001	1st Presbyterian Church	511 SE 3rd St		Ocala                                   	34471
+MRN	0002	The Hampton Center Room 102	1501 W Silver Springs Blvd		Ocala                                   	34475
+MRN	0003	Discovery Center	701 NE Sanchez Ave		Ocala                                   	34470
+MRN	0004	Central Christian Church	3010 NE 14th St		Ocala                                   	34470
+MRN	0005	1st Christian Church	1908 E Fort King St		Ocala                                   	34471
+MRN	0006	South Point Church	3401 SE Lake Weir Ave		Ocala                                   	34471-6711
+MRN	0007	Cala Hills Clubhouse	2400 SW 21st Cir		Ocala                                   	34471
+MRN	0008	College Park Church of God	3140 SW 26th St		Ocala                                   	34474
+MRN	0009	Zion U.M. Church	510 NW ML King Jr Ave		Ocala                                   	34475-5811
+MRN	0010	Lillian Bryant Center	2200 NW 17th Pl		Ocala                                   	34475
+MRN	0011	Southeastern Livestock Exhibit	2200 NE Jacksonville Rd		Ocala                                   	34470
+MRN	0012	Oakcrest Baptist Church	1109 NE 28th St		Ocala                                   	34470-3774
+MRN	0013	Spanish Oaks - Social Hall	3150 NE 36th Ave		Ocala                                   	34479
+MRN	0014	First Baptist Church - Foyer	2801 SE Maricamp Rd		Ocala                                   	34471-5537
+MRN	0015	Scottish Rite Temple	3632 NE 7th St		Ocala                                   	34470
+MRN	0016	St Paul's Fellowship Hall	800 SE 41st Ave		Ocala                                   	34471
+MRN	0017	Ocala Golf Club	3130 E Silv Sprgs Blvd		Ocala                                   	34470
+MRN	0018	Holiday Inn & Suites of Ocala	3600 SW 38th Ave		Ocala                                   	34474
+MRN	0019	Fore Ranch Prairie Club	4001 SW 53rd Ave		Ocala                                   	34474
+MRN	0040	American Legion Hall	5515 SE 109th St		Belleview                               	34420
+MRN	0050	Dunnellon City Hall	20750  River Dr		Dunnellon                               	34431
+MRN	0060	McIntosh Civic Center	5835  Avenue G 		McIntosh                                	32664
+MRN	0070	Reddick Community Center	4345 NW 152nd St		Reddick                                 	32686
+MRN	1500	Ocklawaha River Comm. Bldg.	23125 NE 160th Avenue Rd		Ft McCoy                                	32134
+MRN	1510	Orange Springs Comm. Bldg.	24545 NE 129th Ter		Ft. McCoy                               	32134
+MRN	1520	Citra Community Center	2351 E HWY 318 		Citra                                   	32113
+MRN	1530	1st Baptist Church Salt Spring	24100 NE HWY 314 		Salt Springs                            	32134
+MRN	1540	Old Ft. McCoy Elem-Auditorium	14660 NE HWY 315 		Ft McCoy                                	32134
+MRN	1550	Sparr United Methodist Church	13100 NE Jacksonville Rd		Sparr                                   	32113
+MRN	1560	Tall Timber Mobile Home Park	14575 NE 21st St		Silver Springs                          	34488
+MRN	1570	Ocala Boat Club	9570 NE 28th Ln		Silver Springs                          	34488
+MRN	1580	Anthony UM Church - Educ. Bldg	2396 NE 97th Street Rd		Anthony                                 	32617
+MRN	1590	Ocala Springs Baptist Church	5000 NE 36th Avenue Rd		Ocala                                   	34479
+MRN	1600	County Ag Ctr - Auditorium	2232 NE Jacksonville Rd		Ocala                                   	34470
+MRN	1610	Sheriff's NW District Office	8311 N Hwy 441 		Ocala                                   	34475
+MRN	2500	Shiloh U.M. Church	11020 NW HWY 320 		Micanopy                                	32667
+MRN	2510	McIntosh United Methodist Church	5709  Avenue G 		McIntosh	32664
+MRN	2520	Fairfield Baptist Church	14855 NW HWY 225 		Reddick	32686
+MRN	2530	IBEW Local 222	17850 N HWY 441 		Reddick	32686
+MRN	2540	Christ The King Mission	14045 N HWY 301 		Citra                                   	32113
+MRN	2550	Fellowship Baptist Church	10500 NW HWY 27 		Ocala                                   	34482
+MRN	2551	Fellowship Baptist Church	10500 NW HWY 27 		Ocala                                   	34482
+MRN	2560	Fire College - Bldg B	11655 NW Gainesville Rd		Ocala                                   	34482
+MRN	2570	Sweetwater Oaks Clubhouse	3151 NW 44th Ave		Ocala                                   	34482
+MRN	2580	Quail Meadows Clubhouse	3158 NW 49th Ave		Ocala                                   	34482
+MRN	2590	Living Waters Worship Center	3801 N Hwy 441 		Ocala                                   	34475
+MRN	2600	St Johns UM Church-Conley Hall	12390 W HWY 328 		Ocala                                   	34482
+MRN	2610	Ocala Palms Royal Palm CC	5234 NW 26th St		Ocala                                   	34482
+MRN	2620	Foxwood Farms	2040 NW 46th Ter		Ocala                                   	34482
+MRN	2621	Foxwood Farms	2040 NW 46th Ter		Ocala                                   	34482
+MRN	2630	Fraternal Order of Police Lodge 145	5675 W HWY 40 		Ocala	34482
+MRN	3510	Sunny Hill Farms - Blue House	19561 SE HWY 42 		Umatilla                                	32784
+MRN	3520	Lake Weir Kiwanis Club Bldg	15380 SE 140th Avenue Rd		Weirsdale                               	32195
+MRN	3530	Stonecrest - Community Center	11050 SE 176th Place Rd		Summerfield                             	34491
+MRN	3540	Spruce Creek South - Clubhouse	9880 SE 176th St		Summerfield                             	34491
+MRN	3550	Mulberry Center (Liberty Rm)	8445 SE 165th Mulberry Ln		The Villages                            	32162
+MRN	3551	Mulberry Center (Old Glory Rm)	8445 SE 165th Mulberry Ln		The Villages                            	32162
+MRN	3552	Mulberry Center (Patriot Rm)	8445 SE 165th Mulberry Ln		The Villages                            	32162
+MRN	3553	Mulberry Center (Spirit Rm)	8445 SE 165th Mulberry Ln		The Villages                            	32162
+MRN	3560	1st Baptist Church of S'field	14550 SE 65th Ct		Summerfield                             	34491
+MRN	3570	Community Harvest Baptist Church	14915 SE 36th Ave 		Summerfield                             	34491
+MRN	3580	Orange Blossom Hills	9230 SE 154th St		Summerfield                             	34491
+MRN	3590	Ocklawaha Community Center	12350 SE 131st Ct		Ocklawaha                               	32179
+MRN	3600	St John Lutheran Church	10495 SE Sunset Harbor Rd		Summerfield                             	34491
+MRN	3610	Sunset Harbor Baptist Church	9200 SE Sunset Harbor Rd		Summerfield                             	34491
+MRN	3620	Spruce Creek CC (BallRoom)	13601 SE Del Webb Blvd		Summerfield                             	34491
+MRN	3621	Spruce Creek CC (BallRoom)	13601 SE Del Webb Blvd		Summerfield                             	34491
+MRN	3622	Spruce Creek CC (BallRoom)	13601 SE Del Webb Blvd		Summerfield                             	34491
+MRN	3630	Elks Lodge #2730	7655 E HWY 25 		Belleview                               	34420
+MRN	3640	Sacred Fire Ministries	12226 S Hwy 301 		Belleview                               	34420-4416
+MRN	3650	Woods & Lakes Club House	5970 SE 158th Ct		Ocklawaha                               	32179
+MRN	3660	Immaculate Heart/Social Hall	10670 SE Maricamp Rd		Ocala                                   	34472
+MRN	3670	SSS - Community Center	590  Silver Rd		Ocala                                   	34472
+MRN	3680	SSS Presbyterian Church - Gym	674  Silver Rd		Ocala                                   	34472
+MRN	3690	Wings of Faith (Life Ctr)	5066 SE 64th Avenue Rd		Ocala                                   	34472
+MRN	3700	SSS -Church of the Incarnation	9300  Spring Rd		Ocala                                   	34472
+MRN	3710	Church at the Springs	5424 SE 58th Ave		Ocala                                   	34480
+MRN	3720	Belleview 1st Assembly Of God	10050 S HWY 441 		Belleview                               	34420
+MRN	3721	Belleview 1st Assembly Of God	10050 S HWY 441 		Belleview                               	34420
+MRN	3730	1st Baptist Church of S'field	14550 SE 65th Ct		Summerfield                             	34491
+MRN	3740	Sheriff's South Dist Office	3260 SE 80th St		Ocala                                   	34480
+MRN	3750	Olivet Baptist Church	8495 S Magnolia Ave		Ocala	34476-4924
+MRN	3760	Ocala Shrine Club	4301 SE Maricamp Rd		Ocala                                   	34480
+MRN	3770	Forest Assembly Of God	17530 E HWY 40 		Silver Springs                          	34488
+MRN	3780	Grace Presbyterian Church	2255 SE 38th St		Ocala                                   	34480
+MRN	3790	Forest Comm Ctr	777 S HWY 314A 		Ocklawaha                               	32179
+MRN	3800	Good News Church	5600 SE 24th St		Ocala                                   	34480
+MRN	3810	St George's Fellowship Hall	5646 SE 28th St		Ocala                                   	34480
+MRN	3820	Abiding Hope Lutheran Church	777 SE 58th Ave		Ocala                                   	34480
+MRN	3830	Ocala East Villas Clubhouse	191 NE 63rd Ct		Ocala                                   	34470
+MRN	3840	Ascension Lutheran Church	5730 SE 28th St		Ocala                                   	34480
+MRN	4500	Rainbow Springs Village Church	20222 SW 102nd Street Rd		Dunnellon                               	34431
+MRN	4510	St John Catholic Church	7525 S HWY 41 		Dunnellon                               	34432
+MRN	4520	Living Water Wesleyan Church	11120 SW HWY 484 		Dunnellon                               	34432
+MRN	4521	Living Water Wesleyan Church	11120 SW HWY 484 		Dunnellon                               	34432
+MRN	4530	Spruce Creek Preserve	11376 SW 136th Pl		Dunnellon                               	34432
+MRN	4540	Florida Highlands Baptist Church	10891 SW 155th St		Dunnellon                               	34432-8548
+MRN	4550	Marion Oaks Comm Ctr - Bldg B	294  Marion Oaks Ln		Ocala                                   	34473
+MRN	4560	Marion Oaks Comm Ctr - Aud.	294  Marion Oaks Ln		Ocala                                   	34473
+MRN	4570	SummerGlen Clubhouse	1474 SW 154th Street Rd		Ocala                                   	34473
+MRN	4580	Maranatha Baptist Church	525  Marion Oaks Trl		Ocala                                   	34473
+MRN	4590	Marion Oaks Assembly of God	13977 SW 32nd Terrace Rd		Ocala                                   	34473
+MRN	4600	Pine Run-Happiness Hall	9219 SW 101st Pl		Ocala                                   	34481
+MRN	4610	Oak Run Orchid Clubhouse	8885 SW 110th St		Ocala                                   	34481
+MRN	4620	Oak Run Palm Grove Clubhouse	6951 SW 115th Street Rd		Ocala                                   	34476
+MRN	4630	Palm Cay Oasis Clubhouse	8063 SW 106th Pl		Ocala                                   	34481
+MRN	4640	Spruce Creek North Clubhouse	11040 SW 64th Ave		Ocala                                   	34476
+MRN	4650	OTOW -  Hobby Building	9125 SW 98th St		Ocala                                   	34481
+MRN	4651	OTOW - Arbor Conference Suites	10070 SW 94th St		Ocala                                   	34481
+MRN	4652	OTOW - Master the Possibilities	8415 SW 80th ST		Ocala	34481
+MRN	4653	OTOW - Master the Possibilities	8415 SW 80th ST		Ocala	34481
+MRN	4654	OTOW - Stone Creek Reunion Ctr.	6111 SW 89th COURT RD		OCALA	34481
+MRN	4660	Cherrywood Estates Clubhouse	6267 SW 100th Loop		Ocala                                   	34476
+MRN	4670	Cherrywood Estates Clubhouse	6267 SW 100th Loop		Ocala                                   	34476
+MRN	4680	Oakbend Mobile Home Park	10620 SW 27th Ave		Ocala                                   	34476
+MRN	4690	Rainbow Lakes Estates	4030 SW Deepwater Ct		Dunnellon                               	34431
+MRN	4700	St John Catholic Church	7525 S Hwy 41 		Dunnellon                               	34432
+MRN	4710	Lake Tropicana Civic Assoc.	3380 SW 181st Ct		Dunnellon                               	34432
+MRN	4720	St Johns U.M. Church	12390 W Hwy 328 		Ocala                                   	34482
+MRN	4730	1st Cong Church Of Christ	7173 SW HWY 200 		Ocala                                   	34476
+MRN	4740	Marion Landing Lifestyle Ctr	8601 SW 65th Avenue Rd		Ocala                                   	34476
+MRN	4750	Joy Evangelical Lutheran	7045 SW 83rd Pl		Ocala                                   	34476
+MRN	4760	Saddle Oak Club Clubhouse	5610 SW 60th St		Ocala                                   	34474
+MRN	4770	National Guard Armory	900 SW 20th St		Ocala                                   	34471
+MRN	4771	National Guard Armory	900 SW 20th St		Ocala                                   	34471

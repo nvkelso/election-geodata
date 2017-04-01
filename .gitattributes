@@ -1,2 +1,4 @@
 data/06-california/statewide/2012/mprec_state_g12_v01.zip filter=lfs diff=lfs merge=lfs -text
 data/06-california/statewide/2016/merged.zip filter=lfs diff=lfs merge=lfs -text
+data/42-pennsylvania/statewide/2011/2011-Voting-District-Boundary-Shapefiles.zip filter=lfs diff=lfs merge=lfs -text
+data/20-kansas/statewide/2010/KLRD_2010VotingDistricts.geojson.gz filter=lfs diff=lfs merge=lfs -text

@@ -508,10 +508,15 @@ out/23-maine/state.gpkg: data/23-maine/statewide/2010/tl_2012_23_vtd10.zip
 		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/23-maine/source/tl_2012_23_vtd10.shp'
 	rm -rf 'out/23-maine/source'
 
-out/24-maryland/state.gpkg: data/24-maryland/statewide/2010/maryland.geojson
-	mkdir -p out/24-maryland
-	ogr2ogr -sql "SELECT '2010' AS year, 'Maryland' AS state, COUNTY AS county, VTD AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON" \
-		-overwrite -f GPKG $@ $<
+# "2010" Census data from 2012 release is used in newer elections, see Readme
+out/24-maryland/state.gpkg: data/24-maryland/statewide/2010/tl_2012_24_vtd10.zip
+	mkdir -p out/24-maryland/source
+	unzip -d out/24-maryland/source data/24-maryland/statewide/2010/tl_2012_24_vtd10.zip
+	# GPKG are weird
+	rm -f $@
+	ogr2ogr -sql "SELECT '2016' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_24_vtd10" \
+		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/24-maryland/source/tl_2012_24_vtd10.shp'
+	rm -rf 'out/24-maryland/source'
 
 out/25-massachusetts/state.gpkg: data/25-massachusetts/statewide/2010/tl_2012_25_vtd10.zip
 	mkdir -p out/25-massachusetts/source

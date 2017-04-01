@@ -1,7 +1,10 @@
 # Maryland
 
-- **2010** from US Census
+- **2010** from US Census (2012 revisions)
     - Downloaded 2017-03-11.
+- **2016**
+	- Per https://github.com/nvkelso/election-geodata/issues/23#issuecomment-290935336
+	- The 2010 Maryland US Census (2012 revision) data is used in later elections in Maryland, including 2016
 
 ## Alternate 2010 data
 

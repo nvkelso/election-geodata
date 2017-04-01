@@ -10,8 +10,8 @@
     <Style name="precincts">
         <Rule>
             <Filter>[year] = '2017' or [year] = '2016'</Filter>
-            <PolygonSymbolizer fill="#c2e1cb" />
-            <LineSymbolizer stroke="#006127" stroke-width="0.4" />
+            <PolygonSymbolizer fill="#bddbc6" />
+            <LineSymbolizer stroke="#005b25" stroke-width="0.4" />
         </Rule>
         <Rule>
             <Filter>[year] = '2015' or [year] = '2014'</Filter>
@@ -20,7 +20,7 @@
         </Rule>
         <Rule>
             <Filter>[year] = '2013' or [year] = '2012' or [year] = '2011' </Filter>
-            <PolygonSymbolizer fill="#fafcfb" />
+            <PolygonSymbolizer fill="#eef8f3" />
             <LineSymbolizer stroke="#60b67a" stroke-width="0.2" />
         </Rule>
         <Rule>

@@ -126,11 +126,13 @@ out/01-alabama/state.gpkg: data/01-alabama/statewide/2010/tl_2012_01_vtd10.zip
 		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/01-alabama/source/tl_2012_01_vtd10.shp'
 	rm -rf 'out/01-alabama/source'
 
-out/02-alaska/state.gpkg: data/02-alaska/statewide/2010/tl_2012_02_vtd10.zip
+out/02-alaska/state.gpkg: data/02-alaska/statewide/2012/SW_Amended_Precinct_shape_files.zip
 	mkdir -p out/02-alaska/source
-	unzip -d out/02-alaska/source data/02-alaska/statewide/2010/tl_2012_02_vtd10.zip
-	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_02_vtd10" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/02-alaska/source/tl_2012_02_vtd10.shp'
+	unzip -d out/02-alaska/source data/02-alaska/statewide/2012/SW_Amended_Precinct_shape_files.zip
+	# GPKG are weird
+	rm -f $@
+	ogr2ogr -sql "SELECT '2012' AS year, '02' AS state, DISTRICT_N AS county, CONCAT('02', DISTRICT) AS precinct, 'polygon' AS accuracy FROM SW_Amended_Precinct_shape_files" \
+		-s_srs EPSG:4326 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/02-alaska/source/SW_Amended_Precinct_shape_files.shp'
 	rm -rf 'out/02-alaska/source'
 
 out/04-arizona/state.gpkg: data/04-arizona/statewide/2010/tl_2012_04_vtd10.zip
@@ -175,11 +177,13 @@ out/10-delaware/state.gpkg: data/10-delaware/statewide/2010/tl_2012_10_vtd10.zip
 		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/10-delaware/source/tl_2012_10_vtd10.shp'
 	rm -rf 'out/10-delaware/source'
 
-out/11-district-of-columbia/state.gpkg: data/11-district-of-columbia/statewide/2010/tl_2012_11_vtd10.zip
+out/11-district-of-columbia/state.gpkg: data/11-district-of-columbia/statewide/2012/Voting_Precinct__2012.zip
 	mkdir -p out/11-district-of-columbia/source
-	unzip -d out/11-district-of-columbia/source data/11-district-of-columbia/statewide/2010/tl_2012_11_vtd10.zip
-	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_11_vtd10" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/11-district-of-columbia/source/tl_2012_11_vtd10.shp'
+	unzip -d out/11-district-of-columbia/source data/11-district-of-columbia/statewide/2012/Voting_Precinct__2012.zip
+	# GPKG are weird
+	rm -f $@
+	ogr2ogr -sql "SELECT '2012' AS year, '11' AS state, '01' AS county, CONCAT( '11', '01', NAME) AS precinct, 'polygon' AS accuracy FROM Voting_Precinct__2012" \
+		-s_srs EPSG:4326 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/11-district-of-columbia/source/Voting_Precinct__2012.shp'
 	rm -rf 'out/11-district-of-columbia/source'
 
 out/12-florida/state.gpkg: data/12-florida/statewide/2010/tl_2012_12_vtd10.zip
@@ -504,10 +508,15 @@ out/23-maine/state.gpkg: data/23-maine/statewide/2010/tl_2012_23_vtd10.zip
 		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/23-maine/source/tl_2012_23_vtd10.shp'
 	rm -rf 'out/23-maine/source'
 
-out/24-maryland/state.gpkg: data/24-maryland/statewide/2010/maryland.geojson
-	mkdir -p out/24-maryland
-	ogr2ogr -sql "SELECT '2010' AS year, 'Maryland' AS state, COUNTY AS county, VTD AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON" \
-		-overwrite -f GPKG $@ $<
+# "2010" Census data from 2012 release is used in newer elections, see Readme
+out/24-maryland/state.gpkg: data/24-maryland/statewide/2010/tl_2012_24_vtd10.zip
+	mkdir -p out/24-maryland/source
+	unzip -d out/24-maryland/source data/24-maryland/statewide/2010/tl_2012_24_vtd10.zip
+	# GPKG are weird
+	rm -f $@
+	ogr2ogr -sql "SELECT '2016' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_24_vtd10" \
+		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/24-maryland/source/tl_2012_24_vtd10.shp'
+	rm -rf 'out/24-maryland/source'
 
 out/25-massachusetts/state.gpkg: data/25-massachusetts/statewide/2010/tl_2012_25_vtd10.zip
 	mkdir -p out/25-massachusetts/source
@@ -591,11 +600,13 @@ out/34-new-jersey/state.gpkg: data/34-new-jersey/statewide/2010/tl_2012_34_vtd10
 		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/34-new-jersey/source/tl_2012_34_vtd10.shp'
 	rm -rf 'out/34-new-jersey/source'
 
-out/35-new-mexico/state.gpkg: data/35-new-mexico/statewide/2010/tl_2012_35_vtd10.zip
+out/35-new-mexico/state.gpkg: data/35-new-mexico/statewide/2012/nm-2012-precincts.zip
 	mkdir -p out/35-new-mexico/source
-	unzip -d out/35-new-mexico/source data/35-new-mexico/statewide/2010/tl_2012_35_vtd10.zip
-	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_35_vtd10" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/35-new-mexico/source/tl_2012_35_vtd10.shp'
+	unzip -d out/35-new-mexico/source data/35-new-mexico/statewide/2012/nm-2012-precincts.zip
+	# GPKG are weird
+	rm -f $@
+	ogr2ogr -sql "SELECT '2012' AS year, '35' AS state, '' AS county, CONCAT('35', NAME10) AS precinct, 'polygon' AS accuracy FROM precincts_2012" \
+		-s_srs EPSG:32613 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/35-new-mexico/source/precincts_2012.shp'
 	rm -rf 'out/35-new-mexico/source'
 
 out/36-new-york/state.gpkg: data/36-new-york/statewide/2010/tl_2012_36_vtd10.zip
@@ -690,6 +701,16 @@ out/45-south-carolina/state.gpkg: data/45-south-carolina/statewide/2010/tl_2012_
 	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_45_vtd10" \
 		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/45-south-carolina/source/tl_2012_45_vtd10.shp'
 	rm -rf 'out/45-south-carolina/source'
+
+out/45-south-carolina/state.gpkg: data/45-south-carolina/statewide/2013/sc-statewide-2013.zip
+	mkdir -p out/45-south-carolina/source
+	unzip -d out/45-south-carolina/source data/45-south-carolina/statewide/2013/sc-statewide-2013.zip
+	# GPKG are weird
+	rm -f $@
+	ogr2ogr -sql "SELECT '2013' AS year, '45' AS state, COUNTY AS county, CONCAT('45', COUNTY, PCode) AS precinct, 'polygon' AS accuracy FROM Statewide" \
+		-s_srs EPSG:4019 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/45-south-carolina/source/Statewide.shp'
+	rm -rf 'out/45-south-carolina/source'
+
 
 out/46-south-dakota/state.gpkg: data/46-south-dakota/statewide/2010/tl_2012_46_vtd10.zip
 	mkdir -p out/46-south-dakota/source

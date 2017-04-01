@@ -126,11 +126,13 @@ out/01-alabama/state.gpkg: data/01-alabama/statewide/2010/tl_2012_01_vtd10.zip
 		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/01-alabama/source/tl_2012_01_vtd10.shp'
 	rm -rf 'out/01-alabama/source'
 
-out/02-alaska/state.gpkg: data/02-alaska/statewide/2010/tl_2012_02_vtd10.zip
+out/02-alaska/state.gpkg: data/02-alaska/statewide/2012/SW_Amended_Precinct_shape_files.zip
 	mkdir -p out/02-alaska/source
-	unzip -d out/02-alaska/source data/02-alaska/statewide/2010/tl_2012_02_vtd10.zip
-	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_02_vtd10" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/02-alaska/source/tl_2012_02_vtd10.shp'
+	unzip -d out/02-alaska/source data/02-alaska/statewide/2012/SW_Amended_Precinct_shape_files.zip
+	# GPKG are weird
+	rm -f $@
+	ogr2ogr -sql "SELECT '2012' AS year, '02' AS state, DISTRICT_N AS county, CONCAT('02', DISTRICT) AS precinct, 'polygon' AS accuracy FROM SW_Amended_Precinct_shape_files" \
+		-s_srs EPSG:4326 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/02-alaska/source/SW_Amended_Precinct_shape_files.shp'
 	rm -rf 'out/02-alaska/source'
 
 out/04-arizona/state.gpkg: data/04-arizona/statewide/2010/tl_2012_04_vtd10.zip

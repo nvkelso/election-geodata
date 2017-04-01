@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?><metadata>
+<idinfo>
+<citation>
+<citeinfo>
+<origin/>
+<pubdate>20090903</pubdate>
+<title>Voting Precincts - 2008 (VotePre08Ply)</title>
+<geoform>vector digital data</geoform>
+<pubinfo>
+<publish>DC GIS</publish>
+</pubinfo>
+<onlink>http://dcatlas.dcgis.dc.gov/catalog/download.asp?downloadName=VotePre08Ply&amp;downloadTYPE=KMZ</onlink>
+<onlink>http://dcatlas.dcgis.dc.gov/catalog/download.asp?downloadName=VotePre08Ply&amp;downloadTYPE=ESRI</onlink>
+<lworkcit>
+<citeinfo>
+<title>DC Geographic Information System</title>
+</citeinfo>
+</lworkcit>
+</citeinfo>
+</citation>
+<descript>
+<abstract>Voting Precincts 2008. The dataset contains polygons representing District of Columbia voting precinct boundaries. Precincts were changed based on the ward redistricting following the 2000 census, and changes for 2002. Precincts were established by the Board of Elections and Ethics and created as part of the DC Geographic Information System (DC GIS) for the D.C. Office of the Chief Technology Officer (OCTO) and participating D.C. government agencies. All DC GIS data is stored and exported in Maryland State Plane coordinates NAD 83 meters. METADATA CONTENT IS IN PROCESS OF VALIDATION AND SUBJECT TO CHANGE.</abstract>
+<purpose>This data is used for the planning and management of Washington, D.C. by local government agencies.</purpose>
+</descript>
+<timeperd>
+<timeinfo>
+<sngdate>
+<caldate>20080101</caldate>
+</sngdate>
+</timeinfo>
+<current>ground condition</current>
+</timeperd>
+<status>
+<progress>Complete</progress>
+<update>As needed</update>
+</status>
+<spdom>
+<bounding>
+<westbc>-180</westbc>
+<eastbc>180</eastbc>
+<northbc>90</northbc>
+<southbc>-90</southbc>
+</bounding>
+</spdom>
+<keywords>
+<theme>
+<themekt>None</themekt>
+<themekey>Electoral District</themekey>
+<themekey>society</themekey>
+<themekey>Board Of election And Ethics</themekey>
+<themekey>boundary</themekey>
+<themekey>Precincts</themekey>
+<themekey>election</themekey>
+<themekey>Voting Precincts</themekey>
+</theme>
+<theme>
+<themekt>ISO 19115 Topic Categories</themekt>
+<themekey>society</themekey>
+</theme>
+<place>
+<placekt>None</placekt>
+<placekey>District of Columbia</placekey>
+<placekey>DCGIS</placekey>
+<placekey>Washington</placekey>
+<placekey>D.C.</placekey>
+<placekey>DC GIS</placekey>
+<placekey>DC</placekey>
+</place>
+</keywords>
+<accconst>Contact OCTO GIS. Any data obtained outside of OCTO GIS are unauthorized copies.</accconst>
+<useconst>This work is licensed under a Creative Commons Attribution 4.0 International License.</useconst>
+<ptcontac>
+<cntinfo>
+<cntorgp>
+<cntorg>D.C. Office of the Chief Technology Officer</cntorg>
+<cntper>GIS Data Coordinator</cntper>
+</cntorgp>
+<cntaddr>
+<addrtype>mailing and physical</addrtype>
+<address>441 4th St NW, Suite 930 South</address>
+<city>Washington</city>
+<state>DC</state>
+<postal>20001</postal>
+<country>US</country>
+</cntaddr>
+<cntfax>(202) 727-5660</cntfax>
+<cntemail>dcgis@dc.gov</cntemail>
+<hours>8:30 am - 5 pm</hours>
+</cntinfo>
+</ptcontac>
+<datacred>D.C. Board of Elections and Ethics</datacred>
+<native>Microsoft Windows 2000 Version 5.0 (Build 2195) Service Pack 4; ESRI ArcCatalog 9.2.6.1500</native>
+</idinfo>
+<dataqual>
+<attracc>
+<attraccr>Data believed to be complete and accurate as of the time period cited. Subject to change. Digital version compared with original source data for accuracy and completeness. In process of validation by source and/or responsible agency.</attraccr>
+</attracc>
+<logic>In process of validation by source and/or responsible agency.</logic>
+<complete>Data believed to be complete and accurate, subject to change. Digital version compared with original source data for accuracy and completeness. In process of validation by source and/or responsible agency.</complete>
+<posacc>
+<horizpa>
+<horizpar>In process of validation by source and/or responsible agency.</horizpar>
+</horizpa>
+<vertacc>
+<vertaccr>N/A</vertaccr>
+</vertacc>
+</posacc>
+<lineage>
+<srcinfo>
+<srccite>
+<citeinfo>
+<title>Board of Elections and Ethics Instructions</title>
+</citeinfo>
+</srccite>
+<typesrc>None</typesrc>
+<srccitea>Board of Elections and Ethics Instructions</srccitea>
+<srccontr>boundaries and attributes</srccontr>
+</srcinfo>
+<srcinfo>
+<srccite>
+<citeinfo>
+<pubdate>19920101</pubdate>
+<title>1992 Ward, ANC, SMD, Voting Precinct map</title>
+</citeinfo>
+</srccite>
+<srcscale>24000</srcscale>
+<typesrc>hardcopyPaper</typesrc>
+<srccitea>1992 Ward, ANC, SMD, Voting Precinct map</srccitea>
+<srccontr>boundaries of 1990 based voting precincts which were altered to fit the new 2000 Ward boundaries</srccontr>
+</srcinfo>
+<procstep>
+<procdesc>Precincts were identified from public records (D.C. Board of Elections and Ethics) and initially created selecting street arcs from the WGIS planimetric street centerlines and, where necessary, heads-up digitized from the 1995 orthophotographs. A base ArcInfo coverage of correct line work (snapbase.e00) for all DC data was developed after the final delivery of the planimetric street centerlines. The precinct datasets were selected from the snapbase coverage, creating coincident geography with the other DC GIS datasets. Updates were made, in conjuction with BOEE, in 2002 following the snapbase. When imported into the DC GIS geodatabase the coverages shift 0.01mm since the geodatabase supports only 11 digits of precision, not double precision (16 digits). Planimetrics were created at a scale of 1:1,000. This means that a well defined feature falls within two feet of true position. All DC GIS data is stored and exported in Maryland State Plane coordinates NAD 83 meters.</procdesc>
+<proccont>
+<cntinfo>
+<cntorgp>
+<cntorg>D.C. Office of the Chief Technology Officer</cntorg>
+<cntper>GIS Data Coordinator</cntper>
+</cntorgp>
+<cntaddr>
+<addrtype>unknown</addrtype>
+<country>AF</country>
+</cntaddr>
+<cntfax>(202) 727-5660</cntfax>
+<cntemail>dcgis@dc.gov</cntemail>
+<hours>8:30 am - 5 pm</hours>
+</cntinfo>
+</proccont>
+</procstep>
+<procstep>
+<procdesc>Updated voting precincts to reflect the 2008 elections. Two voting precincts near chinatown had new boundaries.</procdesc>
+<procdate>20080614</procdate>
+<proccont>
+<cntinfo>
+<cntorgp>
+<cntorg>OCTO</cntorg>
+</cntorgp>
+<cntaddr>
+<addrtype>unknown</addrtype>
+<country>AF</country>
+</cntaddr>
+</cntinfo>
+</proccont>
+</procstep>
+<procstep>
+<procdesc>Edits were made to voter precinct boundaries 6, 7, 11, and 80 to match the shared portion of the 2002 Ward boundary layer (Ward02Ply). Post-edit testing verified that all residences remained in the same precincts prior to boundary updates.</procdesc>
+<procdate>20090902</procdate>
+<proccont>
+<cntinfo>
+<cntorgp>
+<cntorg>OCTO</cntorg>
+</cntorgp>
+<cntaddr>
+<addrtype>unknown</addrtype>
+<country>AF</country>
+</cntaddr>
+</cntinfo>
+</proccont>
+</procstep>
+</lineage>
+</dataqual>
+<spdoinfo>
+<direct>Vector</direct>
+<ptvctinf>
+<sdtsterm>
+<sdtstype>GT-polygon composed of chains</sdtstype>
+<ptvctcnt>3</ptvctcnt>
+</sdtsterm>
+<sdtsterm>
+<sdtstype>GT-polygon composed of chains</sdtstype>
+<ptvctcnt>13</ptvctcnt>
+</sdtsterm>
+<sdtsterm>
+<sdtstype>GT-polygon composed of chains</sdtstype>
+<ptvctcnt>0</ptvctcnt>
+</sdtsterm>
+<sdtsterm>
+<sdtstype>GT-polygon composed of chains</sdtstype>
+<ptvctcnt>0</ptvctcnt>
+</sdtsterm>
+</ptvctinf>
+</spdoinfo>
+<eainfo>
+<detailed>
+<enttyp>
+<enttypl>DCGIS.VotePre08Ply</enttypl>
+</enttyp>
+<attr>
+<attrlabl>SHAPE</attrlabl>
+<attrdef>Feature geometry.</attrdef>
+<attrdefs>ESRI</attrdefs>
+<attrdomv>
+					<udom>Coordinates defining the features.</udom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>OBJECTID_1</attrlabl>
+<attrdef>Internal feature number.</attrdef>
+<attrdefs>ESRI</attrdefs>
+<attrdomv>
+					<udom>Sequential unique whole numbers that are automatically generated.</udom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>Shape</attrlabl>
+<attrdef>Feature geometry.</attrdef>
+<attrdefs>ESRI</attrdefs>
+<attrdomv>
+					<udom>Coordinates defining the features.</udom>
+				</attrdomv>
+</attr>
+<attr>
+<attrlabl>NAME</attrlabl>
+<attrdef>Precinct name</attrdef>
+</attr>
+<attr>
+<attrlabl>WEB_URL</attrlabl>
+<attrdef>Precinct web link url</attrdef>
+</attr>
+<attr>
+<attrlabl>SHAPE.LEN</attrlabl>
+</attr>
+<attr>
+<attrlabl>SHAPE.AREA</attrlabl>
+</attr>
+<attr>
+<attrlabl>GIS_ID</attrlabl>
+<attrdef>OCTO GIS sequential identifier</attrdef>
+</attr>
+<attr>
+<attrlabl>OBJECTID</attrlabl>
+<attrdef>Internal feature number.</attrdef>
+<attrdefs>ESRI</attrdefs>
+<attrdomv>
+					<udom>Sequential unique whole numbers that are automatically generated.</udom>
+				</attrdomv>
+</attr>
+</detailed>
+</eainfo>
+<distinfo>
+<distrib>
+<cntinfo>
+<cntorgp>
+<cntorg>D.C. Office of the Chief Technology Officer</cntorg>
+<cntper>GIS Data Coordinator</cntper>
+</cntorgp>
+<cntaddr>
+<addrtype>mailing and physical</addrtype>
+<address>441 4th St NW, Suite 930 South</address>
+<city>Washington</city>
+<state>DC</state>
+<postal>20001</postal>
+<country>AF</country>
+</cntaddr>
+<cntfax>(202) 727-5660</cntfax>
+<cntemail>dcgis@dc.gov</cntemail>
+<hours>8:30 am - 5 pm</hours>
+<cntinst>dcgis@dc.gov</cntinst>
+</cntinfo>
+</distrib>
+<distliab>Acknowledgment of the DC Geographic Information Systems Program (DC GIS). The District of Columbia Government makes no claims as to the completeness, accuracy or content of any data contained hereon, and makes no representation of any kind, including, but not limited to, the warranty of the accuracy or fitness for a particular use, nor are any such warranties to be implied or inferred with respect to the information or data furnished herein.</distliab>
+<custom>Most DC GIS datasets can be downloaded from "http://dcgis.dc.gov" on the data center page. Orders can also be made by contacting OCTO GIS at "dcgis@dc.gov", especially for datasets not available for download.</custom>
+</distinfo>
+<metainfo>
+<metd>20090914</metd>
+<metrd>01/07/04</metrd>
+<metc>
+<cntinfo>
+<cntorgp>
+<cntorg>D.C. Office of the Chief Technology Officer</cntorg>
+<cntper>GIS Data Coordinator</cntper>
+</cntorgp>
+<cntaddr>
+<addrtype>mailing and physical</addrtype>
+<address>441 4th St NW, Suite 930 South</address>
+<city>Washington</city>
+<state>DC</state>
+<postal>20001</postal>
+<country>US</country>
+</cntaddr>
+<cntfax>(202) 727-5660</cntfax>
+<cntemail>dcgis@dc.gov</cntemail>
+<hours>8:30 am - 5 pm</hours>
+</cntinfo>
+</metc>
+<metstdn>FGDC Content Standard for Digital Geospatial Metadata</metstdn>
+<metstdv>FGDC-STD-001-1998</metstdv>
+<mettc>local time</mettc>
+</metainfo>
+</metadata>

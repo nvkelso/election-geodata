@@ -1,2 +1,1 @@
-data/06-california/statewide/2012/mprec_state_g12_v01.shp filter=lfs diff=lfs merge=lfs -text
 data/06-california/statewide/2012/mprec_state_g12_v01.zip filter=lfs diff=lfs merge=lfs -text

@@ -677,9 +677,10 @@ out/40-oklahoma/state.gpkg: data/40-oklahoma/statewide/2016/pct_2010.zip
 		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/40-oklahoma/source/pct_2010.shp'
 	rm -rf 'out/40-oklahoma/source'
 
-out/41-oregon/state.gpkg: data/41-oregon/metro-portland/2016/precinct.zip
+out/41-oregon/state.gpkg: data/41-oregon/metro-portland/2016/precinct.zip data/41-oregon/statewide/2012/ORprecinctsPublic-2012.zip
 	mkdir -p out/41-oregon/source
 	unzip -d out/41-oregon/source data/41-oregon/metro-portland/2016/precinct.zip
+	unzip -d out/41-oregon/source data/41-oregon/statewide/2012/ORprecinctsPublic-2012.zip
 	# GPKG are weird
 	rm -f $@
 	#
@@ -688,9 +689,15 @@ out/41-oregon/state.gpkg: data/41-oregon/metro-portland/2016/precinct.zip
 	#ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_18_vtd10 WHERE COUNTYFP10 != '157'" \
 	#	-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -nln state -nlt MultiPolygon -f GPKG out/18-indiana/state.gpkg out/18-indiana/source/tl_2012_18_vtd10.shp
 	#
+	# Skip many counties since they'll come from other files
+	# 'Multnomah', 'Washington', 'Clackamas'
+	ogr2ogr -sql "SELECT '2012' AS year, '41' AS state, COUNTY AS county, CONCAT('41', PREC_KR) AS precinct, 'polygon' AS accuracy FROM ORprecinctsPublic WHERE ( COUNTY NOT IN ('Multnomah', 'Washington', 'Clackamas'))" \
+		-s_srs '+proj=lcc +lat_1=44.33333333333334 +lat_2=46 +lat_0=43.66666666666666 +lon_0=-120.5 +x_0=2500000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=us-ft +no_defs' \
+		-t_srs EPSG:4326 -overwrite -f GPKG -nln state $@ 'out/41-oregon/source/ORprecinctsPublic.shp'
+	#
 	# Add Portland Metro area counties (FIPS 157) to the statewide Geopackage file.
-	ogr2ogr -sql "SELECT '2016' AS year, '41' AS state, COUNTY AS county, PRECINCT AS precinct, 'polygon' AS accuracy FROM precinct" \
-		-t_srs EPSG:4326 -overwrite -f GPKG -nln state -nlt MultiPolygon \
+	ogr2ogr -sql "SELECT '2016' AS year, '41' AS state, COUNTY AS county, CONCAT('41', CAST(COUNTY as character(3)), CAST(PRECINCT as character(10))) AS precinct, 'polygon' AS accuracy FROM precinct" \
+		-t_srs EPSG:4326 -append -f GPKG -nln state -nlt MultiPolygon \
 		$@ 'out/41-oregon/source/precinct.shp'
 	#-t_srs EPSG:4326 -overwrite -f GPKG -nln state -append \
 	rm -rf 'out/41-oregon/source'

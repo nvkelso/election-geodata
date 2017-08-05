@@ -785,13 +785,13 @@ out/54-west-virginia/state.gpkg: data/54-west-virginia/statewide/2011/VotingDist
 		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/54-west-virginia/source/VotingDistrict_Census_201105_GCS83.shp'
 	rm -rf 'out/54-west-virginia/source'
 
-out/55-wisconsin/state.gpkg: data/55-wisconsin/statewide/2014/Wards_fall_2014.shape.zip
+out/55-wisconsin/state.gpkg: data/55-wisconsin/statewide/2016/19902000_WI_Election_Data_with_2017_Wards.zip
 	mkdir -p out/55-wisconsin/source
-	unzip -d out/55-wisconsin/source data/55-wisconsin/statewide/2014/Wards_fall_2014.shape.zip
+	unzip -d out/55-wisconsin/source data/55-wisconsin/statewide/2016/19902000_WI_Election_Data_with_2017_Wards.zip
 	# GPKG allows multiple layers, and since the original poor 2016 layer was generic GeoJSON, adding the 2014 polygon resulted in 2 layers!
 	rm -f $@
-	ogr2ogr -sql "SELECT '2014' AS year, 'Wisconsin' AS state, CNTY_FIPS AS county, WARD_FIPS AS precinct, 'polygon' AS accuracy FROM Wards_Final_Geo_111312_2014_ED" \
-		-s_srs EPSG:3070 -t_srs EPSG:4326 -overwrite -f GPKG $@ out/55-wisconsin/source/Wards_Final_Geo_111312_2014_ED.shp
+	ogr2ogr -sql "SELECT '2016' AS year, '55' AS state, CNTY_FIPS AS county, GEOID AS precinct, 'polygon' AS accuracy FROM "'"19902000_WI_Election_Data_with_2017_Wards"' \
+		-s_srs EPSG:4326 -t_srs EPSG:4326 -overwrite -f GPKG $@ out/55-wisconsin/source/19902000_WI_Election_Data_with_2017_Wards.shp
 	rm -rf 'out/55-wisconsin/source'
 
 out/56-wyoming/state.gpkg: data/56-wyoming/statewide/2010/2010_wy_precincts.zip

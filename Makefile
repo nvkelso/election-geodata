@@ -3,6 +3,12 @@ all: out/render.png
 clean:
 	rm -rf out
 
+status:
+	docker build -t nvkelso/elections-geodata docker
+	docker run --env-file env.ini --rm -v `pwd`:/vol -w /vol nvkelso/elections-geodata
+
+.PHONY: all clean status
+
 out/render.png: render/precincts-2163.shp render/style.xml
 	render/draw.py out/conus.png out/alaska.png out/hawaii.png $@
 	convert -size 1780x1250 xc:skyblue \

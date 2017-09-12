@@ -17,7 +17,7 @@ fi
 make clean out/render.png out/nation.gpkg
 
 # Upload render for this commit and tell Github about it.
-$RENDER_PATH=$S3_BUCKET/commits/$GIT_SHA1/render.png
+RENDER_PATH=$S3_BUCKET/commits/$GIT_SHA1/render.png
 aws --region us-east-1 s3 cp --acl public-read out/render.png s3://$RENDER_PATH
 scripts/update-status.py https://s3.amazonaws.com/$RENDER_PATH
 

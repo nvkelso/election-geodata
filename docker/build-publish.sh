@@ -5,21 +5,26 @@
 git update-index -q --refresh
 
 if git diff-index --quiet HEAD --; then
-    echo 'Yay: no uncommitted changes found.'
+    # Remember what Git commit and branch we are on.
+    export GIT_SHA1=`git rev-parse HEAD`
+    export GIT_BRANCH=`git rev-parse --abbrev-ref HEAD`
 else
     echo 'Boo: there are local uncommitted changes.'
     exit 1
 fi
 
+# Render an image and a Geopackage output.
 make clean out/render.png out/nation.gpkg
 
-export GIT_SHA1=`git rev-parse HEAD`
-export GIT_BRANCH=`git rev-parse --abbrev-ref HEAD`
+# Upload render for this commit and tell Github about it.
+$RENDER_PATH=$S3_BUCKET/commits/$GIT_SHA1/render.png
+aws --region us-east-1 s3 cp --acl public-read out/render.png s3://$RENDER_PATH
+scripts/update-status.py https://s3.amazonaws.com/$RENDER_PATH
 
-aws --region us-east-1 s3 cp --acl public-read out/render.png s3://$S3_BUCKET/commits/$GIT_SHA1/render.png
+# Check if we're on the deploy branch.
+if [ $GIT_BRANCH = 'master' ]; then
 
-if [ $GIT_BRANCH = 'migurski/add-docker-support' ]; then
-
+    # Upload render and data for this branch.
     aws --region us-east-1 s3 cp --acl public-read --cache-control 'max-age=60 public' out/render.png s3://$S3_BUCKET/branches/$GIT_BRANCH/render.png
     ogr2ogr out/nation.shp out/nation.gpkg
     gzip -9 out/nation.gpkg
@@ -28,5 +33,3 @@ if [ $GIT_BRANCH = 'migurski/add-docker-support' ]; then
     aws --region us-east-1 s3 cp --acl public-read --content-type application/zip out/nation.zip s3://$S3_BUCKET/branches/$GIT_BRANCH/nation-shp.zip
 
 fi
-
-scripts/update-status.py https://s3.amazonaws.com/$S3_BUCKET/commits/$GIT_SHA1/render.png

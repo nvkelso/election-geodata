@@ -3,9 +3,11 @@ all: out/render.png
 clean:
 	rm -rf out
 
+# To build and publish rendered map, collected data, and Github status,
+# create docker/env.ini from template in docker/env.ini-sample.
 status:
 	docker build -t nvkelso/elections-geodata docker
-	docker run --env-file env.ini --rm -v `pwd`:/vol -w /vol nvkelso/elections-geodata
+	docker run --env-file docker/env.ini --rm -v `pwd`:/vol -w /vol nvkelso/elections-geodata
 
 .PHONY: all clean status
 

@@ -4,7 +4,7 @@ import os, sys, requests, json
 
 _, target_url = sys.argv
 auth = os.environ['GITHUB_TOKEN'], 'x-oauth-basic'
-env = [os.environ[key] for key in ('CIRCLE_PROJECT_USERNAME', 'CIRCLE_PROJECT_REPONAME', 'CIRCLE_SHA1')]
+env = [os.environ[key] for key in ('GITHUB_USERNAME', 'GITHUB_REPONAME', 'GIT_SHA1')]
 post_url = 'https://api.github.com/repos/{0}/{1}/commits/{2}/statuses'.format(*env)
 post_data = dict(state="success", context="elections", target_url=target_url, description="Everything is awesome")
 post_body = json.dumps(post_data)

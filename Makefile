@@ -463,18 +463,22 @@ out/17-illinois/state.gpkg: data/17-illinois/statewide/2010/tl_2012_17_vtd10.zip
 		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/17-illinois/source/tl_2012_17_vtd10.shp'
 	rm -rf 'out/17-illinois/source'
 
-out/18-indiana/state.gpkg: data/18-indiana/statewide/2010/tl_2012_18_vtd10.zip #data/18-indiana/157-tippecanoe/precincts.geojson
+out/18-indiana/state.gpkg: data/18-indiana/statewide/2010/tl_2012_18_vtd10.zip data/18-indiana/097-marion/2011/precincts.geojson data/18-indiana/157-tippecanoe/2016/precincts.geojson
 	mkdir -p out/18-indiana/source
 	unzip -d out/18-indiana/source data/18-indiana/statewide/2010/tl_2012_18_vtd10.zip
-	# Skip Tippecanoe County (FIPS 157) since it'll come from another file.
+	# Skip Tippecanoe and Marion Counties (FIPS 157, 097) since they'll come from another file.
 	# GPKG are weird
 	rm -f $@
-	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_18_vtd10 WHERE COUNTYFP10 != '157'" \
+	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_18_vtd10 WHERE COUNTYFP10 != '157' AND COUNTYFP10 != '097'" \
 		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -nln state -nlt MultiPolygon -f GPKG out/18-indiana/state.gpkg out/18-indiana/source/tl_2012_18_vtd10.shp
 	# Add Tippecanoe County (FIPS 157) to the statewide Geopackage file.
 	ogr2ogr -sql "SELECT '2016' AS year, '18' AS state, '157' AS county, P12_STFID AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON" \
 		-t_srs EPSG:4326 -f GPKG -nln state -append \
 		out/18-indiana/state.gpkg data/18-indiana/157-tippecanoe/2016/precincts.geojson
+	# Add Marion County (FIPS 097) to the statewide Geopackage file.
+	ogr2ogr -sql "SELECT '2011' AS year, '18' AS state, '097' AS county, PRECINCT AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON" \
+		-t_srs EPSG:4326 -f GPKG -nln state -append \
+		out/18-indiana/state.gpkg data/18-indiana/097-marion/2011/precincts.geojson
 	rm -rf 'out/18-indiana/source'
 
 out/19-iowa/state.gpkg: data/19-iowa/statewide/2016/pcts_04172014_0908am.zip

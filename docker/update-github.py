@@ -27,7 +27,7 @@ if __name__ == '__main__':
     commits_url = uritemplate.expand(repo_info.get('commits_url'), sha=args.sha)
     pulls_url = uritemplate.expand(repo_info.get('pulls_url'))
 
-    print(statuses_url, commits_url)
+    print('Posting commit status update to Github...')
     
     status = dict(state=args.state, description=descriptions[args.state], context='elections')
     if args.url:
@@ -37,16 +37,17 @@ if __name__ == '__main__':
     if resp1.status_code not in range(200, 299):
         raise Exception('{} response for status update: {}'.format(resp1.status_code, resp1.text))
     
+    if not args.url:
+        exit()
+    
     for pull_info in requests.get(pulls_url, auth=auth).json():
         if pull_info['head']['sha'] != args.sha:
             continue
 
-        print(pull_info.keys())
-        print(pull_info['comments_url'])
-        print(pull_info['issue_url'])
+        print('Posting image comment to Github PR...')
         
         comments_url = pull_info['comments_url']
-        comment = dict(body='Testing in code')
+        comment = dict(body='Preview for commit {}:\n\n![]({})'.format(args.sha, args.url))
         resp2 = requests.post(comments_url, auth=auth, data=json.dumps(comment))
     
         if resp2.status_code not in range(200, 299):

@@ -15,18 +15,14 @@ else
 fi
 
 # Tell Github we're working on it.
-curl -v \
-    -d '{"state":"pending","context":"elections","description":"Working on it..."}' \
-    -u "$GITHUB_TOKEN:x-oauth-basic" \
-    $STATUS_URL
+curl -s -u "$GITHUB_TOKEN:x-oauth-basic" $STATUS_URL \
+    -d '{"state":"pending","context":"elections","description":"Working on it..."}'
 
 # Tell Github we failed.
 function admit_defeat
 {
-    curl -v \
-        -d '{"state":"failure","context":"elections","description":"Argh."}' \
-        -u "$GITHUB_TOKEN:x-oauth-basic" \
-        $STATUS_URL
+    curl -s -u "$GITHUB_TOKEN:x-oauth-basic" $STATUS_URL \
+        -d '{"state":"failure","context":"elections","description":"Argh."}'
     
     exit 1
 }
@@ -35,14 +31,12 @@ function admit_defeat
 make clean out/render.png out/nation.gpkg || admit_defeat
 
 # Upload render for this commit and tell Github about it.
-RENDER_PATH=$S3_BUCKET/commits/$GIT_SHA1/render.png
+RENDER_PATH="$S3_BUCKET/commits/$GIT_SHA1/render.png"
 aws --region us-east-1 s3 cp --acl public-read out/render.png s3://$RENDER_PATH
 
 # Tell Github everything worked.
-curl -v \
-    -d '{"state":"success","context":"elections","description":"Everything is awesome.","target_url":"https://s3.amazonaws.com/'$RENDER_PATH'"}' \
-    -u "$GITHUB_TOKEN:x-oauth-basic" \
-    $STATUS_URL
+curl -s -u "$GITHUB_TOKEN:x-oauth-basic" $STATUS_URL \
+    -d '{"target_url":"https://s3.amazonaws.com/'$RENDER_PATH'","state":"success","context":"elections","description":"Everything is awesome."}'
 
 # Deploy if we're on the deploy branch.
 if [ $GIT_BRANCH = 'master' ]; then

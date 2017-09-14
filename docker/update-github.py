@@ -1,8 +1,14 @@
 #!/usr/bin/env python2.7
 from __future__ import print_function
-import argparse, json, requests, uritemplate
+import sys, argparse, json, requests, uritemplate
 
 SUCCESS, PENDING, FAILURE = 'success', 'pending', 'failure'
+
+descriptions = {
+    SUCCESS: 'Everything is awesome.',
+    PENDING: 'Working on it...',
+    FAILURE: 'Argh.'
+    }
 
 parser = argparse.ArgumentParser(description='Tell Github how it is.')
 
@@ -23,7 +29,7 @@ if __name__ == '__main__':
 
     print(statuses_url, commits_url)
     
-    status = dict(state=args.state, context='elections/pr119', description='Working on it')
+    status = dict(state=args.state, description=descriptions[args.state], context='elections')
     if args.url:
         status.update(target_url=args.url)
     resp1 = requests.post(statuses_url, auth=auth, data=json.dumps(status))
@@ -31,8 +37,6 @@ if __name__ == '__main__':
     if resp1.status_code not in range(200, 299):
         raise Exception('{} response for status update: {}'.format(resp1.status_code, resp1.text))
     
-    exit(0)
-
     for pull_info in requests.get(pulls_url, auth=auth).json():
         if pull_info['head']['sha'] != args.sha:
             continue
@@ -46,4 +50,4 @@ if __name__ == '__main__':
         resp2 = requests.post(comments_url, auth=auth, data=json.dumps(comment))
     
         if resp2.status_code not in range(200, 299):
-            raise Exception('{} response for comment post: {}'.format(resp2.status_code, resp2.text))
+            print('{} response for comment post: {}'.format(resp2.status_code, resp2.text), file=sys.stderr)

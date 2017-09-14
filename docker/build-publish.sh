@@ -8,22 +8,19 @@ if git diff-index --quiet HEAD --; then
     # Remember what Git commit and branch we are on.
     GIT_SHA1=`git rev-parse HEAD`
     GIT_BRANCH=`git rev-parse --abbrev-ref HEAD`
-    STATUS_URL="https://api.github.com/repos/$GITHUB_USERNAME/$GITHUB_REPONAME/commits/$GIT_SHA1/statuses"
 else
     echo 'Boo: there are local uncommitted changes.'
     exit 1
 fi
 
 # Tell Github we're working on it.
-curl -s -u "$GITHUB_TOKEN:x-oauth-basic" $STATUS_URL \
-    -d '{"state":"pending","context":"elections","description":"Working on it..."}'
+REPO_URL="https://api.github.com/repos/$GITHUB_USERNAME/$GITHUB_REPONAME"
+/usr/local/bin/update-github.py $REPO_URL $GIT_SHA1 $GITHUB_TOKEN pending
 
 # Tell Github we failed.
 function admit_defeat
 {
-    curl -s -u "$GITHUB_TOKEN:x-oauth-basic" $STATUS_URL \
-        -d '{"state":"failure","context":"elections","description":"Argh."}'
-    
+    /usr/local/bin/update-github.py $REPO_URL $GIT_SHA1 $GITHUB_TOKEN failure
     exit 1
 }
 
@@ -35,8 +32,8 @@ RENDER_PATH="$S3_BUCKET/commits/$GIT_SHA1/render.png"
 aws --region us-east-1 s3 cp --acl public-read out/render.png s3://$RENDER_PATH
 
 # Tell Github everything worked.
-curl -s -u "$GITHUB_TOKEN:x-oauth-basic" $STATUS_URL \
-    -d '{"target_url":"https://s3.amazonaws.com/'$RENDER_PATH'","state":"success","context":"elections","description":"Everything is awesome."}'
+/usr/local/bin/update-github.py $REPO_URL $GIT_SHA1 $GITHUB_TOKEN success \
+    --url "https://s3.amazonaws.com/$RENDER_PATH"
 
 # Deploy if we're on the deploy branch.
 if [ $GIT_BRANCH = 'master' ]; then

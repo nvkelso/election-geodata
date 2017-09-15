@@ -469,7 +469,8 @@ out/18-indiana/state.gpkg: data/18-indiana/statewide/2010/tl_2012_18_vtd10.zip \
 		data/18-indiana/057-hamilton/2012/precincts.geojson \
 		data/18-indiana/097-marion/2012/precincts.geojson \
 		data/18-indiana/141-St-Joseph/2012/Voter_Precincts.zip \
-		data/18-indiana/157-tippecanoe/2016/precincts.geojson
+		data/18-indiana/157-tippecanoe/2016/precincts.geojson \
+		data/18-indiana/163-vanderburgh/2012/precincts.geojson
 	mkdir -p out/18-indiana/source
 	unzip -d out/18-indiana/source data/18-indiana/statewide/2010/tl_2012_18_vtd10.zip
 	
@@ -477,7 +478,7 @@ out/18-indiana/state.gpkg: data/18-indiana/statewide/2010/tl_2012_18_vtd10.zip \
 	rm -f $@
 
 	# Skip a few since they'll come from another file.
-	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_18_vtd10 WHERE COUNTYFP10 NOT IN ('003', '039', '057', '097', '141', '157')" \
+	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_18_vtd10 WHERE COUNTYFP10 NOT IN ('003', '039', '057', '097', '141', '157', '163')" \
 		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -nln state -nlt MultiPolygon -f GPKG out/18-indiana/state.gpkg out/18-indiana/source/tl_2012_18_vtd10.shp
 	
 	# Add Allen County (FIPS 003) to the statewide Geopackage file.
@@ -510,6 +511,11 @@ out/18-indiana/state.gpkg: data/18-indiana/statewide/2010/tl_2012_18_vtd10.zip \
 	ogr2ogr -sql "SELECT '2016' AS year, '18' AS state, '157' AS county, P12_STFID AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON" \
 		-t_srs EPSG:4326 -f GPKG -nln state -append \
 		out/18-indiana/state.gpkg data/18-indiana/157-tippecanoe/2016/precincts.geojson
+	
+	# Add Vanderburgh County (FIPS 163) to the statewide Geopackage file.
+	ogr2ogr -sql "SELECT '2012' AS year, '18' AS state, '163' AS county, NAME AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON" \
+		-t_srs EPSG:4326 -f GPKG -nln state -append \
+		out/18-indiana/state.gpkg data/18-indiana/163-vanderburgh/2012/precincts.geojson
 	
 	rm -rf 'out/18-indiana/source'
 

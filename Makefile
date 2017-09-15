@@ -502,10 +502,11 @@ out/18-indiana/state.gpkg: data/18-indiana/statewide/2010/tl_2012_18_vtd10.zip \
 		out/18-indiana/state.gpkg data/18-indiana/097-marion/2012/precincts.geojson
 	
 	# Add St. Joesph County (FIPS 141) to the statewide Geopackage file.
-	unzip -d out/18-indiana/source data/18-indiana/141-St-Joseph/2012/Voter_Precincts.zip
+	mkdir -p out/18-indiana/source/141-St-Joseph
+	unzip -d out/18-indiana/source/141-St-Joseph data/18-indiana/141-St-Joseph/2012/Voter_Precincts.zip
 	ogr2ogr -sql "SELECT '2012' AS year, '18' AS state, '141' AS county, PRECINCT AS precinct, 'polygon' AS accuracy FROM Voter_Precincts" \
 		-t_srs EPSG:4326 -f GPKG -nln state -append \
-		out/18-indiana/state.gpkg out/18-indiana/source/Voter_Precincts.shp
+		out/18-indiana/state.gpkg out/18-indiana/source/141-St-Joseph/Voter_Precincts.shp
 	
 	# Add Tippecanoe County (FIPS 157) to the statewide Geopackage file.
 	ogr2ogr -sql "SELECT '2016' AS year, '18' AS state, '157' AS county, P12_STFID AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON" \

@@ -7,7 +7,7 @@
 CURDIR=`dirname $0`
 TEMPDIR=`$CURDIR/tmpdir.py kansas-`
 
-ogr2ogr -sql "SELECT '2012' AS year, 'Kansas' AS state, SUBSTR(VTD_2012, 3, 3) AS county, VTD_2012 AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON WHERE SUBSTR(VTD_2012, 3, 3) != '045'" \
+ogr2ogr -sql "SELECT '2012' AS year, 'Kansas' AS state, SUBSTR(VTD_2012, 3, 3) AS county, VTD_2012 AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON WHERE SUBSTR(VTD_2012, 3, 3) NOT IN ('045', '091', '173', '209')" \
 	-t_srs EPSG:4326 -nln state -nlt MultiPolygon -f GPKG \
 	$TEMPDIR/state.gpkg data/20-kansas/statewide/2012/kansas-state-voting-precincts-2012.geojson
 

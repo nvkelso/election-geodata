@@ -19,6 +19,27 @@ ogr2ogr -sql "SELECT '2016' AS year, 'Kansas' AS state, 'Douglas' AS county, CON
 	$TEMPDIR/state.gpkg data/20-kansas/2016/20045-douglas/precincts.geojson
 
 #
+# Add Johnson County (FIPS 091) to the statewide Geopackage file.
+#
+ogr2ogr -sql "SELECT '2016' AS year, 'Kansas' AS state, 'Johnson' AS county, NAME AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON" \
+        -t_srs EPSG:4326 -f GPKG -nln state -append \
+        $TEMPDIR/state.gpkg data/20-kansas/2016/20091-johnson/precincts.geojson
+
+#
+# Add Sedgwick County (FIPS 173) to the statewide Geopackage file.
+#
+ogr2ogr -sql "SELECT '2016' AS year, 'Kansas' AS state, 'Sedgwick' as county, PRECINCT AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON" \
+        -t_srs EPSG:4326 -f GPKG -nln state -append \
+        $TEMPDIR/state.gpkg data/20-kansas/2016/20173-sedgwick/precincts.geojson
+
+#
+# Add Wyandotte County (FIPS 209) to the statewide Geopackage file.
+#
+ogr2ogr -sql "SELECT '2016' AS year, 'Kansas' AS state, 'Wyandotte' as county, VTD_S AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON" \
+        -t_srs EPSG:4326 -f GPKG -nln state -append \
+        $TEMPDIR/state.gpkg data/20-kansas/2016/20209-wyandotte/precincts.geojson
+
+#
 # Clean up temporary directory.
 #
 OUTFILE=`$CURDIR/tmpfile.py kansas- .gpkg`

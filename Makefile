@@ -3,14 +3,6 @@ all: out/render.png
 clean:
 	rm -rf out
 
-# To build and publish rendered map, collected data, and Github status,
-# create docker/env.ini from template in docker/env.ini-sample.
-status:
-	docker build -t nvkelso/elections-geodata docker
-	docker run --env-file docker/env.ini --rm -v `pwd`:/vol -w /vol nvkelso/elections-geodata
-
-.PHONY: all clean status
-
 out/render.png: render/precincts-2163.shp render/style.xml
 	render/draw.py out/conus.png out/alaska.png out/hawaii.png $@
 	convert -size 1780x1250 xc:skyblue \
@@ -178,12 +170,11 @@ out/09-connecticut/state.gpkg: data/09-connecticut/statewide/2010/tl_2012_09_vtd
 		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/09-connecticut/source/tl_2012_09_vtd10.shp'
 	rm -rf 'out/09-connecticut/source'
 
-out/10-delaware/state.gpkg: data/10-delaware/statewide/2012/Delaware_Election_Boundaries.zip
+out/10-delaware/state.gpkg: data/10-delaware/statewide/2010/tl_2012_10_vtd10.zip
 	mkdir -p out/10-delaware/source
-	unzip -d out/10-delaware/source data/10-delaware/statewide/2012/Delaware_Election_Boundaries.zip
-	rm -f $@
-	ogr2ogr -sql "SELECT '2012' AS year, '10' AS state, '' AS county, CONCAT( '10', '-00-', EDRD_2012) AS precinct, 'polygon' AS accuracy FROM Election_Boundaries" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/10-delaware/source/Election_Boundaries.shp'
+	unzip -d out/10-delaware/source data/10-delaware/statewide/2010/tl_2012_10_vtd10.zip
+	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_10_vtd10" \
+		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/10-delaware/source/tl_2012_10_vtd10.shp'
 	rm -rf 'out/10-delaware/source'
 
 out/11-district-of-columbia/state.gpkg: data/11-district-of-columbia/statewide/2012/Voting_Precinct__2012.zip
@@ -463,22 +454,18 @@ out/17-illinois/state.gpkg: data/17-illinois/statewide/2010/tl_2012_17_vtd10.zip
 		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/17-illinois/source/tl_2012_17_vtd10.shp'
 	rm -rf 'out/17-illinois/source'
 
-out/18-indiana/state.gpkg: data/18-indiana/statewide/2010/tl_2012_18_vtd10.zip data/18-indiana/097-marion/2011/precincts.geojson data/18-indiana/157-tippecanoe/2016/precincts.geojson
+out/18-indiana/state.gpkg: data/18-indiana/statewide/2010/tl_2012_18_vtd10.zip #data/18-indiana/157-tippecanoe/precincts.geojson
 	mkdir -p out/18-indiana/source
 	unzip -d out/18-indiana/source data/18-indiana/statewide/2010/tl_2012_18_vtd10.zip
-	# Skip Tippecanoe and Marion Counties (FIPS 157, 097) since they'll come from another file.
+	# Skip Tippecanoe County (FIPS 157) since it'll come from another file.
 	# GPKG are weird
 	rm -f $@
-	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_18_vtd10 WHERE COUNTYFP10 != '157' AND COUNTYFP10 != '097'" \
+	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_18_vtd10 WHERE COUNTYFP10 != '157'" \
 		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -nln state -nlt MultiPolygon -f GPKG out/18-indiana/state.gpkg out/18-indiana/source/tl_2012_18_vtd10.shp
 	# Add Tippecanoe County (FIPS 157) to the statewide Geopackage file.
 	ogr2ogr -sql "SELECT '2016' AS year, '18' AS state, '157' AS county, P12_STFID AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON" \
 		-t_srs EPSG:4326 -f GPKG -nln state -append \
 		out/18-indiana/state.gpkg data/18-indiana/157-tippecanoe/2016/precincts.geojson
-	# Add Marion County (FIPS 097) to the statewide Geopackage file.
-	ogr2ogr -sql "SELECT '2011' AS year, '18' AS state, '097' AS county, PRECINCT AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON" \
-		-t_srs EPSG:4326 -f GPKG -nln state -append \
-		out/18-indiana/state.gpkg data/18-indiana/097-marion/2011/precincts.geojson
 	rm -rf 'out/18-indiana/source'
 
 out/19-iowa/state.gpkg: data/19-iowa/statewide/2016/pcts_04172014_0908am.zip
@@ -603,9 +590,9 @@ out/33-new-hampshire/state.gpkg: data/33-new-hampshire/statewide/2010/tl_2012_33
 	unzip -d out/33-new-hampshire/source data/33-new-hampshire/statewide/2010/tl_2012_33_vtd10.zip
 	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_33_vtd10 WHERE (FUNCSTAT10='S' AND VTDST10 NOT IN ('ZZZZZZ'))" \
 		-s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ 'out/33-new-hampshire/source/tl_2012_33_vtd10.shp'
-	unzip -d out/33-new-hampshire/source data/33-new-hampshire/statewide/2016/nh_political_boundaries_2016.zip
-	ogr2ogr -sql "SELECT '2016' AS year, '33' AS state, COUNTY AS county, CONCAT('33', CAST(FIPS AS character(3))) AS precinct, 'polygon' AS accuracy FROM nh_political_boundaries WHERE FIPS NOT IN (1035,1040,5045,7020,9110,11085,11110,13040,13060,15040,15145,17010,17050,17060,19015)" \
-		-t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/33-new-hampshire/source/nh_political_boundaries.shp'
+	unzip -d out/33-new-hampshire/source data/33-new-hampshire/statewide/2016/NHPolitDists.zip
+	ogr2ogr -sql "SELECT '2016' AS year, '33' AS state, COUNTY AS county, CONCAT('33', CAST(FIPS AS character(3))) AS precinct, 'polygon' AS accuracy FROM nh_political_boundaries" \
+		-t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/33-new-hampshire/source/nhpolitdists.shp'
 	rm -rf 'out/33-new-hampshire/source'
 
 out/34-new-jersey/state.gpkg: data/34-new-jersey/statewide/2010/tl_2012_34_vtd10.zip
@@ -674,63 +661,11 @@ out/38-north-dakota/state.gpkg: data/38-north-dakota/statewide/2010/tl_2012_38_v
 		-t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/38-north-dakota/source/cassprecinct.shp'
 	rm -rf 'out/38-north-dakota/source'
 
-out/39-ohio/state.gpkg: data/39-ohio/statewide/2010/tl_2012_39_vtd10.zip \
-						data/39-ohio/39003-allen/ALL_PREC.zip \
-						data/39-ohio/39007-ashtabula/ATB_PREC.zip \
-						data/39-ohio/39009-athens/Precincts2016.zip \
-						data/39-ohio/39011-auglaize/AUG_PREC.zip \
-						data/39-ohio/39013-belmont/BEL_PREC.zip \
-						data/39-ohio/39015-brown/BRO_PREC.zip \
-						data/39-ohio/39017-butler/BUT_PREC.zip \
-						data/39-ohio/39021-champaign/CHP_PREC.zip \
-						data/39-ohio/39133-portage/POR_PREC.zip \
-						data/39-ohio/39157-tuscarawas/TUS_PREC.zip
+out/39-ohio/state.gpkg: data/39-ohio/statewide/2010/tl_2012_39_vtd10.zip
 	mkdir -p out/39-ohio/source
 	unzip -d out/39-ohio/source data/39-ohio/statewide/2010/tl_2012_39_vtd10.zip
-	rm -f $@
-	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, CAST(GEOID10 AS character(30)) AS precinct, 'polygon' AS accuracy FROM tl_2012_39_vtd10 WHERE COUNTYFP10 NOT IN ('003','007','009','011','013','015','017','021','133','157')" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ 'out/39-ohio/source/tl_2012_39_vtd10.shp'
-	# Add multiple counties
-	unzip -d out/39-ohio/source data/39-ohio/39003-allen/ALL_PREC.zip
-	ogr2ogr -sql "SELECT '2016' AS year, '39' AS state, '003' AS county, CONCAT('39003', CAST(Precinct_N AS character(10))) AS precinct, 'polygon' AS accuracy FROM ALL_PREC" \
-		-s_srs '+proj=lcc +lat_1=40.43333333333333 +lat_2=41.7 +lat_0=39.66666666666666 +lon_0=-82.5 +x_0=600000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=us-ft +no_defs' \
-		-t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/39-ohio/source/ALL_PREC.shp'
-	unzip -d out/39-ohio/source data/39-ohio/39007-ashtabula/ATB_PREC.zip
-	ogr2ogr -sql "SELECT '2016' AS year, '39' AS state, '007' AS county, CONCAT('39007', GEOID10) AS precinct, 'polygon' AS accuracy FROM ATB_PREC" \
-		-s_srs '+proj=lcc +lat_1=40.43333333333333 +lat_2=41.7 +lat_0=39.66666666666666 +lon_0=-82.5 +x_0=600000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=us-ft +no_defs' \
-		-t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/39-ohio/source/ATB_PREC.shp'
-	unzip -d out/39-ohio/source data/39-ohio/39009-athens/Precincts2016.zip
-	ogr2ogr -sql "SELECT '2016' AS year, '39' AS state, '009' AS county, CONCAT('39009', CAST(NAME AS character(10))) AS precinct, 'polygon' AS accuracy FROM Precincts2016" \
-		-s_srs '+proj=lcc +lat_1=40.43333333333333 +lat_2=41.7 +lat_0=39.66666666666666 +lon_0=-82.5 +x_0=600000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=us-ft +no_defs' \
-		-t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/39-ohio/source/Precincts2016.shp'
-	unzip -d out/39-ohio/source data/39-ohio/39011-auglaize/AUG_PREC.zip
-	ogr2ogr -sql "SELECT '2016' AS year, '39' AS state, '011' AS county, CONCAT('39011', CAST(PREC_NAME AS character(10))) AS precinct, 'polygon' AS accuracy FROM AUG_PREC" \
-		-s_srs EPSG:4269 \
-		-t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/39-ohio/source/AUG_PREC.shp'
-	unzip -d out/39-ohio/source data/39-ohio/39013-belmont/BEL_PREC.zip
-	ogr2ogr -sql "SELECT '2016' AS year, '39' AS state, '013' AS county, CONCAT('39013', CAST(PRECINCTNA AS character(10))) AS precinct, 'polygon' AS accuracy FROM BEL_PREC" \
-		-s_srs '+proj=lcc +lat_1=38.73333333333333 +lat_2=40.03333333333333 +lat_0=38 +lon_0=-82.5 +x_0=600000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=us-ft +no_defs' \
-		-t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/39-ohio/source/BEL_PREC.shp'
-	unzip -d out/39-ohio/source data/39-ohio/39015-brown/BRO_PREC.zip
-	ogr2ogr -sql "SELECT '2016' AS year, '39' AS state, '015' AS county, CONCAT('39015', CAST(NAME AS character(10))) AS precinct, 'polygon' AS accuracy FROM BRO_PREC" \
-		-s_srs '+proj=lcc +lat_1=40.03333333333333 +lat_2=38.73333333333333 +lat_0=38 +lon_0=-82.5 +x_0=600000.0000000016 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=us-ft +no_defs' \
-		-t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/39-ohio/source/BRO_PREC.shp'
-	unzip -d out/39-ohio/source data/39-ohio/39017-butler/BUT_PREC.zip
-	ogr2ogr -sql "SELECT '2016' AS year, '39' AS state, '017' AS county, CONCAT('39017', CAST(NEW_PREC_N AS character(10))) AS precinct, 'polygon' AS accuracy FROM BUT_PREC" \
-		-s_srs '+proj=lcc +lat_1=38.73333333333333 +lat_2=40.03333333333333 +lat_0=38 +lon_0=-82.5 +x_0=600000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=us-ft +no_defs' \
-		-t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/39-ohio/source/BUT_PREC.shp'
-	unzip -d out/39-ohio/source data/39-ohio/39021-champaign/CHP_PREC.zip
-	ogr2ogr -sql "SELECT '2016' AS year, '39' AS state, '021' AS county, CONCAT('39021', CAST(District_N AS character(10))) AS precinct, 'polygon' AS accuracy FROM CHP_PREC" \
-		-s_srs '+proj=lcc +lat_1=38.73333333333333 +lat_2=40.03333333333333 +lat_0=38 +lon_0=-82.5 +x_0=600000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=us-ft +no_defs' \
-		-t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/39-ohio/source/CHP_PREC.shp'
-	unzip -d out/39-ohio/source data/39-ohio/39133-portage/POR_PREC.zip
-	ogr2ogr -sql "SELECT '2016' AS year, '39' AS state, '133' AS county, CONCAT('39133', CAST(NAME_1 AS character(10))) AS precinct, 'polygon' AS accuracy FROM POR_PREC" \
-		-s_srs '+proj=lcc +lat_1=40.43333333333333 +lat_2=41.7 +lat_0=39.66666666666666 +lon_0=-82.5 +x_0=600000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=us-ft +no_defs' \
-		-t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/39-ohio/source/POR_PREC.shp'
-	unzip -d out/39-ohio/source data/39-ohio/39157-tuscarawas/TUS_PREC.zip
-	ogr2ogr -sql "SELECT '2016' AS year, '39' AS state, '157' AS county, CONCAT('39157', CAST(PRCT_NAME AS character(30))) AS precinct, 'polygon' AS accuracy FROM TUS_PREC" \
-		-s_srs '+proj=lcc +lat_1=40.43333333333333 +lat_2=41.7 +lat_0=39.66666666666666 +lon_0=-82.5 +x_0=600000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=us-ft +no_defs' \
-		-t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/39-ohio/source/TUS_PREC.shp'
+	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_39_vtd10" \
+		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/39-ohio/source/tl_2012_39_vtd10.shp'
 	rm -rf 'out/39-ohio/source'
 
 out/40-oklahoma/state.gpkg: data/40-oklahoma/statewide/2016/pct_2010.zip
@@ -824,14 +759,11 @@ out/49-utah/state.gpkg: data/49-utah/statewide/2016/VistaBallotAreas_shp.zip
 		-s_srs EPSG:26912 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/49-utah/source/VistaBallotAreas/VistaBallotAreas.shp'
 	rm -rf 'out/49-utah/source'
 
-out/50-vermont/state.gpkg: data/50-vermont/statewide/2012/Voting_Tabulation_Areas_2012.zip
+out/50-vermont/state.gpkg: data/50-vermont/statewide/2010/tl_2012_50_vtd10.zip
 	mkdir -p out/50-vermont/source
-	unzip -d out/50-vermont/source data/50-vermont/statewide/2012/Voting_Tabulation_Areas_2012.zip
-	# GPKG are weird
-	rm -f $@
-	ogr2ogr -sql "SELECT '2016' AS year, '50' AS state, CNTY AS county, CONCAT('50', CAST(CNTY AS character(3)), CAST(NAME AS character(10))) AS precinct, 'polygon' AS accuracy FROM BoundaryOther_VOTETAB2012" \
-		-s_srs '+proj=tmerc +lat_0=42.5 +lon_0=-72.5 +k=0.9999642857142857 +x_0=500000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs' \
-		-t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/50-vermont/source/BoundaryOther_VOTETAB2012.shp'
+	unzip -d out/50-vermont/source data/50-vermont/statewide/2010/tl_2012_50_vtd10.zip
+	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_50_vtd10" \
+		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/50-vermont/source/tl_2012_50_vtd10.shp'
 	rm -rf 'out/50-vermont/source'
 
 out/51-virginia/state.gpkg: data/51-virginia/statewide/2016/vaprecincts2016.shp
@@ -853,13 +785,13 @@ out/54-west-virginia/state.gpkg: data/54-west-virginia/statewide/2011/VotingDist
 		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/54-west-virginia/source/VotingDistrict_Census_201105_GCS83.shp'
 	rm -rf 'out/54-west-virginia/source'
 
-out/55-wisconsin/state.gpkg: data/55-wisconsin/statewide/2016/19902000_WI_Election_Data_with_2017_Wards.zip
+out/55-wisconsin/state.gpkg: data/55-wisconsin/statewide/2014/Wards_fall_2014.shape.zip
 	mkdir -p out/55-wisconsin/source
-	unzip -d out/55-wisconsin/source data/55-wisconsin/statewide/2016/19902000_WI_Election_Data_with_2017_Wards.zip
+	unzip -d out/55-wisconsin/source data/55-wisconsin/statewide/2014/Wards_fall_2014.shape.zip
 	# GPKG allows multiple layers, and since the original poor 2016 layer was generic GeoJSON, adding the 2014 polygon resulted in 2 layers!
 	rm -f $@
-	ogr2ogr -sql "SELECT '2016' AS year, '55' AS state, CNTY_FIPS AS county, GEOID AS precinct, 'polygon' AS accuracy FROM "'"19902000_WI_Election_Data_with_2017_Wards"' \
-		-s_srs EPSG:4326 -t_srs EPSG:4326 -overwrite -f GPKG $@ out/55-wisconsin/source/19902000_WI_Election_Data_with_2017_Wards.shp
+	ogr2ogr -sql "SELECT '2014' AS year, 'Wisconsin' AS state, CNTY_FIPS AS county, WARD_FIPS AS precinct, 'polygon' AS accuracy FROM Wards_Final_Geo_111312_2014_ED" \
+		-s_srs EPSG:3070 -t_srs EPSG:4326 -overwrite -f GPKG $@ out/55-wisconsin/source/Wards_Final_Geo_111312_2014_ED.shp
 	rm -rf 'out/55-wisconsin/source'
 
 out/56-wyoming/state.gpkg: data/56-wyoming/statewide/2010/2010_wy_precincts.zip

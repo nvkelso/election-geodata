@@ -778,10 +778,10 @@ out/41-oregon/state.gpkg: data/41-oregon/metro-portland/2016/precinct.zip data/4
 
 out/42-pennsylvania/state.gpkg: data/42-pennsylvania/statewide/2011/2011-Voting-District-Boundary-Shapefiles.zip
 	mkdir -p out/42-pennsylvania
-	unzip -d out/42-pennsylvania data/42-pennsylvania/statewide/2011/2011-Voting-District-Boundary-Shapefiles.zip
-	ogr2ogr -sql "SELECT '2011' AS year, 'Pennsylvania' AS state, COUNTYFP11 AS county, NAMELSAD AS precinct, 'polygon' AS accuracy FROM VTDS" \
-		-t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/42-pennsylvania/2011 Voting District Boundary Shapefiles/VTDS.shp'
-	rm -rf 'out/42-pennsylvania/2011 Voting District Boundary Shapefiles'
+	unzip -d out/42-pennsylvania data/42-pennsylvania/statewide/2017/VTDs_Oct17.zip
+	ogr2ogr -sql "SELECT '2016' AS year, 'Pennsylvania' AS state, COUNTYNAME AS county, VTD_NAME AS precinct, 'polygon' AS accuracy FROM VTDs_Oct17" \
+		-t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/42-pennsylvania/VTDs_Oct17.shp'
+	rm -rf 'out/42-pennsylvania/VTDs_Oct17.*'
 
 out/45-south-carolina/state.gpkg: data/45-south-carolina/statewide/2013/sc-statewide-2013.zip
 	mkdir -p out/45-south-carolina/source

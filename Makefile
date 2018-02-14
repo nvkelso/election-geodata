@@ -783,6 +783,7 @@ out/42-pennsylvania/state.gpkg: data/42-pennsylvania/statewide/2011/2011-Voting-
 		-t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/42-pennsylvania/VTDs_Oct17.shp'
 	rm -rf 'out/42-pennsylvania/VTDs_Oct17.*'
 
+
 out/45-south-carolina/state.gpkg: data/45-south-carolina/statewide/2013/sc-statewide-2013.zip
 	mkdir -p out/45-south-carolina/source
 	unzip -d out/45-south-carolina/source data/45-south-carolina/statewide/2013/sc-statewide-2013.zip

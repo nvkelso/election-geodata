@@ -2,12 +2,12 @@
 #
 # Create a new statewide Geopackage file in $TEMPDIR/state.gpkg.
 # Gunzip to a temporary GeoJSON file along the way.
-# Skip Douglas County (FIPS 045) since it'll come from another file.
+# Skip some counties that have newer files.
 #
 CURDIR=`dirname $0`
 TEMPDIR=`$CURDIR/tmpdir.py kansas-`
 
-ogr2ogr -sql "SELECT '2012' AS year, 'Kansas' AS state, SUBSTR(VTD_2012, 3, 3) AS county, VTD_2012 AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON WHERE SUBSTR(VTD_2012, 3, 3) NOT IN ('045', '091', '173', '209')" \
+ogr2ogr -sql "SELECT '2012' AS year, 'Kansas' AS state, SUBSTR(VTD_2012, 3, 3) AS county, VTD_2012 AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON WHERE SUBSTR(VTD_2012, 3, 3) NOT IN ('045', '091', '173', '209', '227')" \
 	-t_srs EPSG:4326 -nln state -nlt MultiPolygon -f GPKG \
 	$TEMPDIR/state.gpkg data/20-kansas/statewide/2012/kansas-state-voting-precincts-2012.geojson
 
@@ -31,6 +31,13 @@ ogr2ogr -sql "SELECT '2016' AS year, 'Kansas' AS state, 'Johnson' AS county, NAM
 ogr2ogr -sql "SELECT '2016' AS year, 'Kansas' AS state, 'Sedgwick' as county, PRECINCT AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON" \
         -t_srs EPSG:4326 -f GPKG -nln state -append \
         $TEMPDIR/state.gpkg data/20-kansas/2016/20173-sedgwick/precincts.geojson
+
+#
+# Add Shawnee County (FIPS 227) to the statewide Geopackage file.
+#
+ogr2ogr -sql "SELECT '2016' AS year, 'Kansas' AS state, 'Shawnee' as county, PRECINCT AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON" \
+        -t_srs EPSG:4326 -f GPKG -nln state -append \
+        $TEMPDIR/state.gpkg data/20-kansas/2016/20227-shawnee/precincts.geojson
 
 #
 # Add Wyandotte County (FIPS 209) to the statewide Geopackage file.

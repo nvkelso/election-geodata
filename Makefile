@@ -488,7 +488,7 @@ out/19-iowa/state.gpkg: data/19-iowa/statewide/2016/pcts_04172014_0908am.zip
 		-t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/19-iowa/source/pcts_04172014_0908am/Precincts041714.shp'
 	rm -rf 'out/19-iowa/source'
 
-out/20-kansas/state.gpkg: data/20-kansas/statewide/2012/kansas-state-voting-precincts-2012.geojson #data/20-kansas/2016/20045-douglas/precincts.geojson
+out/20-kansas/state.gpkg: data/20-kansas/statewide/2012/kansas-state-voting-precincts-2012.geojson
 	mkdir -p out/20-kansas
 	mv `scripts/20-kansas.sh` $@
 

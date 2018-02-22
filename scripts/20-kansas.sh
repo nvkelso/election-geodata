@@ -35,7 +35,7 @@ ogr2ogr -sql "SELECT '2016' AS year, 'Kansas' AS state, 'Sedgwick' as county, PR
 #
 # Add Shawnee County (FIPS 227) to the statewide Geopackage file.
 #
-ogr2ogr -sql "SELECT '2016' AS year, 'Kansas' AS state, 'Shawnee' as county, PRECINCT AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON" \
+ogr2ogr -sql "SELECT '2016' AS year, 'Kansas' AS state, 'Shawnee' as county, NAME AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON" \
         -t_srs EPSG:4326 -f GPKG -nln state -append \
         $TEMPDIR/state.gpkg data/20-kansas/2016/20227-shawnee/precincts.geojson
 

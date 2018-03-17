@@ -6,6 +6,6 @@ Using this Docker image:
     
         docker built -t eg docker
     
-4. Run build script:
+4. Run `build-publish.sh` script:
     
         docker run -it -v `pwd`:/vol -w /vol --env-file docker/env.ini eg

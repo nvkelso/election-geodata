@@ -464,22 +464,61 @@ out/17-illinois/state.gpkg: data/17-illinois/statewide/2010/tl_2012_17_vtd10.zip
 		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/17-illinois/source/tl_2012_17_vtd10.shp'
 	rm -rf 'out/17-illinois/source'
 
-out/18-indiana/state.gpkg: data/18-indiana/statewide/2010/tl_2012_18_vtd10.zip data/18-indiana/097-marion/2011/precincts.geojson data/18-indiana/157-tippecanoe/2016/precincts.geojson
+out/18-indiana/state.gpkg: data/18-indiana/statewide/2010/tl_2012_18_vtd10.zip \
+		data/18-indiana/003-allen/2012/precincts.geojson \
+		data/18-indiana/039-elkhart/2012/precincts.geojson \
+		data/18-indiana/057-hamilton/2012/precincts.geojson \
+		data/18-indiana/097-marion/2012/precincts.geojson \
+		data/18-indiana/141-St-Joseph/2012/Voter_Precincts.zip \
+		data/18-indiana/157-tippecanoe/2016/precincts.geojson \
+		data/18-indiana/163-vanderburgh/2012/precincts.geojson
 	mkdir -p out/18-indiana/source
 	unzip -d out/18-indiana/source data/18-indiana/statewide/2010/tl_2012_18_vtd10.zip
-	# Skip Tippecanoe and Marion Counties (FIPS 157, 097) since they'll come from another file.
+	
 	# GPKG are weird
 	rm -f $@
-	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_18_vtd10 WHERE COUNTYFP10 != '157' AND COUNTYFP10 != '097'" \
+
+	# Skip a few since they'll come from another file.
+	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_18_vtd10 WHERE COUNTYFP10 NOT IN ('003', '039', '057', '097', '141', '157', '163')" \
 		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -nln state -nlt MultiPolygon -f GPKG out/18-indiana/state.gpkg out/18-indiana/source/tl_2012_18_vtd10.shp
+	
+	# Add Allen County (FIPS 003) to the statewide Geopackage file.
+	ogr2ogr -sql "SELECT '2012' AS year, '18' AS state, '003' AS county, Precinct AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON" \
+		-t_srs EPSG:4326 -f GPKG -nln state -append \
+		out/18-indiana/state.gpkg data/18-indiana/003-allen/2012/precincts.geojson
+	
+	# Add Elkhart County (FIPS 039) to the statewide Geopackage file.
+	ogr2ogr -sql "SELECT '2012' AS year, '18' AS state, '039' AS county, P12 AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON" \
+		-t_srs EPSG:4326 -f GPKG -nln state -append \
+		out/18-indiana/state.gpkg data/18-indiana/039-elkhart/2012/precincts.geojson
+	
+	# Add Hamilton County (FIPS 057) to the statewide Geopackage file.
+	ogr2ogr -sql "SELECT '2012' AS year, '18' AS state, '057' AS county, PRECINCT AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON" \
+		-t_srs EPSG:4326 -f GPKG -nln state -append \
+		out/18-indiana/state.gpkg data/18-indiana/057-hamilton/2012/precincts.geojson
+	
+	# Add Marion County (FIPS 097) to the statewide Geopackage file.
+	ogr2ogr -sql "SELECT '2012' AS year, '18' AS state, '097' AS county, PRECINCT AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON" \
+		-t_srs EPSG:4326 -f GPKG -nln state -append \
+		out/18-indiana/state.gpkg data/18-indiana/097-marion/2012/precincts.geojson
+	
+	# Add St. Joesph County (FIPS 141) to the statewide Geopackage file.
+	mkdir -p out/18-indiana/source/141-St-Joseph
+	unzip -d out/18-indiana/source/141-St-Joseph data/18-indiana/141-St-Joseph/2012/Voter_Precincts.zip
+	ogr2ogr -sql "SELECT '2012' AS year, '18' AS state, '141' AS county, PRECINCT AS precinct, 'polygon' AS accuracy FROM Voter_Precincts" \
+		-t_srs EPSG:4326 -f GPKG -nln state -append \
+		out/18-indiana/state.gpkg out/18-indiana/source/141-St-Joseph/Voter_Precincts.shp
+	
 	# Add Tippecanoe County (FIPS 157) to the statewide Geopackage file.
 	ogr2ogr -sql "SELECT '2016' AS year, '18' AS state, '157' AS county, P12_STFID AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON" \
 		-t_srs EPSG:4326 -f GPKG -nln state -append \
 		out/18-indiana/state.gpkg data/18-indiana/157-tippecanoe/2016/precincts.geojson
-	# Add Marion County (FIPS 097) to the statewide Geopackage file.
-	ogr2ogr -sql "SELECT '2011' AS year, '18' AS state, '097' AS county, PRECINCT AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON" \
+	
+	# Add Vanderburgh County (FIPS 163) to the statewide Geopackage file.
+	ogr2ogr -sql "SELECT '2012' AS year, '18' AS state, '163' AS county, NAME AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON" \
 		-t_srs EPSG:4326 -f GPKG -nln state -append \
-		out/18-indiana/state.gpkg data/18-indiana/097-marion/2011/precincts.geojson
+		out/18-indiana/state.gpkg data/18-indiana/163-vanderburgh/2012/precincts.geojson
+	
 	rm -rf 'out/18-indiana/source'
 
 out/19-iowa/state.gpkg: data/19-iowa/statewide/2016/pcts_04172014_0908am.zip

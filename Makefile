@@ -20,6 +20,7 @@ out/render.png: render/precincts-2163.shp render/style.xml
 		$@
 
 render/precincts-2163.shp: out/nation.gpkg
+	rm -f $@
 	ogr2ogr -t_srs EPSG:2163 -overwrite -skipfailures $@ $<
 
 out/nation.gpkg: \
@@ -494,13 +495,10 @@ out/20-kansas/state.gpkg: data/20-kansas/statewide/2012/kansas-state-voting-prec
 
 out/21-kentucky/state.gpkg: data/21-kentucky/statewide/2016/kyprecinctsmergedfinal.zip
 	mkdir -p out/21-kentucky/source
-	unzip -d out/21-kentucky/source data/21-kentucky/statewide/2016/kyprecinctsmergedfinal.zip
-	# Write to temporary GeoJSON because OGR SQL and GPKG driver
-	# don't like spaces in shapefile layer name.
-	rm -f out/21-kentucky/source/temporary.geojson
-	ogr2ogr -sql "SELECT '2014' AS year, 'Kentucky' AS state, COUNTY AS county, VTD AS precinct, 'polygon' AS accuracy FROM "'"KY Precincts Merged Final"' \
-		-t_srs EPSG:4326 -overwrite -f GeoJSON out/21-kentucky/source/temporary.geojson 'out/21-kentucky/source/KY Precincts Merged Final.shp'
-	ogr2ogr -overwrite -f GPKG $@ out/21-kentucky/source/temporary.geojson
+	unzip -d out/21-kentucky/source data/21-kentucky/statewide/2016/kyprecinctsmergedfinal_mod.zip
+	rm -f $@
+	ogr2ogr -sql "SELECT '2014' AS year, 'Kentucky' AS state, COUNTY AS county, VTD AS precinct, 'polygon' AS accuracy FROM kyprecinctsmergedfinal_mod" \
+		-t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/21-kentucky/source/kyprecinctsmergedfinal_mod.shp'
 	rm -rf out/21-kentucky/source
 
 out/22-louisiana/state.gpkg: data/22-louisiana/statewide/2016/2016_LA_Precincts.zip

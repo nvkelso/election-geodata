@@ -684,11 +684,12 @@ out/39-ohio/state.gpkg: data/39-ohio/statewide/2010/tl_2012_39_vtd10.zip \
 						data/39-ohio/39017-butler/BUT_PREC.zip \
 						data/39-ohio/39021-champaign/CHP_PREC.zip \
 						data/39-ohio/39133-portage/POR_PREC.zip \
-						data/39-ohio/39157-tuscarawas/TUS_PREC.zip
+						data/39-ohio/39157-tuscarawas/TUS_PREC.zip \
+						data/39-ohio/39165-warren/WarrenCountyOHPrecincts_2014.zip
 	mkdir -p out/39-ohio/source
 	unzip -d out/39-ohio/source data/39-ohio/statewide/2010/tl_2012_39_vtd10.zip
 	rm -f $@
-	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, CAST(GEOID10 AS character(30)) AS precinct, 'polygon' AS accuracy FROM tl_2012_39_vtd10 WHERE COUNTYFP10 NOT IN ('003','007','009','011','013','015','017','021','133','157')" \
+	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, CAST(GEOID10 AS character(30)) AS precinct, 'polygon' AS accuracy FROM tl_2012_39_vtd10 WHERE COUNTYFP10 NOT IN ('003','007','009','011','013','015','017','021','133','157','165')" \
 		-s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ 'out/39-ohio/source/tl_2012_39_vtd10.shp'
 	# Add multiple counties
 	unzip -d out/39-ohio/source data/39-ohio/39003-allen/ALL_PREC.zip
@@ -731,6 +732,10 @@ out/39-ohio/state.gpkg: data/39-ohio/statewide/2010/tl_2012_39_vtd10.zip \
 	ogr2ogr -sql "SELECT '2016' AS year, '39' AS state, '157' AS county, CONCAT('39157', CAST(PRCT_NAME AS character(30))) AS precinct, 'polygon' AS accuracy FROM TUS_PREC" \
 		-s_srs '+proj=lcc +lat_1=40.43333333333333 +lat_2=41.7 +lat_0=39.66666666666666 +lon_0=-82.5 +x_0=600000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=us-ft +no_defs' \
 		-t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/39-ohio/source/TUS_PREC.shp'
+	unzip -d out/39-ohio/source data/39-ohio/39165-warren/WarrenCountyOHPrecincts_2014.zip
+	ogr2ogr -sql "SELECT '2014' AS year, '39' AS state, '165' AS county, CONCAT('39165', CAST(prec_name AS character(30))) AS precinct, 'polygon' AS accuracy FROM WarrenCountyOHPrecincts_2014" \
+		-s_srs '+proj=lcc +lat_1=40.43333333333333 +lat_2=41.7 +lat_0=39.66666666666666 +lon_0=-82.5 +x_0=600000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=us-ft +no_defs' \
+		-t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/39-ohio/source/WarrenCountyOHPrecincts_2014.shp'
 	rm -rf 'out/39-ohio/source'
 
 out/40-oklahoma/state.gpkg: data/40-oklahoma/statewide/2016/pct_2010.zip

@@ -720,6 +720,7 @@ out/39-ohio/state.gpkg: data/39-ohio/statewide/2010/tl_2012_39_vtd10.zip \
 						data/39-ohio/39015-brown/BRO_PREC.zip \
 						data/39-ohio/39017-butler/BUT_PREC.zip \
 						data/39-ohio/39021-champaign/CHP_PREC.zip \
+						data/39-ohio/39025-clermont/ClermontOHVotingPrecincts.zip \
 						data/39-ohio/39061-hamilton/HamiltonCountyOHPrecincts_2016.zip \
 						data/39-ohio/39133-portage/POR_PREC.zip \
 						data/39-ohio/39157-tuscarawas/TUS_PREC.zip \
@@ -727,7 +728,7 @@ out/39-ohio/state.gpkg: data/39-ohio/statewide/2010/tl_2012_39_vtd10.zip \
 	mkdir -p out/39-ohio/source
 	unzip -d out/39-ohio/source data/39-ohio/statewide/2010/tl_2012_39_vtd10.zip
 	rm -f $@
-	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, CAST(GEOID10 AS character(30)) AS precinct, 'polygon' AS accuracy FROM tl_2012_39_vtd10 WHERE COUNTYFP10 NOT IN ('003','007','009','011','013','015','017','021','061','133','157','165')" \
+	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, CAST(GEOID10 AS character(30)) AS precinct, 'polygon' AS accuracy FROM tl_2012_39_vtd10 WHERE COUNTYFP10 NOT IN ('003','007','009','011','013','015','017','021','025','061','133','157','165')" \
 		-s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ 'out/39-ohio/source/tl_2012_39_vtd10.shp'
 	# Add multiple counties
 	unzip -d out/39-ohio/source data/39-ohio/39003-allen/ALL_PREC.zip
@@ -762,6 +763,10 @@ out/39-ohio/state.gpkg: data/39-ohio/statewide/2010/tl_2012_39_vtd10.zip \
 	ogr2ogr -sql "SELECT '2016' AS year, '39' AS state, '021' AS county, CONCAT('39021', CAST(District_N AS character(10))) AS precinct, 'polygon' AS accuracy FROM CHP_PREC" \
 		-s_srs '+proj=lcc +lat_1=38.73333333333333 +lat_2=40.03333333333333 +lat_0=38 +lon_0=-82.5 +x_0=600000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=us-ft +no_defs' \
 		-t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/39-ohio/source/CHP_PREC.shp'
+	unzip -d out/39-ohio/source data/39-ohio/39025-clermont/ClermontOHVotingPrecincts.zip
+	ogr2ogr -sql "SELECT '2016' AS year, '39' AS state, '025' AS county, CONCAT('39025', CAST(PRECINCT AS character(30))) AS precinct, 'polygon' AS accuracy FROM ClermontOHVotingPrecincts" \
+		-s_srs '+proj=lcc +lat_1=38.73333333333333 +lat_2=40.03333333333333 +lat_0=38 +lon_0=-82.5 +x_0=600000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=us-ft +no_defs' \
+		-t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/39-ohio/source/ClermontOHVotingPrecincts.shp'
 	unzip -d out/39-ohio/source data/39-ohio/39061-hamilton/HamiltonCountyOHPrecincts_2016.zip
 	ogr2ogr -sql "SELECT '2016' AS year, '39' AS state, '061' AS county, CONCAT('39061', CAST(PRC_NAME AS character(30))) AS precinct, 'polygon' AS accuracy FROM HamiltonCountyOHPrecincts_2016" \
 		-s_srs EPSG:4326 -t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/39-ohio/source/HamiltonCountyOHPrecincts_2016.shp'

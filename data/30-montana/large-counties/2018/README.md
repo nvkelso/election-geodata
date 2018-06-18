@@ -1,7 +1,7 @@
+# 2018 Montana precinct boundaries
+
 ## Counties included
 Cascade, Flathead, Gallatin, Lake, Lewis and Clark, Missoula, Yellowstone
-
-## Precicnt boundaries for 2018 
 
 ## County Specific Sources and Dates
 

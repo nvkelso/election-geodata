@@ -625,37 +625,37 @@ out/30-montana/state.gpkg: data/30-montana/statewide/2010/tl_2012_30_vtd10.zip
 	rm -rf 'out/30-montana/source'
 
 	# Add Cascade County (FIPS 013) to the statewide Geopackage file.
-	ogr2ogr -sql "SELECT '2018' AS year, '30' AS state, '013' AS county, Precinct AS precinct, 'polygon' AS accuracy FROM CascadeCntyPrecincts2013" \
+	ogr2ogr -sql "SELECT '2018' AS year, '30' AS state, '013' AS county, CONCAT('30013', Precinct) AS precinct, 'polygon' AS accuracy FROM CascadeCntyPrecincts2013" \
 		-t_srs EPSG:4326 -f GPKG -nln state -append \
 		$@ data/30-montana/county/2018/013-Cascade/CascadeCntyPrecincts2013.shp
 
 	# Add Flathead County (FIPS 029) to the statewide Geopackage file.
-	ogr2ogr -sql "SELECT '2018' AS year, '30' AS state, '029' AS county, Precinct AS precinct, 'polygon' AS accuracy FROM Precinct" \
+	ogr2ogr -sql "SELECT '2018' AS year, '30' AS state, '029' AS county, CONCAT('30029', Precinct) AS precinct, 'polygon' AS accuracy FROM Precinct" \
 		-t_srs EPSG:4326 -f GPKG -nln state -append \
 		$@ data/30-montana/county/2018/029-Flathead/Precinct.shp
 
 	# Add Gallatin County (FIPS 031) to the statewide Geopackage file.
-	ogr2ogr -sql "SELECT '2018' AS year, '30' AS state, '031' AS county, Precinct AS precinct, 'polygon' AS accuracy FROM Precincts2013" \
+	ogr2ogr -sql "SELECT '2018' AS year, '30' AS state, '031' AS county, CONCAT('30031', Precinct) AS precinct, 'polygon' AS accuracy FROM Precincts2013" \
 		-t_srs EPSG:4326 -f GPKG -nln state -append \
 		$@ data/30-montana/county/2018/031-Gallatin/Precincts2013.shp
 
 	# Add Lake County (FIPS 047) to the statewide Geopackage file.
-	ogr2ogr -sql "SELECT '2018' AS year, '30' AS state, '047' AS county, Precinct AS precinct, 'polygon' AS accuracy FROM Lake_Precincts_May_2018" \
+	ogr2ogr -sql "SELECT '2018' AS year, '30' AS state, '047' AS county, CONCAT('30047', Precinct) AS precinct, 'polygon' AS accuracy FROM Lake_Precincts_May_2018" \
 		-t_srs EPSG:4326 -f GPKG -nln state -append \
 		$@ data/30-montana/county/2018/047-Lake/Lake_Precincts_May_2018.shp
 
 	# Add Lewis and Clark County (FIPS 049) to the statewide Geopackage file.
-	ogr2ogr -sql "SELECT '2018' AS year, '30' AS state, '049' AS county, Precinct AS precinct, 'polygon' AS accuracy FROM LCPrecincts" \
+	ogr2ogr -sql "SELECT '2018' AS year, '30' AS state, '049' AS county, CONCAT('30049', Precinct) AS precinct, 'polygon' AS accuracy FROM LCPrecincts" \
 		-t_srs EPSG:4326 -f GPKG -nln state -append \
 		$@ data/30-montana/county/2018/049-LewisAndClark/LCPrecincts.shp
 
 	# Add Missoula County (FIPS 063) to the statewide Geopackage file.
-	ogr2ogr -sql "SELECT '2018' AS year, '30' AS state, '063' AS county, Precinct AS precinct, 'polygon' AS accuracy FROM Precincts" \
+	ogr2ogr -sql "SELECT '2018' AS year, '30' AS state, '063' AS county, CONCAT('30063', Precinct) AS precinct, 'polygon' AS accuracy FROM Precincts" \
 		-t_srs EPSG:4326 -f GPKG -nln state -append \
 		$@ data/30-montana/county/2018/063-Missoula/Precincts.shp
 
 	# Add Yellowstone County (FIPS 111) to the statewide Geopackage file.
-	ogr2ogr -sql "SELECT '2018' AS year, '30' AS state, '111' AS county, Precinct AS precinct, 'polygon' AS accuracy FROM YC_precincts" \
+	ogr2ogr -sql "SELECT '2018' AS year, '30' AS state, '111' AS county, CONCAT('30111', Precinct) AS precinct, 'polygon' AS accuracy FROM YC_precincts" \
 		-t_srs EPSG:4326 -f GPKG -nln state -append \
 		$@ data/30-montana/county/2018/111-Yellowstone/YC_precincts.shp
 

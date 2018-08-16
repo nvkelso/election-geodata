@@ -144,11 +144,12 @@ out/02-alaska/state.gpkg: data/02-alaska/statewide/2012/SW_Amended_Precinct_shap
 		-s_srs EPSG:4326 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/02-alaska/source/SW_Amended_Precinct_shape_files.shp'
 	rm -rf 'out/02-alaska/source'
 
-out/04-arizona/state.gpkg: data/04-arizona/statewide/2010/tl_2012_04_vtd10.zip
+out/04-arizona/state.gpkg: data/04-arizona/statewide/2018/Arizona_2018_Shell.zip
 	mkdir -p out/04-arizona/source
-	unzip -d out/04-arizona/source data/04-arizona/statewide/2010/tl_2012_04_vtd10.zip
-	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_04_vtd10" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/04-arizona/source/tl_2012_04_vtd10.shp'
+	unzip -d out/04-arizona/source data/04-arizona/statewide/2018/Arizona_2018_Shell.zip
+	rm -f $@
+	ogr2ogr -sql "SELECT '2018' AS year, '04' AS state, COUNTYNAME AS county, CONCAT('04', GISPRECINC) AS precinct, 'polygon' AS accuracy FROM Arizona_2018_Shell" \
+		-s_srs EPSG:2223 -t_srs EPSG:4326 -overwrite -f GPKG $@ 'out/04-arizona/source/Arizona_2018_Shell.shp'
 	rm -rf 'out/04-arizona/source'
 
 out/05-arkansas/state.gpkg: data/05-arkansas/statewide/2016/ELECTION_PRECINCTS.zip

@@ -8,9 +8,13 @@
 - **2016** from LA Times
     - https://github.com/datadesk/california-2016-election-precinct-maps
     - Downloaded 2017-03-26
-
-## Other years available from Berkeley Law:
-
-- Including 2001, 2002, and 2011.
-- http://statewidedatabase.org/data.html
-- In a while, 2016 data will also be available: http://statewidedatabase.org/d10/g16.html
+- **2016** precincts with election results. Citation: _Florida Election Science Team, 2018, "2016 Precinct-Level Election Results", [https://doi.org/10.7910/DVN/NH5S2I](https://doi.org/10.7910/DVN/NH5S2I), Harvard Dataverse, V2._
+  - Downloaded and posted on 2018-08-22 by [Will Adler](https://github.com/wtadler), [Princeton Gerrymandering Project](http://gerrymander.princeton.edu/)
+  - Election column codes:
+    - G16PREDCli - Hillary Clinton (Democratic Party)
+    - G16PREGSte - Jill Stein (Green Party)
+    - G16PRELJoh - Gary Johnson (Libertarian Party)
+    - G16PREPLaR - Gloria La Riva (Peace and Freedom Party)
+    - G16PRERTru - Donald J. Trump (Republican Party)
+  - Election results and precinct shapefile from [Statewide Database at UC Berkeley Law](http://statewidedatabase.org/d10/g16.html)
+- Other years available from [Statewide Database at UC Berkeley Law](http://statewidedatabase.org/data.html)

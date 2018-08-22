@@ -5,6 +5,80 @@
 - **2016**
 	- Per https://github.com/nvkelso/election-geodata/issues/23#issuecomment-290935336
 	- The 2010 Maryland US Census (2012 revision) data is used in later elections in Maryland, including 2016
+- **2016** precincts with election results. Citation: _Florida Election Science Team, 2018, "2016 Precinct-Level Election Results", [https://doi.org/10.7910/DVN/NH5S2I](https://doi.org/10.7910/DVN/NH5S2I), Harvard Dataverse, V2._
+  - Downloaded and posted on 2018-08-22 by [Will Adler](https://github.com/wtadler), [Princeton Gerrymandering Project](http://gerrymander.princeton.edu/)
+  - Columns reporting votes follow a standard label pattern. For example, **G16PREDCli**:
+    - Character 1 is G for a general election, P for a primary.
+    - Characters 2 and 3 are the year of the election.
+    - Characters 4–6 represent the office type:
+      - GOV - Governor
+      - H## - U.S. House, where ## is the district number. AL: at large.
+      - LTG - Lieutenant Governor
+      - PRE - President
+      - PSC - Public Service Commission
+      - RRC - Railroad Commissioner
+      - USS - U.S. Senate
+      - Character 7 represents the party of the candidate, such as D and R. See below for specific codes; note that third-party candidates may appear on the ballot under different party labels in different states.
+      - Characters 8–10 are the first three letters of the candidate's last name.
+  - Other codes:
+    - President
+      - G16PRERTru - Donald J. Trump (Republican Party)
+      - G16PREDCli - Hillary Clinton (Democratic Party)
+      - G16PRELJoh - Gary Johnson (Libertarian Party)
+      - G16PREGSte - Jill Stein (Green Party)
+      - G16PREOth - Write-in Votes
+    - U.S. Senate
+      - G16USSRSze - Kathy Szeliga (Republican Party)
+      - G16USSDVan - Chris Van Hollen (Democratic Party)
+      - G16USSGFlo - Margaret Flowers (Green Party)
+      - G16USSOth - Write-in Votes
+    - U.S. House District MD-01
+      - G16H01RHar - Andy Harris (Republican Party)
+      - G16H01DWer - Joe Werner (Democratic Party)
+      - G16H01LBee - Matt Beers (Libertarian Party)
+      - G16H01Oth - Write-in Votes
+    - U.S. House District MD-02
+      - G16H02RMcD - Pat McDonough (Republican Party)
+      - G16H02DRup - C. A. Dutch Ruppersberger (Democratic Party)
+      - G16H02LKas - Kristin S. Kasprzak (Libertarian Party)
+      - G16H02Oth - Write-in Votes
+    - U.S. House District MD-03
+      - G16H03RPla - Mark Plaster (Republican Party)
+      - G16H03DSar - John Sarbanes (Democratic Party)
+      - G16H03GEze - Nnabu Eze (Green Party)
+      - G16H03Oth - Write-in Votes
+    - U.S. House District MD-04
+      - G16H04RMcD - George E. McDermott (Republican Party)
+      - G16H04DBro - Anthony G. Brown (Democratic Party)
+      - G16H04LKra - Benjamin Lee Krause (Libertarian Party)
+      - G16H04GCla - Kamesha T. Clark (Green Party)
+      - G16H04Oth - Write-in Votes
+    - U.S. House District MD-05
+      - G16H05RArn - Mark Arness (Republican Party)
+      - G16H05DHoy - Steny H. Hoyer (Democratic Party)
+      - G16H05LSum - Jason Summers (Libertarian Party)
+      - G16H05Oth - Write-in Votes
+    - U.S. House District MD-06
+      - G16H06RHoe - Amie Hoeber (Republican Party)
+      - G16H06DDel - John K. Delaney (Democratic Party)
+      - G16H06LHow - David L. Howser (Libertarian Party)
+      - G16H06GGlu - George Gluck (Green Party)
+      - G16H06Oth - Write-in Votes
+    - U.S. House District MD-07
+      - G16H07RVau - Corrogan R. Vaughn (Republican Party)
+      - G16H07DCum - Elijah Cummings (Democratic Party)
+      - G16H07GHoe - Myles B. Hoenig (Green Party)
+      - G16H07Oth - Write-in Votes
+    - U.S. House District MD-08
+      - G16H08RCox - Dan Cox (Republican Party)
+      - G16H08DRas - Jamie Raskin (Democratic Party)
+      - G16H08LWun - Jasen Wunder (Libertarian Party)
+      - G16H08GWal - Nancy Wallace (Green Party)
+      - G16H08Oth - Write-in Votes
+  - Election results from [Maryland State Board of Elections](https://elections.maryland.gov/elections/2016/election_data/index.html)
+  - Precinct shapefile from Maryland Department of Planning
+  - Early, Provisional, and Absentee votes are reported only at the county level. These votes are apportioned to precincts by candidate in the same shares that the Election Day vote was split among precincts within a county.
+
 
 ## Alternate 2010 data
 

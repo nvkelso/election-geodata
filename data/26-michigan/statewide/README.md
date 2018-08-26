@@ -1,0 +1,30 @@
+# Michigan
+
+- **2016** precincts from the [Michigan Department of State](https://gis-michigan.opendata.arcgis.com/datasets/8ce0f3ce3ff74109ac02a26d34a0f4fc_1) without election results.
+- **2016** precincts with election results. Citation: _Florida Election Science Team, 2018, "2016 Precinct-Level Election Results", [https://doi.org/10.7910/DVN/NH5S2I](https://doi.org/10.7910/DVN/NH5S2I), Harvard Dataverse, V3._
+  - Downloaded and posted on 2018-08-26 by [Will Adler](https://github.com/wtadler), [Princeton Gerrymandering Project](http://gerrymander.princeton.edu/)
+  - Columns reporting votes follow a standard label pattern. For example, **G16PREDCli**:
+    - Character 1 is G for a general election, P for a primary.
+    - Characters 2 and 3 are the year of the election.
+    - Characters 4–6 represent the office type:
+      - GOV - Governor
+      - H## - U.S. House, where ## is the district number. AL: at large.
+      - LTG - Lieutenant Governor
+      - PRE - President
+      - PSC - Public Service Commission
+      - RRC - Railroad Commissioner
+      - USS - U.S. Senate
+      - Character 7 represents the party of the candidate, such as D and R. See below for specific codes; note that third-party candidates may appear on the ballot under different party labels in different states.
+      - Characters 8–10 are the first three letters of the candidate's last name.
+  - Other codes:
+    - President
+      - G16PREDCli - Hillary Clinton (Democratic Party)
+      - G16PRERTru - Donald J. Trump (Republican Party)
+      - G16PREGSte - Jill Stein (Green Party)
+      - G16PRELJoh - Gary Johnson (Libertarian Party)
+      - G16PREOth - Other Party/Write-in Votes
+  - Election results from the [Michigan Department of State](https://miboecfr.nictusa.com/cgi-bin/cfr/precinct_srch.cgi)
+  - Precinct shapefile from the [Michigan Department of State](https://gis-michigan.opendata.arcgis.com/datasets/8ce0f3ce3ff74109ac02a26d34a0f4fc_1)
+  - Michigan has cities split across counties. Two are relevant to their reported election results versus the precinct map (which did not make the split), Fenton and Richmond. Those precincts were merged to reflect the precinct map.
+  - Most counties had "statistical adjustments" that were at the county level, rather than the precinct level. Only two were for party candidates (Huron and Kalkaka), and in those cases, two or fewer votes. The remaining cases were related to "other" votes. Due to the scattered nature of "other" votes, these votes are apportioned to precincts by the split of total votes of precincts within the county.
+  - Detroit allows for absentee votes to be reported by Absentee Voter Counting Boards, which generally contain multiple precincts. These votes are apportioned to precincts by candidate in the same shares that the non-AVCB vote was split among precincts within a county. The linkage between election precinct and AVCB was provided by OpenElections via Derek Willis. Precinct 176 was listed as split between AVCB 37 and AVCB 158, the only precinct in the city that was listed as split. AVCB 158 has no other precinct assigned to it, so all votes went to precinct 176. However, this was a very low number of votes relative to the other AVCBs, so for ease of calculation, 176 was treated as a normal member of AVCB 37 in the disaggregation calculation described above.

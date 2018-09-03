@@ -140,14 +140,15 @@ out/01-alabama/state.gpkg: data/01-alabama/statewide/2010/tl_2012_01_vtd10.zip d
 		-s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/01-alabama/source/tl_2012_01_vtd10.shp'
 	rm -rf 'out/01-alabama/source'
 
-out/02-alaska/state.gpkg: data/02-alaska/statewide/2012/SW_Amended_Precinct_shape_files.zip data/template.shp
+# from 2013 but reused for next few elections
+out/02-alaska/state.gpkg: data/02-alaska/statewide/2016/ak_2016_FEST.zip data/template.shp
 	mkdir -p out/02-alaska/source
 	# GPKG are weird
 	rm -f $@
 	ogr2ogr -s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ data/template.shp
-	unzip -d out/02-alaska/source data/02-alaska/statewide/2012/SW_Amended_Precinct_shape_files.zip
-	ogr2ogr -sql "SELECT '2012' AS year, '02' AS state, DISTRICT_N AS county, CONCAT('02', DISTRICT) AS precinct, 'polygon' AS accuracy FROM SW_Amended_Precinct_shape_files" \
-		-s_srs EPSG:4326 -t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/02-alaska/source/SW_Amended_Precinct_shape_files.shp'
+	unzip -d out/02-alaska/source data/02-alaska/statewide/2016/ak_2016_FEST.zip
+	ogr2ogr -sql "SELECT '2016' AS year, '02' AS state, CONCAT('0', SUBSTR(DISTRICT, 0, 2)) AS county, CONCAT('020', DISTRICT) AS precinct, name as name, 'polygon' AS accuracy FROM ak_2016" \
+		-s_srs EPSG:4326 -t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/02-alaska/source/ak_2016.shp'
 	rm -rf 'out/02-alaska/source'
 
 out/04-arizona/state.gpkg: data/04-arizona/statewide/2018/Arizona_2018_Shell.zip data/template.shp
@@ -200,14 +201,14 @@ out/09-connecticut/state.gpkg: data/09-connecticut/statewide/2010/tl_2012_09_vtd
 		-s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/09-connecticut/source/tl_2012_09_vtd10.shp'
 	rm -rf 'out/09-connecticut/source'
 
-out/10-delaware/state.gpkg: data/10-delaware/statewide/2012/Delaware_Election_Boundaries.zip data/template.shp
+out/10-delaware/state.gpkg: data/10-delaware/statewide/2016/de_2016_FEST.zip data/template.shp
 	mkdir -p out/10-delaware/source
 	# GPKG are weird
 	rm -f $@
 	ogr2ogr -s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ data/template.shp
-	unzip -d out/10-delaware/source data/10-delaware/statewide/2012/Delaware_Election_Boundaries.zip
-	ogr2ogr -sql "SELECT '2012' AS year, '10' AS state, '' AS county, CONCAT( '10', '-00-', EDRD_2012) AS precinct, 'polygon' AS accuracy FROM Election_Boundaries" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/10-delaware/source/Election_Boundaries.shp'
+	unzip -d out/10-delaware/source data/10-delaware/statewide/2016/de_2016_FEST.zip
+	ogr2ogr -sql "SELECT '2016' AS year, '10' AS state, '000' AS county, CONCAT('10', '000', EDRD_2012) AS precinct FROM de_2016" \
+		-s_srs EPSG:4326 -t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/10-delaware/source/de_2016.shp'
 	rm -rf 'out/10-delaware/source'
 
 out/11-district-of-columbia/state.gpkg: data/11-district-of-columbia/statewide/2012/Voting_Precinct__2012.zip data/template.shp
@@ -220,241 +221,15 @@ out/11-district-of-columbia/state.gpkg: data/11-district-of-columbia/statewide/2
 		-s_srs EPSG:4326 -t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/11-district-of-columbia/source/Voting_Precinct__2012.shp'
 	rm -rf 'out/11-district-of-columbia/source'
 
-out/12-florida/state.gpkg: data/12-florida/statewide/2010/tl_2012_12_vtd10.zip data/template.shp
+out/12-florida/state.gpkg: data/12-florida/statewide/2016/fl_2016_FEST.zip data/template.shp
 	mkdir -p out/12-florida/source
 	# GPKG are weird
 	rm -f $@
 	ogr2ogr -s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ data/template.shp
-	unzip -d out/12-florida/source data/12-florida/statewide/2010/tl_2012_12_vtd10.zip
-	# Skip many counties since they'll come from other files
-	# Broward (portion) 011 at precinct 120110187, Palm Beach 099, Monroe 087, Gladers 043, Manatee 081, Marion 083,
-	# Columbia 023, Hamilton 047, Madison 079, Taylor 123, Gadisden 039,
-	# Jackson 063, Holmes 059, Bacombia 033, Martin 085
-	ogr2ogr -sql "SELECT '2010' AS year, '12' AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_12_vtd10 WHERE (GEOID10 IN ('120110187') OR COUNTYFP10 IN ('099', '087', '047', '081', '083', '085', '023', '041', '043', '079', '123', '039', '063', '059', '033'))" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -append -f GPKG -nln state $@ 'out/12-florida/source/tl_2012_12_vtd10.shp'
-	# Add newer Florida counties to the statewide Geopackage file.
-	ogr2ogr -sql "SELECT '2012' AS year, '12' AS state, '001' AS county, CONCAT('12001', Precinct) AS precinct, 'polygon' AS accuracy FROM ALA20121106v6_PctMap" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/ALA/ALA20121106v6_PctMap.shp
-	ogr2ogr -sql "SELECT '2012' AS year, '12' AS state, '003' AS county, CONCAT('12003', Precinct) AS precinct, 'polygon' AS accuracy FROM BAK20121106v6_PctMap" \
-		-s_srs EPSG:4326 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/BAK/BAK20121106v6_PctMap.shp
-#
-# Should be dissolved on PCT
-	ogr2ogr -sql "SELECT '2012' AS year, '12' AS state, '005' AS county, CONCAT('12005', CAST(PCT AS character(3))) AS precinct, 'polygon' AS accuracy FROM CensusPrecinct_region" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -f "ESRI Shapefile" \
-		out/12-florida/source/BAY_CensusPrecinct_region.shp data/12-florida/county/2016/BAY/CensusPrecinct_region.shp
-	ogr2ogr -sql "SELECT year, state, county, precinct, accuracy FROM BAY_CensusPrecinct_region" \
-		-s_srs EPSG:4326 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ out/12-florida/source/BAY_CensusPrecinct_region.shp
-# 	ogr2ogr -dialect sqlite -sql "SELECT ST_Union(Geometry), year, state, county, precinct, accuracy GROUP BY precinct" \
-# 		-s_srs EPSG:4326 -t_srs EPSG:4326 -f "ESRI Shapefile"
-# 		out/12-florida/source/BAY_CensusPrecinct_region_diss.shp out/12-florida/source/BAY_CensusPrecinct_region.shp
-#
-	ogr2ogr -sql "SELECT '2012' AS year, '12' AS state, '007' AS county, CONCAT('12007', Precinct) AS precinct, 'polygon' AS accuracy FROM BRA20121106v5_PctMap" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/BRA/BRA20121106v5_PctMap.shp
-	ogr2ogr -sql "SELECT '2016' AS year, '12' AS state, '009' AS county, CONCAT('12009', PCT) AS precinct, 'polygon' AS accuracy FROM Precincts_2016" \
+	unzip -d out/12-florida/source data/12-florida/statewide/2016/fl_2016_FEST.zip
+	ogr2ogr -sql "SELECT '2016' AS year, '12' AS state, county AS county, CONCAT('12', countypct) AS precinct FROM fl_2016" \
 		-s_srs '+proj=tmerc +lat_0=24.33333333333333 +lon_0=-81 +k=0.9999411764705882 +x_0=199999.9999999999 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=us-ft +no_defs' \
-		-t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/BRE/Precincts_2016.shp
-	ogr2ogr -sql "SELECT '2012' AS year, '12' AS state, '011' AS county, CONCAT('12011', PRECINCT) AS precinct, 'polygon' AS accuracy FROM PRECINCTS_region" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/BRO/PRECINCTS_region.shp
-	ogr2ogr -sql "SELECT '2012' AS year, '12' AS state, '013' AS county, CONCAT('12013', Precinct) AS precinct, 'polygon' AS accuracy FROM CAL20121106v5_PctMap" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/CAL/CAL20121106v5_PctMap.shp
-	ogr2ogr -sql "SELECT '2012' AS year, '12' AS state, '015' AS county, CONCAT('12015', Precinct) AS precinct, 'polygon' AS accuracy FROM CHA20121106v5_PctMap" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/CHA/CHA20121106v5_PctMap.shp
-	ogr2ogr -sql "SELECT '2012' AS year, '12' AS state, '017' AS county, CONCAT('12017', Precinct) AS precinct, 'polygon' AS accuracy FROM CIT20121106v6_PctMap" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/CIT/CIT20121106v6_PctMap.shp
-	ogr2ogr -sql "SELECT '2016' AS year, '12' AS state, '019' AS county, CONCAT('12019', PRECINCT) AS precinct, 'polygon' AS accuracy FROM CLA20160503_PctMap" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/CLA/CLA20160503_PctMap.shp
-	ogr2ogr -sql "SELECT '2012' AS year, '12' AS state, '021' AS county, CONCAT('12021', PRECINCT) AS precinct, 'polygon' AS accuracy FROM CLL20121106v6_PctMap_region" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/CLL/CLL20121106v6_PctMap_region.shp
-	ogr2ogr -sql "SELECT '2012' AS year, '12' AS state, '086' AS county, CONCAT('12086', CAST(PRECINCT AS character(3))) AS precinct, 'polygon' AS accuracy FROM DAD20120530PctMap" \
-		-s_srs '+proj=tmerc +lat_0=24.33333333333333 +lon_0=-81 +k=0.9999411764705882 +x_0=199999.9999999999 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=us-ft +no_defs' \
-		-t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/DAD/DAD20120530PctMap.shp
-	ogr2ogr -sql "SELECT '2012' AS year, '12' AS state, '027' AS county, CONCAT('12027', Precinct) AS precinct, 'polygon' AS accuracy FROM DES20120630_PctMap" \
-		-s_srs '+proj=tmerc +lat_0=24.33333333333333 +lon_0=-82 +k=0.9999411764705882 +x_0=199999.9999999999 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=us-ft +no_defs' \
-		-t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/DES/DES20120630_PctMap.shp
-	ogr2ogr -sql "SELECT '2012' AS year, '12' AS state, '029' AS county, CONCAT('12029', Precinct) AS precinct, 'polygon' AS accuracy FROM DIX20121106v6_PctMap" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/DIX/DIX20121106v6_PctMap.shp
-	ogr2ogr -sql "SELECT '2012' AS year, '12' AS state, '031' AS county, CONCAT('12031', PRECINCT) AS precinct, 'polygon' AS accuracy FROM DUV20120615_PctMap_region" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/DUV/DUV20120615_PctMap_region.shp
-	ogr2ogr -sql "SELECT '2012' AS year, '12' AS state, '035' AS county, CONCAT('12035', Precinct) AS precinct, 'polygon' AS accuracy FROM FLA20121106v6_PctMap" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/FLA/FLA20121106v6_PctMap.shp
-	ogr2ogr -sql "SELECT '2012' AS year, '12' AS state, '045' AS county, CONCAT('12045', Precinct) AS precinct, 'polygon' AS accuracy FROM GUL20121106v5_PctMap" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/GUL/GUL20121106v5_PctMap.shp
-	ogr2ogr -sql "SELECT '2012' AS year, '12' AS state, '049' AS county, CONCAT('12049', Precinct) AS precinct, 'polygon' AS accuracy FROM HAR20121106v6_PctMap" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/HAR/HAR20121106v6_PctMap.shp
-	ogr2ogr -sql "SELECT '2012' AS year, '12' AS state, '051' AS county, CONCAT('12051', Precinct) AS precinct, 'polygon' AS accuracy FROM HEN20121106v5_PctMap" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/HEN/HEN20121106v5_PctMap.shp
-	ogr2ogr -sql "SELECT '2015' AS year, '12' AS state, '053' AS county, CONCAT('12053', CAST(Precinct AS character(3))) AS precinct, 'polygon' AS accuracy FROM HER20120615_PctMap1" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/HER/HER20120615_PctMap1.shp
-	ogr2ogr -sql "SELECT '2016' AS year, '12' AS state, '055' AS county, CONCAT('12055', CombndPCT) AS precinct, 'polygon' AS accuracy FROM HIG20160801_PctMap3" \
-		-s_srs '+proj=tmerc +lat_0=24.33333333333333 +lon_0=-81 +k=0.9999411764705882 +x_0=199999.9999999999 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=us-ft +no_defs' \
-		-t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/HIG/HIG20160801_PctMap3.shp
-#
-# NEEDS DISSOLVE on PRECINCT
-	ogr2ogr -sql "SELECT '2015' AS year, '12' AS state, '057' AS county, CONCAT('12057', PRECINCT) AS precinct, 'polygon' AS accuracy FROM "'"20151222_PctMap_Proposed_region"' \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/HIL/20151222_PctMap_Proposed_region.shp
-#
-	ogr2ogr -sql "SELECT '2015' AS year, '12' AS state, '061' AS county, CONCAT('12061', PRECINCT) AS precinct, 'polygon' AS accuracy FROM IND20150210_PctMap_region" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/IND/IND20150210_PctMap_region.shp
-	ogr2ogr -sql "SELECT '2012' AS year, '12' AS state, '067' AS county, CONCAT('12067', Precinct) AS precinct, 'polygon' AS accuracy FROM LAF20121106v5_PctMap" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/LAF/LAF20121106v5_PctMap.shp
-	ogr2ogr -sql "SELECT '2016' AS year, '12' AS state, '069' AS county, CONCAT('12069', CAST(Precinct AS character(3))) AS precinct, 'polygon' AS accuracy FROM LAK20160420PctMap" \
-		-s_srs '+proj=tmerc +lat_0=24.33333333333333 +lon_0=-81 +k=0.9999411764705882 +x_0=199999.9999999999 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=us-ft +no_defs' \
-		-t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/LAK/LAK20160420PctMap.shp
-	ogr2ogr -sql "SELECT '2012' AS year, '12' AS state, '071' AS county, CONCAT('12071', CAST(NAME AS character(3))) AS precinct, 'polygon' AS accuracy FROM LEE_PCT_2012_region" \
-		-s_srs EPSG:4019 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/LEE/LEE_PCT_2012_region.shp
-	ogr2ogr -sql "SELECT '2016' AS year, '12' AS state, '073' AS county, CONCAT('12073', PRECINCT) AS precinct, 'polygon' AS accuracy FROM LEO02160608_PctMap" \
-		-s_srs '+proj=lcc +lat_1=29.58333333333333 +lat_2=30.75 +lat_0=29 +lon_0=-84.5 +x_0=600000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=us-ft +no_defs' \
-		-t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/LEO/LEO02160608_PctMap.shp
-	ogr2ogr -sql "SELECT '2012' AS year, '12' AS state, '075' AS county, CONCAT('12075', Precinct) AS precinct, 'polygon' AS accuracy FROM LEV20121106v5_PctMap" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/LEV/LEV20121106v5_PctMap.shp
-	ogr2ogr -sql "SELECT '2012' AS year, '12' AS state, '089' AS county, CONCAT('12089', Precinct) AS precinct, 'polygon' AS accuracy FROM NAS20121106v5_PctMap" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/NAS/NAS20121106v5_PctMap.shp
-	ogr2ogr -sql "SELECT '2012' AS year, '12' AS state, '091' AS county, CONCAT('12091', Precinct) AS precinct, 'polygon' AS accuracy FROM OKA20121106v5_PctMap" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/OKA/OKA20121106v5_PctMap.shp
-	ogr2ogr -sql "SELECT '2012' AS year, '12' AS state, '093' AS county, CONCAT('12093', DISTRICT) AS precinct, 'polygon' AS accuracy FROM "'"2012 Precincts"' \
-		-s_srs '+proj=tmerc +lat_0=24.33333333333333 +lon_0=-81 +k=0.9999411764705882 +x_0=199999.9999999446 +y_0=0 +ellps=GRS80 +units=us-ft +no_defs' \
-		-t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/OKE/2012\ Precincts.shp
-	ogr2ogr -sql "SELECT '2016' AS year, '12' AS state, '095' AS county, CONCAT('12095', PrecMay201) AS precinct, 'polygon' AS accuracy FROM ORA20160506_PctMap_region" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/ORA/ORA20160506_PctMap_region.shp
-	ogr2ogr -sql "SELECT '2016' AS year, '12' AS state, '097' AS county, CONCAT('12097', PCT2014) AS precinct, 'polygon' AS accuracy FROM "'"2016_06 Osceola Precincts"' \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/OSC/2016_06\ Osceola\ Precincts.shp
-	ogr2ogr -sql "SELECT '2012' AS year, '12' AS state, '101' AS county, CONCAT('12101', Precinct) AS precinct, 'polygon' AS accuracy FROM PAS20121106v5_PctMap" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/PAS/PAS20121106v5_PctMap.shp
-	ogr2ogr -sql "SELECT '2016' AS year, '12' AS state, '103' AS county, CONCAT('12103', PRECINCT) AS precinct, 'polygon' AS accuracy FROM PIN20160503PCTSHAPE" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/PIN/PIN20160503PCTSHAPE.shp
-	ogr2ogr -sql "SELECT '2016' AS year, '12' AS state, '105' AS county, CONCAT('12105', DISTRICT) AS precinct, 'polygon' AS accuracy FROM "'"2016 Polk Precincts"' \
-		-s_srs '+proj=tmerc +lat_0=24.33333333333333 +lon_0=-82 +k=0.9999411764705882 +x_0=199999.9999999446 +y_0=0 +ellps=GRS80 +units=us-ft +no_defs' \
-		-t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/POL/2016\ Polk\ Precincts.shp
-	ogr2ogr -sql "SELECT '2016' AS year, '12' AS state, '107' AS county, CONCAT('12107', Prect_txt) AS precinct, 'polygon' AS accuracy FROM PUT20160614PctMap" \
-		-s_srs '+proj=tmerc +lat_0=24.33333333333333 +lon_0=-81 +k=0.9999411764705882 +x_0=199999.9999999999 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=us-ft +no_defs' \
-		-t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/PUT/PUT20160614PctMap.shp
-	ogr2ogr -sql "SELECT '2012' AS year, '12' AS state, '113' AS county, CONCAT('12113', Precinct) AS precinct, 'polygon' AS accuracy FROM SAN20121106v5_PctMap" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/SAN/SAN20121106v5_PctMap.shp
-	ogr2ogr -sql "SELECT '2012' AS year, '12' AS state, '115' AS county, CONCAT('12115', PRECINCT) AS precinct, 'polygon' AS accuracy FROM Sarasota_Pcts_2012_region" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/SAR/Sarasota_Pcts_2012_region.shp
-	ogr2ogr -sql "SELECT '2012' AS year, '12' AS state, '117' AS county, CONCAT('12117', Precinct) AS precinct, 'polygon' AS accuracy FROM SEM20121106v6_PctMap" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/SEM/SEM20121106v6_PctMap.shp
-	ogr2ogr -sql "SELECT '2012' AS year, '12' AS state, '109' AS county, CONCAT('12109', Precinct) AS precinct, 'polygon' AS accuracy FROM STJ20121106v6_PctMap" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/STJ/STJ20121106v6_PctMap.shp
-	ogr2ogr -sql "SELECT '2012' AS year, '12' AS state, '111' AS county, CONCAT('12111', Precinct) AS precinct, 'polygon' AS accuracy FROM STL20121106v6_PctMap" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/STL/STL20121106v6_PctMap.shp
-	ogr2ogr -sql "SELECT '2012' AS year, '12' AS state, '119' AS county, CONCAT('12119', Precinct) AS precinct, 'polygon' AS accuracy FROM SUM20121106v6_PctMap" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/SUM/SUM20121106v6_PctMap.shp
-	ogr2ogr -sql "SELECT '2012' AS year, '12' AS state, '121' AS county, CONCAT('12121', Precinct) AS precinct, 'polygon' AS accuracy FROM SUW20121106v5_PctMap" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/SUW/SUW20121106v5_PctMap.shp
-	ogr2ogr -sql "SELECT '2012' AS year, '12' AS state, '125' AS county, CONCAT('12125', Precinct) AS precinct, 'polygon' AS accuracy FROM UNI20121106v5_PctMap" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/UNI/UNI20121106v5_PctMap.shp
-	ogr2ogr -sql "SELECT '2016' AS year, '12' AS state, '127' AS county, CONCAT('12127', PRECINCT) AS precinct, 'polygon' AS accuracy FROM VOL20160721_PctMap" \
-		-s_srs '+proj=tmerc +lat_0=24.33333333333333 +lon_0=-81 +k=0.9999411764705882 +x_0=199999.9999999999 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=us-ft +no_defs' \
-		-t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/VOL/VOL20160721_PctMap.shp
-	ogr2ogr -sql "SELECT '2012' AS year, '12' AS state, '129' AS county, CONCAT('12129', PRECINCT) AS precinct, 'polygon' AS accuracy FROM WAK20121106v5_PctMap" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/WAK/WAK20121106v5_PctMap.shp
-	ogr2ogr -sql "SELECT '2012' AS year, '12' AS state, '131' AS county, CONCAT('12131', PRECINCT) AS precinct, 'polygon' AS accuracy FROM WAL20121106v6_PctMap" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/WAL/WAL20121106v6_PctMap.shp
-# start per precinct append for a county worth
-	ogr2ogr -sql "SELECT '2014' AS year, '12' AS state, '065' AS county, '1206501' AS precinct, 'polygon' AS accuracy FROM precinct1" \
-		-s_srs EPSG:4326 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/JEF/precinct1.shp
-	ogr2ogr -sql "SELECT '2014' AS year, '12' AS state, '065' AS county, '1206510' AS precinct, 'polygon' AS accuracy FROM precinct10" \
-		-s_srs EPSG:4326 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/JEF/precinct10.shp
-	ogr2ogr -sql "SELECT '2014' AS year, '12' AS state, '065' AS county, '1206511' AS precinct, 'polygon' AS accuracy FROM precinct11" \
-		-s_srs EPSG:4326 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/JEF/precinct11.shp
-	ogr2ogr -sql "SELECT '2014' AS year, '12' AS state, '065' AS county, '1206512' AS precinct, 'polygon' AS accuracy FROM precinct12" \
-		-s_srs EPSG:4326 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/JEF/precinct12.shp
-	ogr2ogr -sql "SELECT '2014' AS year, '12' AS state, '065' AS county, '1206513' AS precinct, 'polygon' AS accuracy FROM precinct13" \
-		-s_srs EPSG:4326 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/JEF/precinct13.shp
-	ogr2ogr -sql "SELECT '2014' AS year, '12' AS state, '065' AS county, '1206514' AS precinct, 'polygon' AS accuracy FROM precinct14" \
-		-s_srs EPSG:4326 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/JEF/precinct14.shp
-	ogr2ogr -sql "SELECT '2014' AS year, '12' AS state, '065' AS county, '1206515' AS precinct, 'polygon' AS accuracy FROM precinct15" \
-		-s_srs EPSG:4326 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/JEF/precinct15.shp
-	ogr2ogr -sql "SELECT '2014' AS year, '12' AS state, '065' AS county, '1206502' AS precinct, 'polygon' AS accuracy FROM precinct2" \
-		-s_srs EPSG:4326 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/JEF/precinct2.shp
-	ogr2ogr -sql "SELECT '2014' AS year, '12' AS state, '065' AS county, '1206503' AS precinct, 'polygon' AS accuracy FROM precinct3" \
-		-s_srs EPSG:4326 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/JEF/precinct3.shp
-	ogr2ogr -sql "SELECT '2014' AS year, '12' AS state, '065' AS county, '1206504' AS precinct, 'polygon' AS accuracy FROM precinct4" \
-		-s_srs EPSG:4326 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/JEF/precinct4.shp
-	ogr2ogr -sql "SELECT '2014' AS year, '12' AS state, '065' AS county, '1206505' AS precinct, 'polygon' AS accuracy FROM precinct5" \
-		-s_srs EPSG:4326 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/JEF/precinct5.shp
-	ogr2ogr -sql "SELECT '2014' AS year, '12' AS state, '065' AS county, '1206506' AS precinct, 'polygon' AS accuracy FROM precinct6" \
-		-s_srs EPSG:4326 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/JEF/precinct6.shp
-	ogr2ogr -sql "SELECT '2014' AS year, '12' AS state, '065' AS county, '1206507' AS precinct, 'polygon' AS accuracy FROM precinct7" \
-		-s_srs EPSG:4326 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/JEF/precinct7.shp
-	ogr2ogr -sql "SELECT '2014' AS year, '12' AS state, '065' AS county, '1206508' AS precinct, 'polygon' AS accuracy FROM precinct8" \
-		-s_srs EPSG:4326 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/JEF/precinct8.shp
-	ogr2ogr -sql "SELECT '2014' AS year, '12' AS state, '065' AS county, '1206509' AS precinct, 'polygon' AS accuracy FROM precinct9" \
-		-s_srs EPSG:4326 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ data/12-florida/county/2016/JEF/precinct9.shp
-# resume normal appends
-	ogr2ogr -sql "SELECT '2015' AS year, '12' AS state, '041' AS county, CONCAT('12041', Name) AS precinct, 'polygon' AS accuracy FROM GIL" \
-		-s_srs EPSG:4326 -t_srs EPSG:4326 -f GPKG -nln state -append \
-		$@ "data/12-florida/county/2016/GIL/GIL.shp"
-# 	ogr2ogr -sql "SELECT '2015' AS year, '12' AS state, '077' AS county, CONCAT('12077', Name) AS precinct, 'polygon' AS accuracy FROM LIB" \
-# 		-s_srs EPSG:4326 -t_srs EPSG:4326 -f GPKG -nln state -append \
-# 		$@ "data/12-florida/county/2016/LIB/LIB.kml"
-# 	ogr2ogr -sql "SELECT '2015' AS year, '12' AS state, '133' AS county, CONCAT('12133', Name) AS precinct, 'polygon' AS accuracy FROM WAS" \
-# 		-s_srs EPSG:4326 -t_srs EPSG:4326 -f GPKG -nln state -append \
-# 		$@ "data/12-florida/county/2016/WAS/WAS.kml"
+		-t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/12-florida/source/fl_2016.shp'
 	rm -rf 'out/12-florida/source'
 
 out/13-georgia/state.gpkg: data/13-georgia/statewide/2016/VTD2016-Shape.shp data/template.shp
@@ -463,7 +238,7 @@ out/13-georgia/state.gpkg: data/13-georgia/statewide/2016/VTD2016-Shape.shp data
 	rm -f $@
 	ogr2ogr -s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ data/template.shp
 	rm -f out/13-georgia/temporary.geojson
-	ogr2ogr -sql "SELECT '2016' AS year, '13' AS state, COUNTY AS county, DISTRICT AS precinct, 'polygon' AS accuracy FROM "'"VTD2016-Shape"' \
+	ogr2ogr -sql "SELECT '2016' AS year, '13' AS state, FIPS1 AS county, CONCAT(FIPS1, DISTRICT) AS precinct, precinct_n AS name FROM "'"VTD2016-Shape"' \
 		-s_srs EPSG:4019 -t_srs EPSG:4326 -overwrite \
 		-f GeoJSON out/13-georgia/temporary.geojson $<
 	ogr2ogr -nln state -append $@ out/13-georgia/temporary.geojson
@@ -637,14 +412,15 @@ out/23-maine/state.gpkg: data/23-maine/statewide/2010/tl_2012_23_vtd10.zip data/
 	rm -rf 'out/23-maine/source'
 
 # "2010" Census data from 2012 release is used in newer elections, see Readme
-out/24-maryland/state.gpkg: data/24-maryland/statewide/2010/tl_2012_24_vtd10.zip data/template.shp
+out/24-maryland/state.gpkg: data/24-maryland/statewide/2016/md_2016_FEST.zip data/template.shp
 	mkdir -p out/24-maryland/source
 	# GPKG are weird
 	rm -f $@
 	ogr2ogr -s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ data/template.shp
-	unzip -d out/24-maryland/source data/24-maryland/statewide/2010/tl_2012_24_vtd10.zip
-	ogr2ogr -sql "SELECT '2016' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_24_vtd10" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/24-maryland/source/tl_2012_24_vtd10.shp'
+	unzip -d out/24-maryland/source data/24-maryland/statewide/2016/md_2016_FEST.zip
+	ogr2ogr -sql "SELECT '2016' AS year, '24' AS state, CONCAT('24', JURIS) AS county, CONCAT('24', preid) AS precinct, name AS name FROM md_2016_w_ushouse" \
+		-s_srs '+proj=lcc +lat_1=38.3 +lat_2=39.45 +lat_0=37.66666666666666 +lon_0=-77 +x_0=400000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs' \
+		-t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/24-maryland/source/md_2016_w_ushouse.shp'
 	rm -rf 'out/24-maryland/source'
 
 out/25-massachusetts/state.gpkg: data/25-massachusetts/statewide/2010/tl_2012_25_vtd10.zip data/template.shp
@@ -665,7 +441,7 @@ out/26-michigan/state.gpkg: data/26-michigan/statewide/2016/2016_Voting_Precinct
 	unzip -d out/26-michigan/source data/26-michigan/statewide/2016/2016_Voting_Precincts.zip
 	# Write to temporary GeoJSON because OGR SQL and GPKG driver
 	# don't like digits at the start of the shapefile layer name.
-	ogr2ogr -sql "SELECT ElectionYe AS year, '26' AS state, CountyFips AS county, CONCAT('26', VTD2016) AS precinct, 'polygon' AS accuracy FROM "'"2016_Voting_Precincts"' \
+	ogr2ogr -sql "SELECT '2016' AS year, '26' AS state, CONCAT('26', CountyFips) AS county, CONCAT('26', VTD2016) AS precinct FROM "'"2016_Voting_Precincts"' \
 		-f GeoJSON out/26-michigan/source/temporary.geojson out/26-michigan/source/2016_Voting_Precincts.shp
 	ogr2ogr -nln state -append -f GPKG $@ out/26-michigan/source/temporary.geojson
 	rm -rf 'out/26-michigan/source'
@@ -676,7 +452,7 @@ out/27-minnesota/state.gpkg: data/27-minnesota/statewide/2016/elec2016.zip data/
 	rm -f $@
 	ogr2ogr -s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ data/template.shp
 	unzip -d out/27-minnesota/source data/27-minnesota/statewide/2016/elec2016.zip
-	ogr2ogr -sql "SELECT '2016' AS year, '27' AS state, COUNTYFIPS AS county, VTD AS precinct, 'polygon' AS accuracy FROM elec2016" \
+	ogr2ogr -sql "SELECT '2016' AS year, '27' AS state, SUBSTR(VTD, 0, 5) AS county, VTD AS precinct, pctname AS name FROM elec2016" \
 		-s_srs EPSG:26915 -t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/27-minnesota/source/elec2016.shp'
 	rm -rf 'out/27-minnesota/source'
 
@@ -1007,14 +783,15 @@ out/46-south-dakota/state.gpkg: data/46-south-dakota/statewide/2010/tl_2012_46_v
 		-s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/46-south-dakota/source/tl_2012_46_vtd10.shp'
 	rm -rf 'out/46-south-dakota/source'
 
-out/47-tennessee/state.gpkg: data/47-tennessee/statewide/2010/tl_2012_47_vtd10.zip data/template.shp
+out/47-tennessee/state.gpkg: data/47-tennessee/statewide/2016/tn_2016_FEST.zip data/template.shp
 	mkdir -p out/47-tennessee/source
 	# GPKG are weird
 	rm -f $@
 	ogr2ogr -s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ data/template.shp
-	unzip -d out/47-tennessee/source data/47-tennessee/statewide/2010/tl_2012_47_vtd10.zip
-	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_47_vtd10" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/47-tennessee/source/tl_2012_47_vtd10.shp'
+	unzip -d out/47-tennessee/source data/47-tennessee/statewide/2016/tn_2016_FEST.zip
+	ogr2ogr -sql "SELECT '2016' AS year, '47' AS state, '000' AS county, vtd AS precinct, name as name FROM tn_2016" \
+		-s_srs '+proj=lcc +lat_1=35.25 +lat_2=36.41666666666666 +lat_0=34.33333333333334 +lon_0=-86 +x_0=600000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=us-ft +no_defs' \
+		-t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/47-tennessee/source/tn_2016.shp'
 	rm -rf 'out/47-tennessee/source'
 
 out/48-texas/state.gpkg: data/48-texas/statewide/2016/Precincts.zip data/template.shp

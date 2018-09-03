@@ -55,3 +55,7 @@ Long text:
 
 1. [baby steps towards measuring the efficiency gap](http://mike.teczno.com/notes/redistricting/measuring-efficiency-gap.html) - Mike's follow-up post
 2. [things I’ve recently learned about legislative redistricting](http://mike.teczno.com/notes/redistricting.html) - Mike's original post
+
+### Building From Scratch
+
+Code for building output maps, nationwide packages, and uploading downloadable files can be founder under `docker/` directory.

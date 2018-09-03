@@ -6,3 +6,44 @@
 	- from ? via aaron-strauss
     - https://github.com/aaron-strauss/precinct-shapefiles/tree/master/ak
     - Downloaded 017-04-01
+- **2016** precincts with election results. Citation: _Florida Election Science Team, 2018, "2016 Precinct-Level Election Results", [https://doi.org/10.7910/DVN/NH5S2I](https://doi.org/10.7910/DVN/NH5S2I), Harvard Dataverse, V2._
+  - Downloaded and posted on 2018-08-22 by [Will Adler](https://github.com/wtadler), [Princeton Gerrymandering Project](http://gerrymander.princeton.edu/)
+  - Columns reporting votes follow a standard label pattern. For example, **G16PREDCli**:
+    - Character 1 is G for a general election, P for a primary.
+    - Characters 2 and 3 are the year of the election.
+    - Characters 4–6 represent the office type:
+      - GOV - Governor
+      - H## - U.S. House, where ## is the district number. AL: at large.
+      - LTG - Lieutenant Governor
+      - PRE - President
+      - PSC - Public Service Commission
+      - RRC - Railroad Commissioner
+      - USS - U.S. Senate
+      - Character 7 represents the party of the candidate, such as D and R. See below for specific codes; note that third-party candidates may appear on the ballot under different party labels in different states.
+      - Characters 8–10 are the first three letters of the candidate's last name.
+  - Other codes:
+    - President
+      - G16PRECCas - Darrell L. Castle (Constitution Party)
+      - G16PREDCli - Hillary Clinton (Democratic Party)
+      - G16PREIDeL - Roque De La Fuente (Independent)
+      - G16PRELJoh - Gary Johnson (Libertarian Party)
+      - G16PREGSte - Jill Stein (Green Party)
+      - G16PRERTru - Donald J. Trump (Republican Party)
+      - G16PREOth - Write-in Votes
+    - U.S. Senate
+      - G16USSICra - Breck A. Craig (Independent)
+      - G16USSIGia - Ted Gianoutsos (Independent)
+      - G16USSDMet - Ray Metcalfe (Democratic Party)
+      - G16USSLMil - Joe Miller (Libertarian Party)
+      - G16USSRMur - Lisa Murkowski (Republican Party)
+      - G16USSISto - Margaret Stock (Independent)
+      - G16USSOth - Write-in Votes
+    - U.S. House
+      - G16HALDLin - Steve Lindbeck (Democratic Party)
+      - G16HALLMcD - Jim C. McDermott (Libertarian Party)
+      - G16HALISou - Bernie Souphanavong (Independent)
+      - G16HALRYou - Don Young (Republican Party)
+      - G16HALOth - Write-in Votes
+  - Election results from [Alaska Division of Elections](http://www.elections.alaska.gov/results/16GENR/index.shtml)
+  - Precinct shapefile from [Alaska Division of Elections](http://www.elections.alaska.gov/Core/districtmaps.php)  
+  - Early, Absentee, and Questioned votes are only reported at the State House district level (since Alaska has portions of the state with no lower level of government, HDs serve a similar purpose as counties do in other states for the purpose of reporting votes). These votes are apportioned to precincts by candidate in the same shares that the Election Day vote was split among precincts within an HD.

@@ -2,12 +2,42 @@
 
 - **2010** US Census
     - Downloaded 2017-03-11.
-- **2016** from Florida Secretary of State
+- **2016** county files from Florida Secretary of State
     - via FOIA request and DVD delivery, email sent to DivElections@dos.myflorida.com
     - precinct polling place locations data as of 9.19.16
     - Shapefiles come per county, Makefile stitches them into state-wide file
     - Data uploaded from DVD on 2017-03-21
-
+- **2016** precincts with election results. Citation: _Florida Election Science Team, 2018, "2016 Precinct-Level Election Results", [https://doi.org/10.7910/DVN/NH5S2I](https://doi.org/10.7910/DVN/NH5S2I), Harvard Dataverse, V2._
+  - Downloaded and posted on 2018-08-22 by [Will Adler](https://github.com/wtadler), [Princeton Gerrymandering Project](http://gerrymander.princeton.edu/)
+  - Columns reporting votes follow a standard label pattern. For example, **G16PREDCli**:
+    - Character 1 is G for a general election, P for a primary.
+    - Characters 2 and 3 are the year of the election.
+    - Characters 4–6 represent the office type:
+      - GOV - Governor
+      - H## - U.S. House, where ## is the district number. AL: at large.
+      - LTG - Lieutenant Governor
+      - PRE - President
+      - PSC - Public Service Commission
+      - RRC - Railroad Commissioner
+      - USS - U.S. Senate
+      - Character 7 represents the party of the candidate, such as D and R. See below for specific codes; note that third-party candidates may appear on the ballot under different party labels in different states.
+      - Characters 8–10 are the first three letters of the candidate's last name.
+  - Other codes:
+    - President
+      - G16PRERTru - Donald J. Trump (Republican Party)
+      - G16PREDCli - Hillary Clinton (Democratic Party)
+      - G16PRELJoh - Gary Johnson (Libertarian Party)
+      - G16PRECCas - Darrell L. Castle (Constitution Party)
+      - G16PREGSte - Jill Stein (Green Party)
+      - G16PREIDeL - Roque De La Fuente (Reform Party)
+      - G16PREOth - Write-in Votes
+    - U.S. Senate
+      - G16USSRRub - Marco Rubio (Republican Party)
+      - G16USSDMur - Patrick Murphy (Democratic Party)
+      - G16USSLSta - Paul Stanton (Libertarian Party)
+      - G16USSOth - Independent and Write-in Votes
+  - Election results from [Florida Division of Elections](http://dos.myflorida.com/elections/data-statistics/elections-data/precinct-level-election-results/)
+  - Precinct shapefile from many sources. The starting point was the Orlando Sentinel's [precinct map](http://interactive.orlandosentinel.com/elections/2016/presidential-primary/results/dem.html) for the 2016 presidential primary. Hillsborough, Lake, Miami-Dade, Orange, Palm Beach, and Pinellas Counties were updated directly with shapefiles downloaded from county Supervisor of Elections websites. Brevard, Marion, and Putnam Counties were updated with KML files from the respective county Supervisor of Elections websites, from their election result map pages. DeSoto, Leon, Polk, and Osceola Counties updates received from Supervisor of Elections websites through personal contact. Highlands, Santa Rosa, Sarasota, and Volusia Counties had some precinct mergers, which were determined based on visual inspection of PDF precinct maps from the county websites. Jefferson County changed its precincts, but no map could be procured. As a last resort, the 2016 voter registration file was geocoded. Census blocks were assigned to precincts based on where voters fell, with best guesses made in blocks with no voters. Hernando 99, Collier 450, and Palm Beach 8001/8002 are UOCAVA precincts with no real geography and votes were not redistributed. Precinct names were adjusted to align with the formatting used in the voter registration file (e.g., some precincts have leading spaces).
 
 ## Florida County FIPS codes
 

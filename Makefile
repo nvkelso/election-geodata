@@ -238,7 +238,7 @@ out/13-georgia/state.gpkg: data/13-georgia/statewide/2016/VTD2016-Shape.shp data
 	rm -f $@
 	ogr2ogr -s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ data/template.shp
 	rm -f out/13-georgia/temporary.geojson
-	ogr2ogr -sql "SELECT '2016' AS year, '13' AS state, COUNTY AS county, DISTRICT AS precinct, 'polygon' AS accuracy FROM "'"VTD2016-Shape"' \
+	ogr2ogr -sql "SELECT '2016' AS year, '13' AS state, FIPS1 AS county, CONCAT(FIPS1, DISTRICT) AS precinct, precinct_n AS name FROM "'"VTD2016-Shape"' \
 		-s_srs EPSG:4019 -t_srs EPSG:4326 -overwrite \
 		-f GeoJSON out/13-georgia/temporary.geojson $<
 	ogr2ogr -nln state -append $@ out/13-georgia/temporary.geojson

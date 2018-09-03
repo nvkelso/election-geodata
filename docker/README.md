@@ -4,7 +4,7 @@ Using this Docker image:
 2. Populate `docker/env.ini` from `docker/env.ini-sample`
 3. Build `eg` Docker image:
     
-        docker built -t eg docker
+        docker build -t eg docker
     
 4. Run `build-publish.sh` script:
     

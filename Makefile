@@ -441,7 +441,7 @@ out/26-michigan/state.gpkg: data/26-michigan/statewide/2016/2016_Voting_Precinct
 	unzip -d out/26-michigan/source data/26-michigan/statewide/2016/2016_Voting_Precincts.zip
 	# Write to temporary GeoJSON because OGR SQL and GPKG driver
 	# don't like digits at the start of the shapefile layer name.
-	ogr2ogr -sql "SELECT '2016' AS year, '26' AS state, CountyFips AS county, CONCAT('26', VTD2016) AS precinct, 'polygon' AS accuracy FROM "'"2016_Voting_Precincts"' \
+	ogr2ogr -sql "SELECT '2016' AS year, '26' AS state, CONCAT('26', CountyFips) AS county, CONCAT('26', VTD2016) AS precinct FROM "'"2016_Voting_Precincts"' \
 		-f GeoJSON out/26-michigan/source/temporary.geojson out/26-michigan/source/2016_Voting_Precincts.shp
 	ogr2ogr -nln state -append -f GPKG $@ out/26-michigan/source/temporary.geojson
 	rm -rf 'out/26-michigan/source'

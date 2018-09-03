@@ -412,14 +412,15 @@ out/23-maine/state.gpkg: data/23-maine/statewide/2010/tl_2012_23_vtd10.zip data/
 	rm -rf 'out/23-maine/source'
 
 # "2010" Census data from 2012 release is used in newer elections, see Readme
-out/24-maryland/state.gpkg: data/24-maryland/statewide/2010/tl_2012_24_vtd10.zip data/template.shp
+out/24-maryland/state.gpkg: data/24-maryland/statewide/2016/md_2016_FEST.zip data/template.shp
 	mkdir -p out/24-maryland/source
 	# GPKG are weird
 	rm -f $@
 	ogr2ogr -s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ data/template.shp
-	unzip -d out/24-maryland/source data/24-maryland/statewide/2010/tl_2012_24_vtd10.zip
-	ogr2ogr -sql "SELECT '2016' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_24_vtd10" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/24-maryland/source/tl_2012_24_vtd10.shp'
+	unzip -d out/24-maryland/source data/24-maryland/statewide/2016/md_2016_FEST.zip
+	ogr2ogr -sql "SELECT '2016' AS year, '24' AS state, CONCAT('24', JURIS) AS county, CONCAT('24', preid) AS precinct, name AS name FROM md_2016_w_ushouse" \
+		-s_srs '+proj=lcc +lat_1=38.3 +lat_2=39.45 +lat_0=37.66666666666666 +lon_0=-77 +x_0=400000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs' \
+		-t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/24-maryland/source/md_2016_w_ushouse.shp'
 	rm -rf 'out/24-maryland/source'
 
 out/25-massachusetts/state.gpkg: data/25-massachusetts/statewide/2010/tl_2012_25_vtd10.zip data/template.shp

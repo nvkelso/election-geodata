@@ -452,7 +452,7 @@ out/27-minnesota/state.gpkg: data/27-minnesota/statewide/2016/elec2016.zip data/
 	rm -f $@
 	ogr2ogr -s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ data/template.shp
 	unzip -d out/27-minnesota/source data/27-minnesota/statewide/2016/elec2016.zip
-	ogr2ogr -sql "SELECT '2016' AS year, '27' AS state, COUNTYFIPS AS county, VTD AS precinct, 'polygon' AS accuracy FROM elec2016" \
+	ogr2ogr -sql "SELECT '2016' AS year, '27' AS state, SUBSTR(VTD, 0, 5) AS county, VTD AS precinct, pctname AS name FROM elec2016" \
 		-s_srs EPSG:26915 -t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/27-minnesota/source/elec2016.shp'
 	rm -rf 'out/27-minnesota/source'
 

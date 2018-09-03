@@ -1008,14 +1008,15 @@ out/46-south-dakota/state.gpkg: data/46-south-dakota/statewide/2010/tl_2012_46_v
 		-s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/46-south-dakota/source/tl_2012_46_vtd10.shp'
 	rm -rf 'out/46-south-dakota/source'
 
-out/47-tennessee/state.gpkg: data/47-tennessee/statewide/2010/tl_2012_47_vtd10.zip data/template.shp
+out/47-tennessee/state.gpkg: data/47-tennessee/statewide/2016/tn_2016_FEST.zip data/template.shp
 	mkdir -p out/47-tennessee/source
 	# GPKG are weird
 	rm -f $@
 	ogr2ogr -s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ data/template.shp
-	unzip -d out/47-tennessee/source data/47-tennessee/statewide/2010/tl_2012_47_vtd10.zip
-	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_47_vtd10" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/47-tennessee/source/tl_2012_47_vtd10.shp'
+	unzip -d out/47-tennessee/source data/47-tennessee/statewide/2016/tn_2016_FEST.zip
+	ogr2ogr -sql "SELECT '2016' AS year, '47' AS state, '000' AS county, vtd AS precinct, name as name FROM tn_2016" \
+		-s_srs '+proj=lcc +lat_1=35.25 +lat_2=36.41666666666666 +lat_0=34.33333333333334 +lon_0=-86 +x_0=600000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=us-ft +no_defs' \
+		-t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/47-tennessee/source/tn_2016.shp'
 	rm -rf 'out/47-tennessee/source'
 
 out/48-texas/state.gpkg: data/48-texas/statewide/2016/Precincts.zip data/template.shp

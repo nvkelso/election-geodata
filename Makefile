@@ -706,9 +706,50 @@ out/30-montana/state.gpkg: data/30-montana/statewide/2010/tl_2012_30_vtd10.zip d
 	rm -f $@
 	ogr2ogr -s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ data/template.shp
 	unzip -d out/30-montana/source data/30-montana/statewide/2010/tl_2012_30_vtd10.zip
-	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_30_vtd10" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/30-montana/source/tl_2012_30_vtd10.shp'
+
+	# GPKG are weird
+	rm -f $@
+
+	# Skip a few since they'll come from another file.
+	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_30_vtd10 WHERE COUNTYFP10 NOT IN ('013', '029', '031', '047', '049', '063', '111')" \
+		-s_srs EPSG:4269 -t_srs EPSG:4326 -append -f GPKG -nln state $@ 'out/30-montana/source/tl_2012_30_vtd10.shp'
 	rm -rf 'out/30-montana/source'
+
+	# Add Cascade County (FIPS 013) to the statewide Geopackage file.
+	ogr2ogr -sql "SELECT '2018' AS year, '30' AS state, '013' AS county, CONCAT('30013', Precinct) AS precinct, 'polygon' AS accuracy FROM CascadeCntyPrecincts2013" \
+		-t_srs EPSG:4326 -f GPKG -nln state -append \
+		$@ data/30-montana/county/2018/013-Cascade/CascadeCntyPrecincts2013.shp
+
+	# Add Flathead County (FIPS 029) to the statewide Geopackage file.
+	ogr2ogr -sql "SELECT '2018' AS year, '30' AS state, '029' AS county, CONCAT('30029', Precinct) AS precinct, 'polygon' AS accuracy FROM Precinct" \
+		-t_srs EPSG:4326 -f GPKG -nln state -append \
+		$@ data/30-montana/county/2018/029-Flathead/Precinct.shp
+
+	# Add Gallatin County (FIPS 031) to the statewide Geopackage file.
+	ogr2ogr -sql "SELECT '2018' AS year, '30' AS state, '031' AS county, CONCAT('30031', Precinct) AS precinct, 'polygon' AS accuracy FROM Precincts2013" \
+		-t_srs EPSG:4326 -f GPKG -nln state -append \
+		$@ data/30-montana/county/2018/031-Gallatin/Precincts2013.shp
+
+	# Add Lake County (FIPS 047) to the statewide Geopackage file.
+	ogr2ogr -sql "SELECT '2018' AS year, '30' AS state, '047' AS county, CONCAT('30047', Precinct) AS precinct, 'polygon' AS accuracy FROM Lake_Precincts_May_2018" \
+		-t_srs EPSG:4326 -f GPKG -nln state -append \
+		$@ data/30-montana/county/2018/047-Lake/Lake_Precincts_May_2018.shp
+
+	# Add Lewis and Clark County (FIPS 049) to the statewide Geopackage file.
+	ogr2ogr -sql "SELECT '2018' AS year, '30' AS state, '049' AS county, CONCAT('30049', Precinct) AS precinct, 'polygon' AS accuracy FROM LCPrecincts" \
+		-t_srs EPSG:4326 -f GPKG -nln state -append \
+		$@ data/30-montana/county/2018/049-LewisAndClark/LCPrecincts.shp
+
+	# Add Missoula County (FIPS 063) to the statewide Geopackage file.
+	ogr2ogr -sql "SELECT '2018' AS year, '30' AS state, '063' AS county, CONCAT('30063', Precinct) AS precinct, 'polygon' AS accuracy FROM Precincts" \
+		-t_srs EPSG:4326 -f GPKG -nln state -append \
+		$@ data/30-montana/county/2018/063-Missoula/Precincts.shp
+
+	# Add Yellowstone County (FIPS 111) to the statewide Geopackage file.
+	ogr2ogr -sql "SELECT '2018' AS year, '30' AS state, '111' AS county, CONCAT('30111', Precinct) AS precinct, 'polygon' AS accuracy FROM YC_precincts" \
+		-t_srs EPSG:4326 -f GPKG -nln state -append \
+		$@ data/30-montana/county/2018/111-Yellowstone/YC_precincts.shp
+
 
 out/31-nebraska/state.gpkg: data/31-nebraska/statewide/2010/tl_2012_31_vtd10.zip data/template.shp
 	mkdir -p out/31-nebraska/source
@@ -735,11 +776,8 @@ out/33-new-hampshire/state.gpkg: data/33-new-hampshire/statewide/2010/tl_2012_33
 	# GPKG are weird
 	rm -f $@
 	ogr2ogr -s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ data/template.shp
-	unzip -d out/33-new-hampshire/source data/33-new-hampshire/statewide/2010/tl_2012_33_vtd10.zip
-	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct FROM tl_2012_33_vtd10 WHERE (FUNCSTAT10='S' AND VTDST10 NOT IN ('ZZZZZZ'))" \
-		-s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/33-new-hampshire/source/tl_2012_33_vtd10.shp'
 	unzip -d out/33-new-hampshire/source data/33-new-hampshire/statewide/2016/NHPolitDists.zip
-	ogr2ogr -sql "SELECT '2016' AS year, '33' AS state, COUNTY AS county, CONCAT('33', CAST(FIPS AS character(3))) AS precinct FROM NHPolitDists" \
+	ogr2ogr -sql "SELECT '2016' AS year, '33' AS state, COUNTY AS county, nameward AS precinct, 'polygon' AS accuracy FROM NHPolitDists" \
 	  -t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/33-new-hampshire/source/nhpolitdists.shp'
 	rm -rf 'out/33-new-hampshire/source'
 
@@ -948,7 +986,6 @@ out/42-pennsylvania/state.gpkg: data/42-pennsylvania/statewide/2011/2011-Voting-
 	ogr2ogr -sql "SELECT '2016' AS year, '42' AS state, COUNTYNAME AS county, VTD_NAME AS precinct, 'polygon' AS accuracy FROM VTDs_Oct17" \
 		-t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/42-pennsylvania/source/VTDs_Oct17.shp'
 	rm -rf 'out/42-pennsylvania/source/'
-
 
 out/45-south-carolina/state.gpkg: data/45-south-carolina/statewide/2013/sc-statewide-2013.zip data/template.shp
 	mkdir -p out/45-south-carolina/source

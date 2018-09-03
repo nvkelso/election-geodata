@@ -296,22 +296,22 @@ out/18-indiana/state.gpkg: data/18-indiana/statewide/2010/tl_2012_18_vtd10.zip \
 		-s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -append -nln state $@ out/18-indiana/source/tl_2012_18_vtd10.shp
 
 	# Add Allen County (FIPS 003) to the statewide Geopackage file.
-	ogr2ogr -sql "SELECT '2012' AS year, '18' AS state, '003' AS county, Precinct AS precinct, 'polygon' AS accuracy FROM precincts" \
+	ogr2ogr -sql "SELECT '2012' AS year, '18' AS state, '003' AS county, Precinct AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON" \
 		-t_srs EPSG:4326 -f GPKG -nln state -nln state -append \
 		$@ data/18-indiana/003-allen/2012/precincts.geojson
 
 	# Add Elkhart County (FIPS 039) to the statewide Geopackage file.
-	ogr2ogr -sql "SELECT '2012' AS year, '18' AS state, '039' AS county, P12 AS precinct, 'polygon' AS accuracy FROM precincts" \
+	ogr2ogr -sql "SELECT '2012' AS year, '18' AS state, '039' AS county, P12 AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON" \
 		-t_srs EPSG:4326 -f GPKG -nln state -nln state -append \
 		$@ data/18-indiana/039-elkhart/2012/precincts.geojson
 
 	# Add Hamilton County (FIPS 057) to the statewide Geopackage file.
-	ogr2ogr -sql "SELECT '2012' AS year, '18' AS state, '057' AS county, PRECINCT AS precinct, 'polygon' AS accuracy FROM precincts" \
+	ogr2ogr -sql "SELECT '2012' AS year, '18' AS state, '057' AS county, PRECINCT AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON" \
 		-t_srs EPSG:4326 -f GPKG -nln state -nln state -append \
 		$@ data/18-indiana/057-hamilton/2012/precincts.geojson
 
 	# Add Marion County (FIPS 097) to the statewide Geopackage file.
-	ogr2ogr -sql "SELECT '2012' AS year, '18' AS state, '097' AS county, PRECINCT AS precinct, 'polygon' AS accuracy FROM precincts" \
+	ogr2ogr -sql "SELECT '2012' AS year, '18' AS state, '097' AS county, PRECINCT AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON" \
 		-t_srs EPSG:4326 -f GPKG -nln state -nln state -append \
 		$@ data/18-indiana/097-marion/2012/precincts.geojson
 
@@ -323,12 +323,12 @@ out/18-indiana/state.gpkg: data/18-indiana/statewide/2010/tl_2012_18_vtd10.zip \
 		$@ out/18-indiana/source/141-St-Joseph/Voter_Precincts.shp
 
 	# Add Tippecanoe County (FIPS 157) to the statewide Geopackage file.
-	ogr2ogr -sql "SELECT '2016' AS year, '18' AS state, '157' AS county, P12_STFID AS precinct, 'polygon' AS accuracy FROM precincts" \
+	ogr2ogr -sql "SELECT '2016' AS year, '18' AS state, '157' AS county, P12_STFID AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON" \
 		-t_srs EPSG:4326 -f GPKG -nln state -nln state -append \
 		$@ data/18-indiana/157-tippecanoe/2016/precincts.geojson
 
 	# Add Vanderburgh County (FIPS 163) to the statewide Geopackage file.
-	ogr2ogr -sql "SELECT '2012' AS year, '18' AS state, '163' AS county, NAME AS precinct, 'polygon' AS accuracy FROM precincts" \
+	ogr2ogr -sql "SELECT '2012' AS year, '18' AS state, '163' AS county, NAME AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON" \
 		-t_srs EPSG:4326 -f GPKG -nln state -nln state -append \
 		$@ data/18-indiana/163-vanderburgh/2012/precincts.geojson
 
@@ -350,32 +350,32 @@ out/20-kansas/state.gpkg: data/20-kansas/statewide/2012/kansas_state_voting_prec
 	rm -f $@
 	ogr2ogr -s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ data/template.shp
 
-	ogr2ogr -sql "SELECT '2012' AS year, '20' AS state, SUBSTR(VTD_2012, 3, 3) AS county, VTD_2012 AS precinct, 'polygon' AS accuracy FROM kansas_state_voting_precincts_2012 WHERE SUBSTR(VTD_2012, 3, 3) NOT IN ('045', '091', '173', '209', '227')" \
+	ogr2ogr -sql "SELECT '2012' AS year, '20' AS state, SUBSTR(VTD_2012, 3, 3) AS county, VTD_2012 AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON WHERE SUBSTR(VTD_2012, 3, 3) NOT IN ('045', '091', '173', '209', '227')" \
 		-s_srs EPSG:4326 -t_srs EPSG:4326 -nln state -nlt MultiPolygon -f GPKG \
 		$@ data/20-kansas/statewide/2012/kansas_state_voting_precincts_2012.geojson
 
 	# Add Douglas County (FIPS 045) to the statewide Geopackage file.
-	ogr2ogr -sql "SELECT '2016' AS year, '20' AS state, '20045' AS county, CONCAT(CAST(precinctid AS character(255)), ' ', CAST(subprecinctid AS character(255))) AS precinct, 'polygon' AS accuracy FROM precincts" \
+	ogr2ogr -sql "SELECT '2016' AS year, '20' AS state, '20045' AS county, CONCAT(CAST(precinctid AS character(255)), ' ', CAST(subprecinctid AS character(255))) AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON" \
 		-s_srs EPSG:4326 -t_srs EPSG:4326 -f GPKG -nln state -append \
 		$@ data/20-kansas/2016/20045-douglas/precincts.geojson
 
 	# Add Johnson County (FIPS 091) to the statewide Geopackage file.
-	ogr2ogr -sql "SELECT '2016' AS year, '20' AS state, '20091' AS county, NAME AS precinct, 'polygon' AS accuracy FROM precincts" \
+	ogr2ogr -sql "SELECT '2016' AS year, '20' AS state, '20091' AS county, NAME AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON" \
 		-s_srs EPSG:4326 -t_srs EPSG:4326 -f GPKG -nln state -append \
 		$@ data/20-kansas/2016/20091-johnson/precincts.geojson
 
 	# Add Sedgwick County (FIPS 173) to the statewide Geopackage file.
-	ogr2ogr -sql "SELECT '2016' AS year, '20' AS state, '20173' as county, PRECINCT AS precinct, 'polygon' AS accuracy FROM precincts" \
+	ogr2ogr -sql "SELECT '2016' AS year, '20' AS state, '20173' as county, PRECINCT AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON" \
 		-s_srs EPSG:4326 -t_srs EPSG:4326 -f GPKG -nln state -append \
 		$@ data/20-kansas/2016/20173-sedgwick/precincts.geojson
 
 	# Add Shawnee County (FIPS 227) to the statewide Geopackage file.
-	ogr2ogr -sql "SELECT '2016' AS year, '20' AS state, '20227' as county, SUBSTR(PRECINCTID, 3, 6) AS precinct, 'polygon' AS accuracy FROM precincts" \
+	ogr2ogr -sql "SELECT '2016' AS year, '20' AS state, '20227' as county, SUBSTR(PRECINCTID, 3, 6) AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON" \
 		-s_srs EPSG:4326 -t_srs EPSG:4326 -f GPKG -nln state -append \
 		$@ data/20-kansas/2016/20227-shawnee/precincts.geojson
 
 	# Add Wyandotte County (FIPS 209) to the statewide Geopackage file.
-	ogr2ogr -sql "SELECT '2016' AS year, '20' AS state, '20209' as county, VTD_S AS precinct, 'polygon' AS accuracy FROM precincts" \
+	ogr2ogr -sql "SELECT '2016' AS year, '20' AS state, '20209' as county, VTD_S AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON" \
 		-s_srs EPSG:4326 -t_srs EPSG:4326 -f GPKG -nln state -append \
 		$@ data/20-kansas/2016/20209-wyandotte/precincts.geojson
 
@@ -839,7 +839,7 @@ out/53-washington/state.gpkg: data/53-washington/statewide/2016/statewide_prec_2
 	rm -f $@
 	ogr2ogr -s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ data/template.shp
 	unzip -d out/53-washington/source data/53-washington/statewide/2016/statewide_prec_2016_nowater.geojson.zip
-	ogr2ogr -sql "SELECT '2016' AS year, '53' AS state, COUNTY AS county, ST_CODE AS precinct, 'polygon' AS accuracy FROM statewide_prec_2016_nowater" \
+	ogr2ogr -sql "SELECT '2016' AS year, '53' AS state, COUNTY AS county, ST_CODE AS precinct, 'polygon' AS accuracy FROM OGRGeoJSON" \
 		 -nln state -append -f GPKG $@ out/53-washington/source/statewide_prec_2016_nowater.geojson
 	rm -rf 'out/53-washington/source'
 

@@ -736,23 +736,27 @@ out/41-oregon/state.gpkg: data/41-oregon/metro-portland/2016/precinct.zip data/4
 	# Except: (2016) 'Multnomah', 'Washington', 'Clackamas'
 	# Except: (2012) 'Baker'
 	# Except: (no-data) 'Lake', 'Lincoln', 'Tillamook', 'Union', 'Wallowa', 'Wheeler'
-	ogr2ogr -sql "SELECT '2016' AS year, '41' AS state, OROnly_P_2 AS county, CONCAT('41', OROnly_Pre) AS precinct, 'polygon' AS accuracy FROM ORWA_2016 WHERE ( OROnly_P_2 NOT IN ('Multnomah', 'Washington', 'Clackamas', 'Baker', 'Lake', 'Lincoln', 'Tillamook', 'Union', 'Wallowa', 'Wheeler'))" \
+        # Keep: (remainders) 'Benton', 'Clatsop', 'Columbia', 'Coos', 'Crook', 'Curry', 'Deschutes', 'Douglas', 'Gilliam', 'Grant', 'Harney', 'Hood River', 'Jackson', 'Jefferson', 'Josephine', 'Klamath', 'Lane', 'Linn', 'Malheur', 'Marion', 'Morrow', 'Polk', 'Sherman', 'Umatilla', 'Wasco', 'Yamhill'
+	ogr2ogr -sql "SELECT '2016' AS year, '41' AS state, CASE OROnly_P_2 WHEN 'Benton' THEN '003' WHEN 'Clatsop' THEN '007' WHEN 'Columbia' THEN '009' WHEN 'Coos' THEN '011' WHEN 'Crook' THEN '013' WHEN 'Curry' THEN '015' WHEN 'Deschutes' THEN '017' WHEN 'Douglas' THEN '019' WHEN 'Gilliam' THEN '021' WHEN 'Grant' THEN '023' WHEN 'Harney' THEN '025' WHEN 'Hood River' THEN '027' WHEN 'Jackson' THEN '029' WHEN 'Jefferson' THEN '031' WHEN 'Josephine' THEN '033' WHEN 'Klamath' THEN '035' WHEN 'Lane' THEN '039' WHEN 'Linn' THEN '043' WHEN 'Malheur' THEN '045' WHEN 'Marion' THEN '047' WHEN 'Morrow' THEN '049' WHEN 'Polk' THEN '053' WHEN 'Sherman' THEN '055' WHEN 'Umatilla' THEN '059' WHEN 'Wasco' THEN '065' WHEN 'Yamhill' THEN '071' ELSE NULL END AS county, OROnly_Pre AS precinct, 'polygon' AS accuracy, GEOMETRY AS geometry FROM ORWA_2016 WHERE ( OROnly_P_2 IN ('Benton', 'Clatsop', 'Columbia', 'Coos', 'Crook', 'Curry', 'Deschutes', 'Douglas', 'Gilliam', 'Grant', 'Harney', 'Hood River', 'Jackson', 'Jefferson', 'Josephine', 'Klamath', 'Lane', 'Linn', 'Malheur', 'Marion', 'Morrow', 'Polk', 'Sherman', 'Umatilla', 'Wasco', 'Yamhill'))" \
+                -dialect SQLITE \
 		-s_srs EPSG:4326 \
 		-t_srs EPSG:4326 -nln state -append -f GPKG -nln state 'out/41-oregon/source/staging.gpkg' 'out/41-oregon/source/ORWA_2016.shp'
 	#
 	# 2012: add detail in Baker county
-	ogr2ogr -sql "SELECT '2012' AS year, '41' AS state, COUNTY AS county, CONCAT('41', PREC_KR, '-', PRECNAME) AS precinct, 'polygon' AS accuracy FROM ORprecinctsPublic WHERE ( COUNTY IN ('Baker'))" \
+        # Note that Baker County's FIPS code is 001
+	ogr2ogr -sql "SELECT '2012' AS year, '41' AS state, '001' AS county, PRECNAME AS precinct, 'polygon' AS accuracy, GEOMETRY AS geometry FROM ORprecinctsPublic WHERE COUNTY='Baker'" \
+                -dialect SQLITE \
 		-s_srs '+proj=lcc +lat_1=44.33333333333334 +lat_2=46 +lat_0=43.66666666666666 +lon_0=-120.5 +x_0=2500000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=us-ft +no_defs' \
 		-t_srs EPSG:4326 -nln state -append -f GPKG -nln state 'out/41-oregon/source/staging.gpkg' 'out/41-oregon/source/ORprecinctsPublic.shp'
 	#
 	# 2016: Add Portland Metro area counties (Multnomah, Washington, and Clackamas) to the statewide Geopackage file.
-	ogr2ogr -sql "SELECT '2016' AS year, '41' AS state, CASE COUNTY WHEN 'C' THEN 'Clackamas' WHEN 'M' THEN 'Multnomah' WHEN 'W' THEN 'Washington' ELSE COUNTY END AS county, '41' || CAST(COUNTY as character(3)) || CAST(PRECINCT as character(10)) AS precinct, 'polygon' AS accuracy, GEOMETRY AS geometry FROM precinct" \
+	ogr2ogr -sql "SELECT '2016' AS year, '41' AS state, CASE COUNTY WHEN 'C' THEN '005' WHEN 'M' THEN '051' WHEN 'W' THEN '067' ELSE NULL END AS county, PRECINCT AS precinct, 'polygon' AS accuracy, GEOMETRY AS geometry FROM precinct" \
 		-dialect SQLITE \
 		-t_srs EPSG:4326 -nln state -append -f GPKG -nln state -nlt MultiPolygon \
 		'out/41-oregon/source/staging.gpkg' 'out/41-oregon/source/precinct.shp'
 
         # Rename counties to FIPS codes
-	ogr2ogr -sql "SELECT year AS year, state AS state, CASE county WHEN 'Baker' THEN '001' WHEN 'Benton' THEN '003' WHEN 'Clackamas' THEN '005' WHEN 'Clatsop' THEN '007' WHEN 'Columbia' THEN '009' WHEN 'Coos' THEN '011' WHEN 'Crook' THEN '013' WHEN 'Curry' THEN '015' WHEN 'Deschutes' THEN '017' WHEN 'Douglas' THEN '019' WHEN 'Gilliam' THEN '021' WHEN 'Grant' THEN '023' WHEN 'Harney' THEN '025' WHEN 'Hood River' THEN '027' WHEN 'Jackson' THEN '029' WHEN 'Jefferson' THEN '031' WHEN 'Josephine' THEN '033' WHEN 'Klamath' THEN '035' WHEN 'Lake' THEN '037' WHEN 'Lane' THEN '039' WHEN 'Lincoln' THEN '041' WHEN 'Linn' THEN '043' WHEN 'Malheur' THEN '045' WHEN 'Marion' THEN '047' WHEN 'Morrow' THEN '049' WHEN 'Multnomah' THEN '051' WHEN 'Polk' THEN '053' WHEN 'Sherman' THEN '055' WHEN 'Tillamook' THEN '057' WHEN 'Umatilla' THEN '059' WHEN 'Union' THEN '061' WHEN 'Wallowa' THEN '063' WHEN 'Wasco' THEN '065' WHEN 'Washington' THEN '067' WHEN 'Wheeler' THEN '069' WHEN 'Yamhill' THEN '071' ELSE county END AS county, precinct AS precinct, 'polygon' AS accuracy, geom AS geom FROM state" \
+	ogr2ogr -sql "SELECT year AS year, state AS state, county AS county, state || county || precinct AS precinct, 'polygon' AS accuracy, geom AS geom FROM state" \
 		-dialect SQLITE \
 		-s_srs EPSG:4326 \
 		-t_srs EPSG:4326 -nln state -f GPKG -nlt MultiPolygon \

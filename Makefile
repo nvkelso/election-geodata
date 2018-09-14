@@ -755,8 +755,16 @@ out/41-oregon/state.gpkg: data/41-oregon/metro-portland/2016/precinct.zip data/4
 		-t_srs EPSG:4326 -nln state -append -f GPKG -nln state -nlt MultiPolygon \
 		'out/41-oregon/source/staging.gpkg' 'out/41-oregon/source/precinct.shp'
 
-        # Rename counties to FIPS codes
-	ogr2ogr -sql "SELECT year AS year, state AS state, county AS county, state || county || precinct AS precinct, 'polygon' AS accuracy, geom AS geom FROM state" \
+        # Rename counties to FIPS codes and standardize precinct IDs
+        # We want to standardize precinct IDs broadly as CONCAT(state_fips, county_fips, precinct_code)
+        # Oregon precincts take several forms: (a) OR_UMATILLA_106R, (b) OR_MORROW_3, (c) OR_MARION_NA, (c) Unity, (d) 351
+        # (a) We want to left-pad everything after the last _ to length 5 with 0
+        # (b) We want to left-pad everything after the last _ to length 4 with 0
+        # (c) We want to take everything after the last _
+        # (d) We want to take everything
+        # (e) We want to left-pad everything to length 4 with 0
+        # The above cases are handled in the given order in the CASE statement below for creating the `precinct_code' portion of the `precinct' field
+	ogr2ogr -sql "SELECT year AS year, state AS state, county AS county, state || county || CASE WHEN precinct GLOB '*_*_[0-9]*[A-Z]' THEN SUBSTR('0000' || SUBSTR(precinct, 4+INSTR(SUBSTR(precinct, 4), '_')), -5) WHEN precinct GLOB '*_*_[0-9]*' THEN SUBSTR('0000' || SUBSTR(precinct, 4+INSTR(SUBSTR(precinct, 4), '_')), -4) WHEN precinct GLOB '*_*_*' THEN SUBSTR(precinct, 4+INSTR(SUBSTR(precinct, 4), '_')) WHEN precinct GLOB '[A-Z]*' THEN precinct ELSE SUBSTR('0000' || precinct, -4) END AS precinct, 'polygon' AS accuracy, geom AS geom FROM state" \
 		-dialect SQLITE \
 		-s_srs EPSG:4326 \
 		-t_srs EPSG:4326 -nln state -f GPKG -nlt MultiPolygon \

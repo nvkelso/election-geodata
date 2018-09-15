@@ -830,7 +830,16 @@ out/51-virginia/state.gpkg: data/51-virginia/statewide/2016/vaprecincts2016.shp 
 	# GPKG are weird
 	rm -f $@
 	ogr2ogr -s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ data/template.shp
-	ogr2ogr -sql "SELECT 2016 AS year, '51' AS state, locality AS county, id AS precinct, 'polygon' AS accuracy FROM vaprecincts2016" \
+
+
+	# This file uses county names as county identifiers and
+	# `$state_fips$county_fips$precinct_code` as precinct codes. Rather
+	# than using a big case statement to determine county fips, it is simply
+	# extracted from the precinct ID. Also, for maximal cross-compatibility,
+	# we prefer to have 4-digit numeric precinct codes, so we left-pad the
+	# existing 3-digit precinct code with exactly one '0'.
+	ogr2ogr -sql "SELECT 2016 AS year, '51' AS state, SUBSTR(id, 3, 3) AS county, SUBSTR(id, 1, 5) || '0' || SUBSTR(id, 6, 3) AS precinct, 'polygon' AS accuracy, GEOMETRY as geometry FROM vaprecincts2016" \
+		-dialect SQLITE \
 		-s_srs EPSG:3857 -t_srs EPSG:4326 -nln state -append -f GPKG $@ $<
 
 out/53-washington/state.gpkg: data/53-washington/statewide/2016/statewide_prec_2016_nowater.geojson.zip data/template.shp

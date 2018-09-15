@@ -250,8 +250,34 @@ out/15-hawaii/state.gpkg: data/15-hawaii/statewide/2014/Election_Precincts_Polyg
 	rm -f $@
 	ogr2ogr -s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ data/template.shp
 	unzip -d out/15-hawaii/source data/15-hawaii/statewide/2014/Election_Precincts_Polygon.zip
-	ogr2ogr -sql "SELECT '2014' AS year, '15' AS state, county, dp AS precinct, 'polygon' AS accuracy FROM Election_Precincts" \
-		-t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/15-hawaii/source/Election_Precincts.shp'
+
+	# Hawaii has 5 counties:
+	#
+	# * Hawaii County (001)
+	# * Honolulu County (003)
+	# * Kalawao County (005)
+	# * Kauai County (007)
+	# * Maui County (009)
+	#
+	# The file labels "counties" as the big islands:
+	# * HAWAII
+	# * MAUI
+	# * OAHU
+	# * KAUAI
+	#
+	# This maps well to counties exception for Kalawao County, which is one
+	# precinct in the area labeled MAUI.
+	#
+	# Precincts are labeled NN-NN, so we'll transform to 4-digit precinct
+	# codes by removing the '-' character.
+	ogr2ogr -sql "SELECT '2014' AS year, '15' AS state, CASE county WHEN 'HAWAII' THEN '001' WHEN 'MAUI' THEN (CASE dp WHEN '13-09' THEN '005' ELSE '009' END) WHEN 'OAHU' THEN '003' WHEN 'KAUAI' THEN '007' ELSE county END AS county, dp AS precinct, 'polygon' AS accuracy, geometry AS geometry FROM Election_Precincts" \
+		-dialect SQLITE \
+		-t_srs EPSG:4326 -nln state -append -f GPKG 'out/15-hawaii/source/staging.gpkg' 'out/15-hawaii/source/Election_Precincts.shp'
+
+	ogr2ogr -sql "SELECT year AS year, state AS state, county AS county, state || county || REPLACE(precinct, '-', '') AS precinct, 'polygon' AS accuracy, geometry AS geometry FROM state" \
+		-dialect SQLITE \
+		-t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/15-hawaii/source/staging.gpkg'
+
 	rm -rf 'out/15-hawaii/source'
 
 out/16-idaho/state.gpkg: data/16-idaho/statewide/2010/tl_2012_16_vtd10.zip data/template.shp

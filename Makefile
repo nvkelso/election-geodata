@@ -334,11 +334,14 @@ out/18-indiana/state.gpkg: data/18-indiana/statewide/2010/tl_2012_18_vtd10.zip \
 
 	rm -rf 'out/18-indiana/source'
 
-out/19-iowa/state.gpkg: data/19-iowa/statewide/2016/pcts_04172014_0908am.zip data/19-iowa/counties/tl_2016_19_cousub.zip data/template.shp
+out/19-iowa/state.gpkg: data/19-iowa/statewide/2016/pcts_04172014_0908am.zip \
+	data/19-iowa/counties/tl_2016_19_cousub.zip \
+	data/template.shp
+
 	mkdir -p out/19-iowa/source
 	# GPKG are weird
 	rm -f $@
-	ogr2ogr -s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ data/template.shp
+	ogrn2ogr -s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ data/template.shp
 	unzip -d out/19-iowa/source data/19-iowa/statewide/2016/pcts_04172014_0908am.zip
 	unzip -d out/19-iowa/source data/19-iowa/counties/tl_2016_19_cousub.zip
 

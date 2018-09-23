@@ -341,7 +341,7 @@ out/19-iowa/state.gpkg: data/19-iowa/statewide/2016/pcts_04172014_0908am.zip \
 	mkdir -p out/19-iowa/source
 	# GPKG are weird
 	rm -f $@
-	ogrn2ogr -s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ data/template.shp
+	ogr2ogr -s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ data/template.shp
 	unzip -d out/19-iowa/source data/19-iowa/statewide/2016/pcts_04172014_0908am.zip
 	unzip -d out/19-iowa/source data/19-iowa/counties/tl_2016_19_cousub.zip
 

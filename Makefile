@@ -208,7 +208,6 @@ out/10-delaware/state.gpkg: data/10-delaware/statewide/2016/de_2016_FEST.zip \
 	mkdir -p out/10-delaware/source
 	# GPKG are weird
 	rm -f $@
-	ogr2ogr -s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ data/template.shp
 	unzip -d out/10-delaware/source data/10-delaware/statewide/2016/de_2016_FEST.zip
 	unzip -d out/10-delaware/source data/10-delaware/counties/tl_2016_10_cousub.zip
 
@@ -237,6 +236,7 @@ out/10-delaware/state.gpkg: data/10-delaware/statewide/2016/de_2016_FEST.zip \
 	# We'd prefer to use a window function, which would make this much
 	# simpler, but the build version of ogr2ogr does not have a recent
 	# enough version to support them.
+	ogr2ogr -s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ data/template.shp
 	ogr2ogr -sql "SELECT '2016' AS year, '10' AS state, i.county AS county, p.EDRD_2012 AS precinct, 'polygon' AS accuracy, p.GEOM AS geometry FROM (SELECT precinct, MAX(area) AS maxarea FROM intersection i GROUP BY precinct) m, intersection i, de_2016 p WHERE i.precinct=m.precinct AND i.precinct=p.EDRD_2012 AND i.area=m.maxarea" \
 		-dialect SQLITE \
 		-t_srs EPSG:4326 -nln state -append -f GPKG $@ out/10-delaware/source/staging.gpkg

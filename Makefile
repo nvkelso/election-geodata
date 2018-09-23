@@ -537,15 +537,74 @@ out/31-nebraska/state.gpkg: data/31-nebraska/statewide/2010/tl_2012_31_vtd10.zip
 		-s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/31-nebraska/source/tl_2012_31_vtd10.shp'
 	rm -rf 'out/31-nebraska/source'
 
-out/32-nevada/state.gpkg: data/32-nevada/statewide/2010/tl_2012_32_vtd10.zip data/template.shp
+out/32-nevada/state.gpkg: data/32-nevada/statewide/2010/tl_2012_32_vtd10.zip \
+	data/template.shp \
+	data/32-nevada/county/2016/clark_crel_precinct_p.zip \
+	data/32-nevada/county/2016/nevadacarsoncity.zip \
+	data/32-nevada/county/2016/nevadadouglas.zip \
+	data/32-nevada/county/2016/nevadaelko.zip \
+	data/32-nevada/county/2016/nevadaeureka.zip \
+	data/32-nevada/county/2016/nevadawashoe.zip
+
 	mkdir -p out/32-nevada/source
 	# GPKG are weird
 	rm -f $@
 	ogr2ogr -s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ data/template.shp
+
 	unzip -d out/32-nevada/source data/32-nevada/statewide/2010/tl_2012_32_vtd10.zip
-	ogr2ogr -sql "SELECT '2010' AS year, STATEFP10 AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_32_vtd10" \
+	# Skip a few since they'll come from another file.
+	ogr2ogr -sql "SELECT '2010' AS year, '32' AS state, COUNTYFP10 AS county, GEOID10 AS precinct, 'polygon' AS accuracy FROM tl_2012_32_vtd10 WHERE COUNTYFP10 NOT IN ('003', '510', '005', '007', '011', '013', '031')" \
 		-s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/32-nevada/source/tl_2012_32_vtd10.shp'
+
+	# Add Clark County (FIPS 003) to the statewide Geopackage file.
+	unzip -d out/32-nevada/source data/32-nevada/county/2016/clark_crel_precinct_p.zip
+	ogr2ogr -sql "SELECT '2016' AS year, '32' AS state, '003' AS county, CONCAT('32003', CAST(PREC AS character(10))) AS precinct, 'polygon' AS accuracy FROM precinct_p" \
+		-s_srs '+proj=tmerc +lat_0=34.75 +lon_0=-115.5833333333333 +k=0.9999 +x_0=199999.9999999999 +y_0=7999999.999999997 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=us-ft +no_defs' \
+		-t_srs EPSG:4326 -f GPKG -nln state -append \
+		$@ out/32-nevada/source/precinct_p.shp
+
+	# Add Carson City (FIPS 510) to the statewide Geopackage file.
+	unzip -d out/32-nevada/source data/32-nevada/county/2016/nevadacarsoncity.zip
+	ogr2ogr -sql "SELECT '2016' AS year, '32' AS state, '510' AS county, CONCAT('32510', CAST(Precinct AS character(5))) AS precinct, 'polygon' AS accuracy FROM nevadacarsoncity" \
+		-s_srs '+proj=tmerc +lat_0=34.75 +lon_0=-118.5833333333333 +k=0.9999 +x_0=799999.9999999998 +y_0=3999999.999999999 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=us-ft +no_defs' \
+		-t_srs EPSG:4326 -f GPKG -nln state -append \
+		$@ out/32-nevada/source/nevadacarsoncity.shp
+
+	# Add Douglas (FIPS 005) to the statewide Geopackage file.
+	unzip -d out/32-nevada/source data/32-nevada/county/2016/nevadadouglas.zip
+	ogr2ogr -sql "SELECT '2016' AS year, '32' AS state, '005' AS county, CONCAT('32005', TAG) AS precinct, 'polygon' AS accuracy FROM nevadadouglas" \
+		-s_srs '+proj=tmerc +lat_0=34.75 +lon_0=-118.5833333333333 +k=0.9999 +x_0=799999.9999999998 +y_0=3999999.999999999 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=us-ft +no_defs' \
+		-t_srs EPSG:4326 -f GPKG -nln state -append \
+		$@ out/32-nevada/source/nevadadouglas.shp
+
+	# Add Elko (FIPS 007) to the statewide Geopackage file.
+	unzip -d out/32-nevada/source data/32-nevada/county/2016/nevadaelko.zip
+	ogr2ogr -sql "SELECT '2016' AS year, '32' AS state, '007' AS county, CONCAT('32007', SUBSTR(NAME,10)) AS precinct, 'polygon' AS accuracy FROM nevadaelko" \
+		-s_srs EPSG:26911 -t_srs EPSG:4326 -f GPKG -nln state -append \
+		$@ out/32-nevada/source/nevadaelko.shp
+
+	# Add Eureka (FIPS 011) to the statewide Geopackage file.
+	unzip -d out/32-nevada/source data/32-nevada/county/2016/nevadaeureka.zip
+	ogr2ogr -sql "SELECT '2016' AS year, '32' AS state, '011' AS county, CONCAT('32011', Label) AS precinct, 'polygon' AS accuracy FROM nevadaeureka" \
+		-s_srs EPSG:32008 -t_srs EPSG:4326 -f GPKG -nln state -append \
+		$@ out/32-nevada/source/nevadaeureka.shp
+
+	# Add Humboldt (FIPS 013) to the statewide Geopackage file.
+	unzip -d out/32-nevada/source data/32-nevada/county/2016/nevadahumboldt.zip
+	ogr2ogr -sql "SELECT '2016' AS year, '32' AS state, '013' AS county, CONCAT('32013', LAYER) AS precinct, 'polygon' AS accuracy FROM nevadahumboldt" \
+		-s_srs '+proj=tmerc +lat_0=34.75 +lon_0=-118.583333333333 +k=0.9999 +x_0=152400.30480061 +y_0=0 +datum=NAD27 +units=us-ft +no_defs' \
+		-t_srs EPSG:4326 -f GPKG -nln state -append \
+		$@ out/32-nevada/source/nevadahumboldt.shp
+
+	# Add Washoe (FIPS 031) to the statewide Geopackage file.
+	unzip -d out/32-nevada/source data/32-nevada/county/2016/nevadawashoe.zip
+	ogr2ogr -sql "SELECT '2016' AS year, '32' AS state, '031' AS county, CONCAT('32031', CAST(PRECINCT AS character(10))) AS precinct, 'polygon' AS accuracy FROM nevadawashoe" \
+		-s_srs '+proj=tmerc +lat_0=34.75 +lon_0=-118.5833333333333 +k=0.9999 +x_0=800000.0000101601 +y_0=3999999.999989841 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=us-ft +no_defs' \
+		-t_srs EPSG:4326 -f GPKG -nln state -append \
+		$@ out/32-nevada/source/nevadawashoe.shp
+
 	rm -rf 'out/32-nevada/source'
+
 
 out/33-new-hampshire/state.gpkg: data/33-new-hampshire/statewide/2010/tl_2012_33_vtd10.zip data/template.shp
 	mkdir -p out/33-new-hampshire/source

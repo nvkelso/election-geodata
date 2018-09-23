@@ -14,6 +14,6 @@
 ## Additional Boundary Geodata
 
 - **2016** New Mexico county outlines pulled from [TIGER census project](https://catalog.data.gov/dataset/tiger-line-shapefile-2016-state-new-mexico-current-county-subdivision-state-based)
-  - Note that TIGER file contains a finder division, which roll up to counties.
+  - Note that TIGER file contains a finer division, which roll up to counties.
   - The type of the finer boundaries is not clear, but they are labeled "CCDs"
   - Delaware's labels also use CCD, meaning "court district."

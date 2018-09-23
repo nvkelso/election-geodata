@@ -341,7 +341,6 @@ out/19-iowa/state.gpkg: data/19-iowa/statewide/2016/pcts_04172014_0908am.zip \
 	mkdir -p out/19-iowa/source
 	# GPKG are weird
 	rm -f $@
-	ogr2ogr -s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ data/template.shp
 	unzip -d out/19-iowa/source data/19-iowa/statewide/2016/pcts_04172014_0908am.zip
 	unzip -d out/19-iowa/source data/19-iowa/counties/tl_2016_19_cousub.zip
 
@@ -372,6 +371,7 @@ out/19-iowa/state.gpkg: data/19-iowa/statewide/2016/pcts_04172014_0908am.zip \
 	# We'd prefer to use a window function, which would make this much
 	# simpler, but the build version of ogr2ogr does not have a recent
 	# enough version to support them.
+	ogr2ogr -s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ data/template.shp
 	ogr2ogr -sql "SELECT '2016' AS year, '19' AS state, i.county AS county, p.NAME AS precinct, 'polygon' AS accuracy, p.GEOM AS geometry FROM (SELECT precinct, MAX(area) AS maxarea FROM intersection i GROUP BY precinct) m, intersection i, Precincts041714 p WHERE i.precinct=m.precinct AND i.precinct=p.DISTRICT || '_' || p.NAME AND i.area=m.maxarea" \
 		-dialect SQLITE \
 		-t_srs EPSG:4326 -nln state -append -f GPKG $@ out/19-iowa/source/staging.gpkg
@@ -608,7 +608,6 @@ out/35-new-mexico/state.gpkg: data/35-new-mexico/statewide/2012/nm-2012-precinct
 	mkdir -p out/35-new-mexico/source
 	# GPKG are weird
 	rm -f $@
-	ogr2ogr -s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ data/template.shp
 	unzip -d out/35-new-mexico/source data/35-new-mexico/statewide/2012/nm-2012-precincts.zip
 	unzip -d out/35-new-mexico/source data/35-new-mexico/counties/tl_2016_35_cousub.zip
 
@@ -634,6 +633,7 @@ out/35-new-mexico/state.gpkg: data/35-new-mexico/statewide/2012/nm-2012-precinct
 	# We'd prefer to use a window function, which would make this much
 	# simpler, but the build version of ogr2ogr does not have a recent
 	# enough version to support them.
+	ogr2ogr -s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ data/template.shp
 	ogr2ogr -sql "SELECT '2016' AS year, '10' AS state, i.county AS county, p.NAME10 AS precinct, 'polygon' AS accuracy, p.GEOM AS geometry FROM (SELECT precinct, MAX(area) AS maxarea FROM intersection i GROUP BY precinct) m, intersection i, precincts_2012 p WHERE i.precinct=m.precinct AND i.precinct=p.NAME10 AND i.area=m.maxarea" \
 		-dialect SQLITE \
 		-t_srs EPSG:4326 -nln state -append -f GPKG $@ out/35-new-mexico/source/staging.gpkg

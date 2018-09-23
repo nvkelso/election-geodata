@@ -209,9 +209,6 @@ out/06-california/state.gpkg: data/06-california/statewide/2016/merged.zip \
 		-dialect SQLITE \
 		-t_srs EPSG:4326 -nln intersection -append -f GPKG out/06-california/source/staging.gpkg out/06-california/source/staging.gpkg
 
-#	ogr2ogr -sql "SELECT '2016' AS year, '06' AS state, '' AS county, CONCAT('06', pct16) AS precinct, 'polygon' AS accuracy FROM merged" \
-#		-s_srs EPSG:4326 -t_srs EPSG:4326 -nln state -append -f GPKG $@ -nln state 'out/06-california/source/merged.shp'
-
 	# Join each precinct to the county that contains the most of its area.
 	# We'd prefer to use a window function, which would make this much
 	# simpler, but the build version of ogr2ogr does not have a recent
@@ -221,7 +218,7 @@ out/06-california/state.gpkg: data/06-california/statewide/2016/merged.zip \
 		-dialect SQLITE \
 		-t_srs EPSG:4326 -nln state -append -f GPKG $@ out/06-california/source/staging.gpkg
 
-#	rm -rf 'out/06-california/source'
+	rm -rf 'out/06-california/source'
 
 out/08-colorado/state.gpkg: data/08-colorado/statewide/2010/tl_2012_08_vtd10.zip data/template.shp
 	mkdir -p out/08-colorado/source

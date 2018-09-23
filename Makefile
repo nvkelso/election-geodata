@@ -201,13 +201,16 @@ out/09-connecticut/state.gpkg: data/09-connecticut/statewide/2010/tl_2012_09_vtd
 		-s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/09-connecticut/source/tl_2012_09_vtd10.shp'
 	rm -rf 'out/09-connecticut/source'
 
-out/10-delaware/state.gpkg: data/10-delaware/statewide/2016/de_2016_FEST.zip data/template.shp
+out/10-delaware/state.gpkg: data/10-delaware/statewide/2016/de_2016_FEST.zip \
+	data/10-delaware/counties/tl_2016_10_cousub.zip \
+	data/template.shp
+
 	mkdir -p out/10-delaware/source
 	# GPKG are weird
 	rm -f $@
 	ogr2ogr -s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ data/template.shp
 	unzip -d out/10-delaware/source data/10-delaware/statewide/2016/de_2016_FEST.zip
-	unzip -d out/10-delaware/source data/10-delaware/counties/tl_2013_10_cousub.zip
+	unzip -d out/10-delaware/source data/10-delaware/counties/tl_2016_10_cousub.zip
 
 	# Because we have to join multiple data sets together, we use a staging
 	# GPKG to hold them.
@@ -217,10 +220,10 @@ out/10-delaware/state.gpkg: data/10-delaware/statewide/2016/de_2016_FEST.zip dat
 
 	# Copy township data. This data comes from the census.
 	# https://catalog.data.gov/dataset/tiger-line-shapefile-2016-state-delaware-current-county-subdivision-state-based
-	ogr2ogr -t_srs EPSG:4326 -append -f GPKG out/10-delaware/source/staging.gpkg out/10-delaware/source/tl_2013_10_cousub.shp
+	ogr2ogr -t_srs EPSG:4326 -append -f GPKG out/10-delaware/source/staging.gpkg out/10-delaware/source/tl_2016_10_cousub.shp
 
 	# Aggregate historical court districts data into counties.
-	ogr2ogr -sql "SELECT c.COUNTYFP AS county, 'polygon' AS accuracy, ST_Union(c.GEOM) AS geom FROM tl_2013_10_cousub c GROUP BY c.COUNTYFP" \
+	ogr2ogr -sql "SELECT c.COUNTYFP AS county, 'polygon' AS accuracy, ST_Union(c.GEOM) AS geom FROM tl_2016_10_cousub c GROUP BY c.COUNTYFP" \
 		-dialect SQLITE \
 		-t_srs EPSG:4326 -nln county -append -f GPKG out/10-delaware/source/staging.gpkg out/10-delaware/source/staging.gpkg
 

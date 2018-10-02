@@ -201,14 +201,46 @@ out/09-connecticut/state.gpkg: data/09-connecticut/statewide/2010/tl_2012_09_vtd
 		-s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/09-connecticut/source/tl_2012_09_vtd10.shp'
 	rm -rf 'out/09-connecticut/source'
 
-out/10-delaware/state.gpkg: data/10-delaware/statewide/2016/de_2016_FEST.zip data/template.shp
+out/10-delaware/state.gpkg: data/10-delaware/statewide/2016/de_2016_FEST.zip \
+	data/10-delaware/counties/tl_2016_10_cousub.zip \
+	data/template.shp
+
 	mkdir -p out/10-delaware/source
 	# GPKG are weird
 	rm -f $@
-	ogr2ogr -s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ data/template.shp
 	unzip -d out/10-delaware/source data/10-delaware/statewide/2016/de_2016_FEST.zip
-	ogr2ogr -sql "SELECT '2016' AS year, '10' AS state, '000' AS county, CONCAT('10', '000', EDRD_2012) AS precinct FROM de_2016" \
-		-s_srs EPSG:4326 -t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/10-delaware/source/de_2016.shp'
+	unzip -d out/10-delaware/source data/10-delaware/counties/tl_2016_10_cousub.zip
+
+	# Because we have to join multiple data sets together, we use a staging
+	# GPKG to hold them.
+
+	# Copy precinct data
+	ogr2ogr -s_srs EPSG:4326 -t_srs EPSG:4326 -append -f GPKG out/10-delaware/source/staging.gpkg out/10-delaware/source/de_2016.shp
+
+	# Copy township data. This data comes from the census.
+	# https://catalog.data.gov/dataset/tiger-line-shapefile-2016-state-delaware-current-county-subdivision-state-based
+	ogr2ogr -t_srs EPSG:4326 -append -f GPKG out/10-delaware/source/staging.gpkg out/10-delaware/source/tl_2016_10_cousub.shp
+
+	# Aggregate historical court districts data into counties.
+	ogr2ogr -sql "SELECT c.COUNTYFP AS county, 'polygon' AS accuracy, ST_Union(c.GEOM) AS geom FROM tl_2016_10_cousub c GROUP BY c.COUNTYFP" \
+		-dialect SQLITE \
+		-t_srs EPSG:4326 -nln county -append -f GPKG out/10-delaware/source/staging.gpkg out/10-delaware/source/staging.gpkg
+
+	# Compute all county/precinct intersections as a precursor to assigning
+	# precincts to the counties that contain the most of their area.
+	ogr2ogr -sql "SELECT p.EDRD_2012 AS precinct, c.county AS county, 'polygon' AS accuracy, ST_Intersection(p.GEOM, c.GEOM) AS geom, ST_Area(ST_Intersection(p.GEOM, c.GEOM)) AS area, ST_Area(p.GEOM) AS parea, ST_Area(c.GEOM) AS carea FROM de_2016 p, county c WHERE ST_Disjoint(ST_Envelope(c.GEOM), ST_Envelope(p.GEOM))=0 AND ST_Intersection(p.GEOM, c.GEOM) IS NOT NULL" \
+		-dialect SQLITE \
+		-t_srs EPSG:4326 -nln intersection -append -f GPKG out/10-delaware/source/staging.gpkg out/10-delaware/source/staging.gpkg
+
+	# Join each precinct to the county that contains the most of its area.
+	# We'd prefer to use a window function, which would make this much
+	# simpler, but the build version of ogr2ogr does not have a recent
+	# enough version to support them.
+	ogr2ogr -s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ data/template.shp
+	ogr2ogr -sql "SELECT '2016' AS year, '10' AS state, i.county AS county, p.EDRD_2012 AS precinct, 'polygon' AS accuracy, p.GEOM AS geometry FROM (SELECT precinct, MAX(area) AS maxarea FROM intersection i GROUP BY precinct) m, intersection i, de_2016 p WHERE i.precinct=m.precinct AND i.precinct=p.EDRD_2012 AND i.area=m.maxarea" \
+		-dialect SQLITE \
+		-t_srs EPSG:4326 -nln state -append -f GPKG $@ out/10-delaware/source/staging.gpkg
+
 	rm -rf 'out/10-delaware/source'
 
 out/11-district-of-columbia/state.gpkg: data/11-district-of-columbia/statewide/2012/Voting_Precinct__2012.zip data/template.shp

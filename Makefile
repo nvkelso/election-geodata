@@ -936,7 +936,7 @@ out/40-oklahoma/state.gpkg: data/40-oklahoma/statewide/2016/pct_2010.zip data/te
 	rm -f $@
 	ogr2ogr -s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ data/template.shp
 	unzip -d out/40-oklahoma/source data/40-oklahoma/statewide/2016/pct_2010.zip
-	ogr2ogr -sql "SELECT '2016' AS year, '40' AS state, COUNTY AS county, CONCAT('40', PCT_CEB) AS precinct, 'polygon' AS accuracy FROM pct_2010" \
+	ogr2ogr -sql "SELECT '2016' AS year, '40' AS state, CONCAT('40', SUBSTR(CONCAT('000', COUNTY), -3)) AS county, CONCAT('40', CONCAT('40', SUBSTR(CONCAT('000', COUNTY), -3)), PCT_CEB) AS precinct, 'polygon' AS accuracy FROM pct_2010" \
 		-s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/40-oklahoma/source/pct_2010.shp'
 	rm -rf 'out/40-oklahoma/source'
 

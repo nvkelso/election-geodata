@@ -1066,7 +1066,7 @@ out/50-vermont/state.gpkg: data/50-vermont/statewide/2012/Voting_Tabulation_Area
 	rm -f $@
 	ogr2ogr -s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ data/template.shp
 	unzip -d out/50-vermont/source data/50-vermont/statewide/2012/Voting_Tabulation_Areas_2012.zip
-	ogr2ogr -sql "SELECT '2016' AS year, '50' AS state, CNTY AS county, CONCAT('50', CAST(CNTY AS character(3)), CAST(NAME AS character(10))) AS precinct, 'polygon' AS accuracy FROM BoundaryOther_VOTETAB2012" \
+	ogr2ogr -sql "SELECT '2016' AS year, '50' AS state, CONCAT('50', SUBSTR(CONCAT('000', CAST(CNTY AS character(3))), -3)) AS county, CONCAT('50', SUBSTR(CONCAT('000', CAST(CNTY AS character(3))), -3), CAST(NAME AS character(10))) AS precinct, 'polygon' AS accuracy FROM BoundaryOther_VOTETAB2012" \
 		-s_srs '+proj=tmerc +lat_0=42.5 +lon_0=-72.5 +k=0.9999642857142857 +x_0=500000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs' \
 		-t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/50-vermont/source/BoundaryOther_VOTETAB2012.shp'
 	rm -rf 'out/50-vermont/source'

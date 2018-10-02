@@ -171,14 +171,53 @@ out/05-arkansas/state.gpkg: data/05-arkansas/statewide/2016/ELECTION_PRECINCTS.z
 		-s_srs EPSG:26915 -t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/05-arkansas/source/boundaries_ELECTION_PRECINCTS.shp'
 	rm -rf 'out/05-arkansas/source'
 
-out/06-california/state.gpkg: data/06-california/statewide/2016/merged.zip data/template.shp
+out/06-california/state.gpkg: data/06-california/statewide/2016/merged.zip \
+	data/06-california/counties/tl_2016_06_cousub.zip \
+	data/template.shp
+
 	mkdir -p out/06-california/source
 	# GPKG are weird
 	rm -f $@
-	ogr2ogr -s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ data/template.shp
 	unzip -d out/06-california/source data/06-california/statewide/2016/merged.zip
-	ogr2ogr -sql "SELECT '2016' AS year, '06' AS state, '' AS county, CONCAT('06', pct16) AS precinct, 'polygon' AS accuracy FROM merged" \
-		-s_srs EPSG:4326 -t_srs EPSG:4326 -nln state -append -f GPKG $@ -nln state 'out/06-california/source/merged.shp'
+	unzip -d out/06-california/source data/06-california/counties/tl_2016_06_cousub.zip
+
+	# Because we have to join multiple data sets together, we use a staging
+	# GPKG to hold them.
+
+	# Copy precinct data
+	ogr2ogr -t_srs EPSG:4326 -append -f GPKG out/06-california/source/staging.gpkg out/06-california/source/merged.shp
+
+	# Copy township data. This data comes from the census.
+	# https://catalog.data.gov/dataset/tiger-line-shapefile-2016-state-iowa-current-county-subdivision-state-based
+	ogr2ogr -t_srs EPSG:4326 -append -f GPKG out/06-california/source/staging.gpkg out/06-california/source/tl_2016_06_cousub.shp
+
+	# Aggregate court district data into counties.
+	ogr2ogr -sql "SELECT c.COUNTYFP AS county, 'polygon' AS accuracy, ST_Union(c.GEOM) AS geom, ST_Envelope(ST_Union(c.GEOM)) AS envelope FROM tl_2016_06_cousub c GROUP BY c.COUNTYFP" \
+		-dialect SQLITE \
+		-t_srs EPSG:4326 -nln county -append -f GPKG out/06-california/source/staging.gpkg out/06-california/source/staging.gpkg
+
+	# Pull out precincts and envelopes
+	ogr2ogr -sql "SELECT pct16, area, 'polygon' AS accuracy, GEOM AS geom, ST_Envelope(GEOM) AS envelope FROM merged" \
+		-dialect SQLITE \
+		-t_srs EPSG:4326 -nln precinct -append -f GPKG out/06-california/source/staging.gpkg out/06-california/source/staging.gpkg
+
+	# Compute all county/precinct intersections as a precursor to assigning
+	# precincts to the counties that contain the most of their area. We use
+	# the funny expression as ID because the individual fields are not
+	# unique.
+	ogr2ogr -sql "SELECT p.pct16 || '_' || CAST(p.area AS TEXT) AS precinct, c.county AS county, 'polygon' AS accuracy, ST_Intersection(p.GEOM, c.GEOM) AS geom, ST_Area(ST_Intersection(p.GEOM, c.GEOM)) AS area, ST_Area(p.GEOM) AS parea, ST_Area(c.GEOM) AS carea FROM precinct p, county c WHERE ST_Disjoint(c.envelope, p.envelope)=0 AND ST_Intersection(p.GEOM, c.GEOM) IS NOT NULL" \
+		-dialect SQLITE \
+		-t_srs EPSG:4326 -nln intersection -append -f GPKG out/06-california/source/staging.gpkg out/06-california/source/staging.gpkg
+
+	# Join each precinct to the county that contains the most of its area.
+	# We'd prefer to use a window function, which would make this much
+	# simpler, but the build version of ogr2ogr does not have a recent
+	# enough version to support them.
+	ogr2ogr -s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ data/template.shp
+	ogr2ogr -sql "SELECT '2016' AS year, '06' AS state, i.county AS county, p.pct16 AS precinct, 'polygon' AS accuracy, p.GEOM AS geometry FROM (SELECT precinct, MAX(area) AS maxarea FROM intersection i GROUP BY precinct) m, intersection i, precinct p WHERE i.precinct=m.precinct AND i.precinct=p.pct16 || '_' || CAST(p.area AS TEXT) AND i.area=m.maxarea" \
+		-dialect SQLITE \
+		-t_srs EPSG:4326 -nln state -append -f GPKG $@ out/06-california/source/staging.gpkg
+
 	rm -rf 'out/06-california/source'
 
 out/08-colorado/state.gpkg: data/08-colorado/statewide/2010/tl_2012_08_vtd10.zip data/template.shp

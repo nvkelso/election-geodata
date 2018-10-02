@@ -1,5 +1,7 @@
 # California
 
+## Election Geodata
+
 - **2010** from US Census
     - Downloaded 2017-03-11.
 - **2012** from Berkeley Law
@@ -18,3 +20,11 @@
     - G16PRERTru - Donald J. Trump (Republican Party)
   - Election results and precinct shapefile from [Statewide Database at UC Berkeley Law](http://statewidedatabase.org/d10/g16.html)
 - Other years available from [Statewide Database at UC Berkeley Law](http://statewidedatabase.org/data.html)
+
+## Additional Boundary Geodata
+
+- **2016** California county outlines pulled from [TIGER census project](https://catalog.data.gov/dataset/tiger-line-shapefile-2016-state-california-current-county-subdivision-state-based)
+  - Note that TIGER file contains a finer division, which roll up to counties.
+  - The type of the finer boundaries is not clear, but they are labeled "CCDs"
+  - Delaware's labels also use CCD, meaning "court district."
+

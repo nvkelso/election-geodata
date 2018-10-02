@@ -289,7 +289,7 @@ out/11-district-of-columbia/state.gpkg: data/11-district-of-columbia/statewide/2
 	rm -f $@
 	ogr2ogr -s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ data/template.shp
 	unzip -d out/11-district-of-columbia/source data/11-district-of-columbia/statewide/2012/Voting_Precinct__2012.zip
-	ogr2ogr -sql "SELECT '2012' AS year, '11' AS state, '01' AS county, CONCAT( '11', '01', NAME) AS precinct, 'polygon' AS accuracy FROM Voting_Precinct__2012" \
+	ogr2ogr -sql "SELECT '2012' AS year, '11' AS state, '001' AS county, CONCAT( '11', '01', NAME) AS precinct, 'polygon' AS accuracy FROM Voting_Precinct__2012" \
 		-s_srs EPSG:4326 -t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/11-district-of-columbia/source/Voting_Precinct__2012.shp'
 	rm -rf 'out/11-district-of-columbia/source'
 

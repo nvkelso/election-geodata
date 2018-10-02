@@ -833,7 +833,7 @@ out/37-north-carolina/state.gpkg: data/37-north-carolina/statewide/2016/SBE_PREC
 	rm -f $@
 	ogr2ogr -s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ data/template.shp
 	unzip -d out/37-north-carolina/source data/37-north-carolina/statewide/2016/SBE_PRECINCTS_20160826.zip
-	ogr2ogr -sql "SELECT '2016' AS year, '37' AS state, COUNTY_ID AS county, CONCAT('37', CAST(COUNTY_ID as character(20)), PREC_ID) AS precinct, 'polygon' AS accuracy FROM Precincts" \
+	ogr2ogr -sql "SELECT '2016' AS year, '37' AS state, CONCAT('37', SUBSTR(CONCAT('000', CAST(COUNTY_ID AS character(20))), -3)) AS county, CONCAT('37', SUBSTR(CONCAT('000', CAST(COUNTY_ID AS character(20))), -3), PREC_ID) AS precinct, 'polygon' AS accuracy FROM Precincts" \
 		-s_srs '+proj=lcc +lat_1=34.33333333333334 +lat_2=36.16666666666666 +lat_0=33.75 +lon_0=-79 +x_0=609601.2199999997 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=us-ft +no_defs' \
 		-t_srs EPSG:4326 -nln state -append -f GPKG $@ out/37-north-carolina/source/Precincts.shp
 	rm -rf 'out/37-north-carolina/source'

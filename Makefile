@@ -551,7 +551,8 @@ out/24-maryland/state.gpkg: data/24-maryland/statewide/2016/md_2016_FEST.zip dat
 	rm -f $@
 	ogr2ogr -s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ data/template.shp
 	unzip -d out/24-maryland/source data/24-maryland/statewide/2016/md_2016_FEST.zip
-	ogr2ogr -sql "SELECT '2016' AS year, '24' AS state, CONCAT('24', JURIS) AS county, CONCAT('24', preid) AS precinct, name AS name FROM md_2016_w_ushouse" \
+	ogr2ogr -sql "SELECT '2016' AS year, '24' AS state, CASE JURIS WHEN 'ALLE' THEN '001' WHEN 'ANNE' THEN '003' WHEN 'BACI' THEN '510' WHEN 'BACO' THEN '005' WHEN 'CALV' THEN '009' WHEN 'CARO' THEN '011' WHEN 'CARR' THEN '013' WHEN 'CECI' THEN '015' WHEN 'CHAR' THEN '017' WHEN 'DORC' THEN '019' WHEN 'FRED' THEN '021' WHEN 'GARR' THEN '023' WHEN 'HARF' THEN '025' WHEN 'HOWA' THEN '027' WHEN 'KENT' THEN '029' WHEN 'MONT' THEN '031' WHEN 'PRIN' THEN '033' WHEN 'QUEE' THEN '035' WHEN 'SOME' THEN '039' WHEN 'STMA' THEN '037' WHEN 'TALB' THEN '041' WHEN 'WASH' THEN '043' WHEN 'WICO' THEN '045' WHEN 'WORC' THEN '047' ELSE JURIS END AS county, '24' || preid AS precinct, name AS name, 'polygon' AS accuracy, GEOMETRY AS geometry FROM md_2016_w_ushouse" \
+		-dialect SQLITE \
 		-s_srs '+proj=lcc +lat_1=38.3 +lat_2=39.45 +lat_0=37.66666666666666 +lon_0=-77 +x_0=400000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs' \
 		-t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/24-maryland/source/md_2016_w_ushouse.shp'
 	rm -rf 'out/24-maryland/source'

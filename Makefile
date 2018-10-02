@@ -746,8 +746,9 @@ out/33-new-hampshire/state.gpkg: data/33-new-hampshire/statewide/2010/tl_2012_33
 	rm -f $@
 	ogr2ogr -s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ data/template.shp
 	unzip -d out/33-new-hampshire/source data/33-new-hampshire/statewide/2016/NHPolitDists.zip
-	ogr2ogr -sql "SELECT '2016' AS year, '33' AS state, COUNTY AS county, nameward AS precinct, 'polygon' AS accuracy FROM NHPolitDists" \
-	  -t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/33-new-hampshire/source/nhpolitdists.shp'
+	ogr2ogr -sql "SELECT '2016' AS year, '33' AS state, CASE COUNTY WHEN 'Belknap' THEN '001' WHEN 'Carroll' THEN '003' WHEN 'Cheshire' THEN '005' WHEN 'Coos' THEN '007' WHEN 'Grafton' THEN '009' WHEN 'Hillsborough' THEN '011' WHEN 'Merrimack' THEN '013' WHEN 'Rockingham' THEN '015' WHEN 'Strafford' THEN '017' WHEN 'Sullivan' THEN '019' ELSE COUNTY END AS county, nameward AS precinct, 'polygon' AS accuracy, GEOMETRY AS geometry FROM NHPolitDists" \
+		-dialect SQLITE \
+		-t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/33-new-hampshire/source/nhpolitdists.shp'
 	rm -rf 'out/33-new-hampshire/source'
 
 out/34-new-jersey/state.gpkg: data/34-new-jersey/statewide/2010/tl_2012_34_vtd10.zip data/template.shp

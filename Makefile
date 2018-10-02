@@ -1046,7 +1046,7 @@ out/48-texas/state.gpkg: data/48-texas/statewide/2016/Precincts.zip data/templat
 	rm -f $@
 	ogr2ogr -s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ data/template.shp
 	unzip -d out/48-texas/source data/48-texas/statewide/2016/Precincts.zip
-	ogr2ogr -sql "SELECT '2016' AS year, '48' AS state, CNTY AS county, CONCAT('48', CAST(CNTY AS character(3)), CAST(PREC AS character(10))) AS precinct, 'polygon' AS accuracy FROM Precincts" \
+	ogr2ogr -sql "SELECT '2016' AS year, '48' AS state, CONCAT('48', SUBSTR(CONCAT('000', CAST(CNTY AS character(3))), -3)) AS county, CONCAT('48', SUBSTR(CONCAT('000', CAST(CNTY AS character(3))), -3), CAST(PREC AS character(10))) AS precinct, 'polygon' AS accuracy FROM Precincts" \
 		-s_srs EPSG:3081 -t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/48-texas/source/Precincts.shp'
 	rm -rf 'out/48-texas/source'
 

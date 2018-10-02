@@ -1015,7 +1015,7 @@ out/45-south-carolina/state.gpkg: data/45-south-carolina/statewide/2013/sc-state
 	rm -f $@
 	ogr2ogr -s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ data/template.shp
 	unzip -d out/45-south-carolina/source data/45-south-carolina/statewide/2013/sc-statewide-2013.zip
-	ogr2ogr -sql "SELECT '2013' AS year, '45' AS state, COUNTY AS county, CONCAT('45', COUNTY, PCode) AS precinct, 'polygon' AS accuracy FROM Statewide" \
+	ogr2ogr -sql "SELECT '2013' AS year, '45' AS state, CONCAT('45', SUBSTR(CONCAT('000', COUNTY), -3)) AS county, CONCAT('45', SUBSTR(CONCAT('000', COUNTY), -3), PCode) AS precinct, 'polygon' AS accuracy FROM Statewide" \
 		-s_srs EPSG:4019 -t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/45-south-carolina/source/Statewide.shp'
 	rm -rf 'out/45-south-carolina/source'
 

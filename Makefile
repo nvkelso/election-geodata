@@ -1056,7 +1056,7 @@ out/49-utah/state.gpkg: data/49-utah/statewide/2016/VistaBallotAreas_shp.zip dat
 	rm -f $@
 	ogr2ogr -s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ data/template.shp
 	unzip -d out/49-utah/source data/49-utah/statewide/2016/VistaBallotAreas_shp.zip
-	ogr2ogr -sql "SELECT '2016' AS year, '49' AS state, CountyID AS county, CONCAT('49', CAST(CountyID AS character(3)), CAST(VistaID AS character(10))) AS precinct, 'polygon' AS accuracy FROM VistaBallotAreas" \
+	ogr2ogr -sql "SELECT '2016' AS year, '49' AS state, CONCAT('49', SUBSTR(CONCAT('000', CAST(CountyID AS CHARACTER(3))), -3)) AS county, CONCAT('49', SUBSTR(CONCAT('000', CAST(CountyID AS CHARACTER(3))), -3), VistaID) AS precinct, 'polygon' AS accuracy FROM VistaBallotAreas" \
 		-s_srs EPSG:26912 -t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/49-utah/source/VistaBallotAreas/VistaBallotAreas.shp'
 	rm -rf 'out/49-utah/source'
 

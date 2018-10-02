@@ -157,7 +157,8 @@ out/04-arizona/state.gpkg: data/04-arizona/statewide/2018/Arizona_2018_Shell.zip
 	rm -f $@
 	ogr2ogr -s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ data/template.shp
 	unzip -d out/04-arizona/source data/04-arizona/statewide/2018/Arizona_2018_Shell.zip
-	ogr2ogr -sql "SELECT '2018' AS year, '04' AS state, COUNTYNAME AS county, CONCAT('04', GISPRECINC) AS precinct, 'polygon' AS accuracy FROM Arizona_2018_Shell" \
+	ogr2ogr -sql "SELECT '2018' AS year, '04' AS state, CASE COUNTYNAME WHEN 'Apache' THEN '001' WHEN 'Cochise' THEN '003' WHEN 'Coconino' THEN '005' WHEN 'Gila' THEN '007' WHEN 'Graham' THEN '009' WHEN 'Greenlee' THEN '011' WHEN 'La Paz' THEN '012' WHEN 'Maricopa' THEN '013' WHEN 'Mohave' THEN '015' WHEN 'Navajo' THEN '017' WHEN 'Pima' THEN '019' WHEN 'Pinal' THEN '021' WHEN 'Santa Cruz' THEN '023' WHEN 'Yavapai' THEN '025' WHEN 'Yuma' THEN '027' ELSE COUNTYNAME END AS county, '04' || GISPRECINC AS precinct, 'polygon' AS accuracy, 'polygon' AS accuracy, GEOMETRY AS geometry FROM Arizona_2018_Shell" \
+		-dialect SQLITE \
 		-s_srs EPSG:2223 -t_srs EPSG:4326 -nln state -append -f GPKG $@ 'out/04-arizona/source/Arizona_2018_Shell.shp'
 	rm -rf 'out/04-arizona/source'
 

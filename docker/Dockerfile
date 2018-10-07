@@ -3,10 +3,9 @@ FROM ubuntu:16.04
 ENV LC_ALL=C.UTF-8
 
 # Install packages additional Ubuntu PPAs.
-#     add-apt-repository -y ppa:election-geodata/ppa && \
 RUN apt-get update -y && \
     apt-get install -y software-properties-common python-software-properties && \
-    add-apt-repository -y ppa:sigpwned/election-geodata && \
+    add-apt-repository -y ppa:election-geodata/ppa && \
     apt-get update -y
 
 # Install needed binary packages.

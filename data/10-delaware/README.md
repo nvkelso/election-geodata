@@ -1,5 +1,7 @@
 # Delaware
 
+## Election Geodata
+
 - **2012** from [the state](http://opendata.firstmap.delaware.gov/datasets/delaware-election-boundaries)
     - Downloaded 2017-08-04.
 - **2016** precincts with election results. Citation: _Florida Election Science Team, 2018, "2016 Precinct-Level Election Results", [https://doi.org/10.7910/DVN/NH5S2I](https://doi.org/10.7910/DVN/NH5S2I), Harvard Dataverse, V2._
@@ -36,3 +38,9 @@
   - Precincts 17-02, 16-31, and 16-41 are the reporting units for UOCAVA votes (for New Castle, Kent, and Sussex Counties, respectively). These have no actual geography and the votes reported were not distributed to other precincts.
   - Precinct 13-02 appears in the shapefile, but not in election returns. However, the POPULATION column which came supplied in the shapefile reports 0 population.
   - Though the shapefile is labeled as the 2012 version, personal communication with the state office confirms that these will be in place throughout the decade.
+
+## Additional Boundary Geodata
+
+- **2016** Delaware county outlines pulled from [TIGER census project](https://catalog.data.gov/dataset/tiger-line-shapefile-2016-state-delaware-current-county-subdivision-state-based)
+  - Note that TIGER file contains historical court district outlines, which roll up to counties.
+

@@ -819,6 +819,7 @@ out/38-north-dakota/state.gpkg: data/38-north-dakota/statewide/2010/tl_2012_38_v
 
 out/39-ohio/state.gpkg: data/39-ohio/statewide/2016/precincts_results.shp \
 						data/template.shp
+	mkdir -p out/39-ohio
 	# GPKG are weird
 	rm -f $@
 	ogr2ogr -s_srs EPSG:4269 -t_srs EPSG:4326 -nln state -overwrite -f GPKG $@ data/template.shp

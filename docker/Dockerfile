@@ -1,15 +1,15 @@
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 
 ENV LC_ALL=C.UTF-8
 
 # Install packages additional Ubuntu PPAs.
 RUN apt-get update -y && \
     apt-get install -y software-properties-common python-software-properties && \
-    add-apt-repository -y ppa:migurski/electionsgeodata
+    add-apt-repository -y ppa:election-geodata/ppa && \
+    apt-get update -y
 
 # Install needed binary packages.
-RUN apt-get update -y && \
-    apt-get install -y libgeos-c1v5=3.5.0-1~trusty1 gdal-bin=2.1.0+dfsg-1~trusty2 && \
+RUN apt-get install -y libgeos-c1v5=3.5.1-3~xenial0 gdal-bin=2.1.3+dfsg-1~xenial2 && \
     apt-get install -y python-mapnik python-pip imagemagick && \
     apt-get install -y build-essential zip unzip awscli git && \
     pip install requests uritemplate

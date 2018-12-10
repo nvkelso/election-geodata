@@ -4,14 +4,18 @@
 # in the repo and refuse to continue if any are found.
 git update-index -q --refresh
 
-if git diff-index --quiet HEAD --; then
-    # Remember what Git commit and branch we are on.
-    GIT_SHA1=`git rev-parse HEAD`
-    GIT_BRANCH=`git rev-parse --abbrev-ref HEAD`
-else
-    echo 'Boo: there are local uncommitted changes.'
-    exit 1
-fi
+# if git diff-index --quiet HEAD --; then
+#     # Remember what Git commit and branch we are on.
+#     GIT_SHA1=`git rev-parse HEAD`
+#     GIT_BRANCH=`git rev-parse --abbrev-ref HEAD`
+# else
+#     echo 'Boo: there are local uncommitted changes.'
+#     exit 1
+# fi
+
+GIT_SHA1=`git rev-parse HEAD`
+GIT_BRANCH=`git rev-parse --abbrev-ref HEAD`
+
 
 # Tell Github we're working on it.
 REPO_URL="https://api.github.com/repos/$GITHUB_USERNAME/$GITHUB_REPONAME"

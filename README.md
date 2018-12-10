@@ -3,8 +3,10 @@ Precinct shapes (and vote results) for US elections past, present, and future
 
 ### Download data
 
-- [National file as Geopackage](https://s3.amazonaws.com/nvkelso-election-geodata/branches/master/nation.gpkg)
 - [National file as Shapefile](https://s3.amazonaws.com/nvkelso-election-geodata/branches/master/nation-shp.zip)
+- [National file as Geopackage](https://s3.amazonaws.com/nvkelso-election-geodata/branches/master/nation.gpkg)
+
+_NOTE 20180928: the preview map below is out of date, more data has been added. Shapefile download link above or build from source!_
 
 [![Preview render](https://s3.amazonaws.com/nvkelso-election-geodata/branches/master/render.png)](https://s3.amazonaws.com/nvkelso-election-geodata/branches/master/render.png)
 
@@ -39,7 +41,23 @@ If you also find election result information along the way my current thinking i
 - Census 2010 ([src](https://www.census.gov/geo/reference/gtc/gtc_vtd.html))
     - For the 2010 Census, only Rhode Island did not participate in Phase 2 (the Voting District/Block Boundary Suggestion Project) of the 2010 Census Redistricting Data Program.  Kentucky chose not to provide VTDs as part of their participation in Phase 2, and the states of Montana and Oregon provided VTDs for some counties.  Therefore, for 2010 Census data products, no VTDs exist in select counties in Montana and Oregon or for the states of Rhode Island and Kentucky in their entirety.
 
+### Credits
+
+No permission is needed to use Election Geodata. Crediting the project, authors, and linking back is recommended but not required.
+
+Short text:
+
+> Source: [election-geodata](https://github.com/nvkelso/election-geodata/).
+
+Long text: 
+
+> Source: Precinct-level maps from [election-geodata](https://github.com/nvkelso/election-geodata/) compiled by Nathaniel Kelso and Michal Migurski.
+
 ### See also:
 
 1. [baby steps towards measuring the efficiency gap](http://mike.teczno.com/notes/redistricting/measuring-efficiency-gap.html) - Mike's follow-up post
 2. [things I’ve recently learned about legislative redistricting](http://mike.teczno.com/notes/redistricting.html) - Mike's original post
+
+### Building From Scratch
+
+Code for building output maps, nationwide packages, and uploading downloadable files can be founder under `docker/` directory.

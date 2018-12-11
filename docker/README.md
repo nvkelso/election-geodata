@@ -8,4 +8,4 @@ Using this Docker image:
     
 4. Run `build-publish.sh` script:
     
-        docker run -it -v `pwd`:/vol -w /vol --env-file docker/env.ini eg
+        docker run -it --rm --env-file docker/env.ini -v `pwd`:/vol -w /vol eg

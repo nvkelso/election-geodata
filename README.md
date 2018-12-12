@@ -6,8 +6,6 @@ Precinct shapes (and vote results) for US elections past, present, and future
 - [National file as Shapefile](https://s3.amazonaws.com/nvkelso-election-geodata/branches/master/nation-shp.zip)
 - [National file as Geopackage](https://s3.amazonaws.com/nvkelso-election-geodata/branches/master/nation.gpkg)
 
-_NOTE 20180928: the preview map below is out of date, more data has been added. Shapefile download link above or build from source!_
-
 [![Preview render](https://s3.amazonaws.com/nvkelso-election-geodata/branches/master/render.png)](https://s3.amazonaws.com/nvkelso-election-geodata/branches/master/render.png)
 
 #### MAP KEY

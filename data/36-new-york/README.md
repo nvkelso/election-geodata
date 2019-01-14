@@ -7,6 +7,7 @@
 ## Local areas
 
 - Lots (though not all) counties from a statewide FOIL request: https://www.muckrock.com/foi/new-york-16/ny-state-election-district-shapefiles-for-past-elections-60752/
+    - where dates weren't explicitly part of the filename, I've used the date modified on the files themselves (which in most cases appear to have been preserved thru the FOIL dump and often align with election years)
 - NYC is Jan. 2017 (presumably used in 2016 election), downloaded 2017-03-14 (+ 2016 and 2014 from the FOIL)
     - http://www1.nyc.gov/site/planning/data-maps/open-data/districts-download-metadata.page
     - Coverage:

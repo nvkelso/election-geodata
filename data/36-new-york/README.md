@@ -6,7 +6,8 @@
 
 ## Local areas
 
-- NYC is Jan. 2017 (presumably used in 2016 election), downloaded 2017-03-14.
+- Lots (though not all) counties from a statewide FOIL request: https://www.muckrock.com/foi/new-york-16/ny-state-election-district-shapefiles-for-past-elections-60752/
+- NYC is Jan. 2017 (presumably used in 2016 election), downloaded 2017-03-14 (+ 2016 and 2014 from the FOIL)
     - http://www1.nyc.gov/site/planning/data-maps/open-data/districts-download-metadata.page
     - Coverage:
         - 061-new-york
@@ -14,6 +15,7 @@
         - 081-queens
         - 005-bronx
         - 085-richmond
+    - NYC election district to county mapping done via the somewhat dank `generate-county-field.sh` script
 - Erie (circa 2000, but it seems to have _more_ features than Census 2010 here so I suspect the metadata is wrong), downloaded 2017-03-14.
     - http://gis.ny.gov/gisdata/fileserver/?DSID=834&file=election_dist.zip
     - From: https://gis.ny.gov/gisdata/inventories/details.cfm?DSID=834

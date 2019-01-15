@@ -759,12 +759,76 @@ out/35-new-mexico/state.gpkg: data/35-new-mexico/statewide/2012/nm-2012-precinct
 
 	rm -rf 'out/35-new-mexico/staging.gpkg'
 
-out/36-new-york/state.gpkg: data/36-new-york/001-albany/2012/2012_EDs-Albany.shp \
+out/36-new-york/state.gpkg: data/36-new-york/statewide/2010/tl_2012_36_vtd10.zip \
+	data/36-new-york/001-albany/2012/2012_EDs-Albany.shp \
 	data/36-new-york/003-allegany/2012/ElectionDistricts2012.shp \
-	data/36-new-york/statewide/2010/tl_2012_36_vtd10.zip \
+	data/36-new-york/003-allegany/2014/ElectionDistricts2014.shp \
+	data/36-new-york/007-broome/2016/broome_ed.shp \
+	data/36-new-york/009-cattaraugus/2012/CattaraugusVotingDistricts.shp \
+	data/36-new-york/011-cayuga/2012/Election_Districts.shp \
+	data/36-new-york/011-cayuga/2014/Cayuga_County_NY_Elect_Dists.shp \
+	data/36-new-york/019-clinton/2014/ClintonEDs.shp \
+	data/36-new-york/023-cortland/2012/election_districts.shp \
+	data/36-new-york/027-dutchess/2008/DutchessCountyElectionDistricts.shp \
+	data/36-new-york/027-dutchess/2012/2012_EDs-Dutchess.shp \
+	data/36-new-york/027-dutchess/2014/DutchessED3-6.shp \
+	data/36-new-york/029-erie/2001/ny-erie-county-election_dist.zip \
+	data/36-new-york/029-erie/2012/2012_EDs-Erie.shp \
+	data/36-new-york/029-erie/2014/2015\ ED\ Final.shp \
+	data/36-new-york/031-essex/2014/ED15.shp \
+	data/36-new-york/043-herkimer/2012/2012_EDs-Herkimer.shp \
+	data/36-new-york/055-monroe/2012/2012_EDs-Monroe.shp \
+	data/36-new-york/059-nassau/2012/2012_EDs-Nassau.shp \
+	data/36-new-york/059-nassau/2014/Nassau\ County\ Election\ Districts.shp \
+	data/36-new-york/059-nassau/2018/Electin\ Districts.shp \
+	data/36-new-york/061-new-york/2014/nyed.shp \
+	data/36-new-york/061-new-york/2016/nyed_16d/nyed.shp \
 	data/36-new-york/061-new-york/2017/nyed_17a/nyed.shp \
+	data/36-new-york/063-niagara/2012/2012_EDs-Niagara.shp \
+	data/36-new-york/065-oneida/2012/2012_EDs-Oneida.shp \
+	data/36-new-york/067-onondaga/2012/2012_EDs-Onondaga.shp \
+	data/36-new-york/067-onondaga/2014/election_districts.shp \
+	data/36-new-york/069-ontario/2014/BOE_Election_Districts.shp \
 	data/36-new-york/069-ontario/2016/BOE_Election_Districts_201605180903412713.zip \
+	data/36-new-york/071-orange/2012/2012_EDs-Orange.shp \
+	data/36-new-york/071-orange/2014/OC_ElectionDistricts2014.shp \
+	data/36-new-york/073-orleans/2008/ALBIVOTE.SHP \
+	data/36-new-york/073-orleans/2008/CLARVOTE.SHP \
+	data/36-new-york/073-orleans/2008/MURRVOTE.SHP \
+	data/36-new-york/073-orleans/2008/BARRVOTE.SHP \
+	data/36-new-york/073-orleans/2008/GAINVOTE.SHP \
+	data/36-new-york/073-orleans/2008/SHELVOTE.SHP \
+	data/36-new-york/073-orleans/2008/CARLVOTE.SHP \
+	data/36-new-york/073-orleans/2008/KENDVOTE.SHP \
+	data/36-new-york/073-orleans/2008/YATEVOTE.SHP \
+	data/36-new-york/075-oswego/2014/OswegoCoEleDist.shp \
+	data/36-new-york/077-otsego/2012/Otsego_Voting_2012_Final.shp \
+	data/36-new-york/079-putnam/2012/2012_EDs-Putnam.shp \
+	data/36-new-york/083-rensselaer/2012/cnty_election_districts.shp \
+	data/36-new-york/083-rensselaer/2014/cnty_ed.shp \
 	data/36-new-york/083-rensselaer/2016/ren-cnty_ed.zip \
+	data/36-new-york/087-rockland/2012/2012_EDs-Rockland.shp \
+	data/36-new-york/087-rockland/2016/Cty_ED_Jan_15_2016.shp \
+	data/36-new-york/089-st-lawrence/2012/2012_EDs-St_Lawrence.shp \
+	data/36-new-york/093-schenectady/2012/2012_EDs-Duanesburg.shp \
+	data/36-new-york/093-schenectady/2012/2012_EDs-Glenville.shp \
+	data/36-new-york/093-schenectady/2012/2012_EDs-Niskayuna.shp \
+	data/36-new-york/093-schenectady/2012/2012_EDs-Princetown.shp \
+	data/36-new-york/093-schenectady/2012/2012_EDs-Rotterdam.shp \
+	data/36-new-york/093-schenectady/2012/2012_EDs-Schenectady_.shp \
+	data/36-new-york/095-schoharie/2012/ElectionDists.shp \
+	data/36-new-york/101-steuben/2012/2012_EDs-Steuben.shp \
+	data/36-new-york/101-steuben/2014/ElectionDistricts.shp \
+	data/36-new-york/103-suffolk/2012/2012\ ED\ Files.shp \
+	data/36-new-york/107-tioga/2012/2012_EDs-Tioga.shp \
+	data/36-new-york/109-tompkins/2014/ElDistricts2014.shp \
+	data/36-new-york/111-ulster/2012/2012_EDs-Ulster.shp \
+	data/36-new-york/113-warren/2012/2012_EDs-Warren.shp \
+	data/36-new-york/115-washington/2012/2012_EDs-Washington.shp \
+	data/36-new-york/115-washington/2014/election_districts.shp \
+	data/36-new-york/119-westchester/2012/2012_EDs-Westchester.shp \
+	data/36-new-york/119-westchester/2014/Westchester\ 2014\ Election\ Districts.shp \
+	data/36-new-york/123-yates/2012/2012_EDs-Yates.shp \
 	data/template.shp
 	mkdir -p out/36-new-york
 	# GPKG are weird
@@ -788,13 +852,13 @@ out/36-new-york/state.gpkg: data/36-new-york/001-albany/2012/2012_EDs-Albany.shp
 		-s_srs EPSG:2260 -t_srs EPSG:4326 -nln state -append -f GPKG $@ \
 		'data/36-new-york/003-allegany/2014/ElectionDistricts2014.shp'
 
-	# Add 007-broome... appears to be 2016 (date modifieds of files = 2016)
+	# Add 007-broome
 	ogr2ogr -sql "SELECT '2016' AS year, '36' AS state, '007' AS county, CONCAT('36007', CAST(NAME AS character(20))) AS precinct, 'polygon' AS accuracy FROM broome_ed" \
 		-s_srs EPSG:2260 -t_srs EPSG:4326 -nln state -append -f GPKG $@ \
 		'data/36-new-york/007-broome/2016/broome_ed.shp'
 
 	# Add 009-cattaraugus
-	ogr2ogr -sql "SELECT '2012' AS year, '36' AS state, '009' AS county, CONCAT('36009', CAST(DISTRICT AS character(20))) AS precinct, 'polygon' AS accuracy FROM CattaraugusVotingDistricts" \
+	ogr2ogr -sql "SELECT '2013' AS year, '36' AS state, '009' AS county, CONCAT('36009', CAST(DISTRICT AS character(20))) AS precinct, 'polygon' AS accuracy FROM CattaraugusVotingDistricts" \
 		-s_srs EPSG:2260 -t_srs EPSG:4326 -nln state -append -f GPKG $@ \
 		'data/36-new-york/009-cattaraugus/2012/CattaraugusVotingDistricts.shp'
 
@@ -803,19 +867,19 @@ out/36-new-york/state.gpkg: data/36-new-york/001-albany/2012/2012_EDs-Albany.shp
 		-s_srs EPSG:2260 -t_srs EPSG:4326 -nln state -append -f GPKG $@ \
 		'data/36-new-york/011-cayuga/2012/Election_Districts.shp'
 	# This one errors with: "Failed to reproject feature 38 (geometry probably out of source or destination SRS)."
-	ogr2ogr -sql "SELECT '2014' AS year, '36' AS state, '011' AS county, CONCAT('36011', CAST(MUNI AS character(20)), CAST(District AS character(20))) AS precinct, 'polygon' AS accuracy FROM Cayuga_County_NY_Elect_Dists" \
+	ogr2ogr -sql "SELECT '2015' AS year, '36' AS state, '011' AS county, CONCAT('36011', CAST(MUNI AS character(20)), CAST(District AS character(20))) AS precinct, 'polygon' AS accuracy FROM Cayuga_County_NY_Elect_Dists" \
 		-skipfailures -s_srs EPSG:2260 -t_srs EPSG:4326 -nln state -append -f GPKG $@ \
 		'data/36-new-york/011-cayuga/2014/Cayuga_County_NY_Elect_Dists.shp'
 
 	# 015-chemung aren't polygons :(
 
 	# 019-clinton
-	ogr2ogr -sql "SELECT '2014' AS year, '36' AS state, '019' AS county, CONCAT('36019', CAST(Election_D AS character(20))) AS precinct, 'polygon' AS accuracy FROM ClintonEDs" \
+	ogr2ogr -sql "SELECT '2015' AS year, '36' AS state, '019' AS county, CONCAT('36019', CAST(Election_D AS character(20))) AS precinct, 'polygon' AS accuracy FROM ClintonEDs" \
 		-s_srs EPSG:2260 -t_srs EPSG:4326 -nln state -append -f GPKG $@ \
 		'data/36-new-york/019-clinton/2014/ClintonEDs.shp'
 
 	# 023-cortland
-	ogr2ogr -sql "SELECT '2012' AS year, '36' AS state, '023' AS county, CONCAT('36023', CAST(ED AS character(20))) AS precinct, 'polygon' AS accuracy FROM election_districts" \
+	ogr2ogr -sql "SELECT '2013' AS year, '36' AS state, '023' AS county, CONCAT('36023', CAST(ED AS character(20))) AS precinct, 'polygon' AS accuracy FROM election_districts" \
 		-s_srs EPSG:2260 -t_srs EPSG:4326 -nln state -append -f GPKG $@ \
 		'data/36-new-york/023-cortland/2012/election_districts.shp'
 
@@ -826,7 +890,7 @@ out/36-new-york/state.gpkg: data/36-new-york/001-albany/2012/2012_EDs-Albany.shp
 	ogr2ogr -sql "SELECT '2012' AS year, '36' AS state, '027' AS county, CONCAT('36027', CAST(DISTRICT AS character(20))) AS precinct, 'polygon' AS accuracy FROM \"2012_EDs-Dutchess\"" \
 		-s_srs EPSG:2260 -t_srs EPSG:4326 -nln state -append -f GPKG $@ \
 		'data/36-new-york/027-dutchess/2012/2012_EDs-Dutchess.shp'
-	ogr2ogr -sql "SELECT '2014' AS year, '36' AS state, '027' AS county, CONCAT('36027', CAST(DISTRICT AS character(20))) AS precinct, 'polygon' AS accuracy FROM \"DutchessED3-6\"" \
+	ogr2ogr -sql "SELECT '2015' AS year, '36' AS state, '027' AS county, CONCAT('36027', CAST(DISTRICT AS character(20))) AS precinct, 'polygon' AS accuracy FROM \"DutchessED3-6\"" \
 		-s_srs EPSG:2260 -t_srs EPSG:4326 -nln state -append -f GPKG $@ \
 		'data/36-new-york/027-dutchess/2014/DutchessED3-6.shp'
 
@@ -838,12 +902,12 @@ out/36-new-york/state.gpkg: data/36-new-york/001-albany/2012/2012_EDs-Albany.shp
 		-s_srs EPSG:2260 -t_srs EPSG:4326 -nln state -append -f GPKG $@ \
 		'data/36-new-york/029-erie/2012/2012_EDs-Erie.shp'
 	# the election district id's gained a left number padding this year, might require tweaking
-	ogr2ogr -sql "SELECT '2014' AS year, '36' AS state, '029' AS county, CONCAT('36029', CAST(ED AS character(20))) AS precinct, 'polygon' AS accuracy FROM \"2015 ED Final\"" \
+	ogr2ogr -sql "SELECT '2015' AS year, '36' AS state, '029' AS county, CONCAT('36029', CAST(ED AS character(20))) AS precinct, 'polygon' AS accuracy FROM \"2015 ED Final\"" \
 		-s_srs EPSG:2260 -t_srs EPSG:4326 -nln state -append -f GPKG $@ \
 		'data/36-new-york/029-erie/2014/2015 ED Final.shp'
 
 	# 031-essex
-	ogr2ogr -sql "SELECT '2014' AS year, '36' AS state, '031' AS county, CONCAT('36031', CAST(DIST_NUM AS character(20))) AS precinct, 'polygon' AS accuracy FROM ED15" \
+	ogr2ogr -sql "SELECT '2015' AS year, '36' AS state, '031' AS county, CONCAT('36031', CAST(DIST_NUM AS character(20))) AS precinct, 'polygon' AS accuracy FROM ED15" \
 		-s_srs EPSG:2260 -t_srs EPSG:4326 -nln state -append -f GPKG $@ \
 		'data/36-new-york/031-essex/2014/ED15.shp'
 
@@ -861,7 +925,7 @@ out/36-new-york/state.gpkg: data/36-new-york/001-albany/2012/2012_EDs-Albany.shp
 	ogr2ogr -sql "SELECT '2012' AS year, '36' AS state, '059' AS county, CONCAT('36059', CAST(419035 AS character(20))) AS precinct, 'polygon' AS accuracy FROM \"2012_EDs-Nassau\"" \
 		-s_srs EPSG:2260 -t_srs EPSG:4326 -nln state -append -f GPKG $@ \
 		'data/36-new-york/059-nassau/2012/2012_EDs-Nassau.shp'
-	ogr2ogr -sql "SELECT '2014' AS year, '36' AS state, '059' AS county, CONCAT('36059', CAST(ID AS character(20))) AS precinct, 'polygon' AS accuracy FROM \"Nassau County Election Districts\"" \
+	ogr2ogr -sql "SELECT '2015' AS year, '36' AS state, '059' AS county, CONCAT('36059', CAST(ID AS character(20))) AS precinct, 'polygon' AS accuracy FROM \"Nassau County Election Districts\"" \
 		-s_srs EPSG:2260 -t_srs EPSG:4326 -nln state -append -f GPKG $@ \
 		'data/36-new-york/059-nassau/2014/Nassau County Election Districts.shp'
 	ogr2ogr -sql "SELECT '2018' AS year, '36' AS state, '059' AS county, CONCAT('36059', CAST(DISTRICT AS character(20))) AS precinct, 'polygon' AS accuracy FROM \"Electin Districts\"" \
@@ -902,10 +966,10 @@ out/36-new-york/state.gpkg: data/36-new-york/001-albany/2012/2012_EDs-Albany.shp
 		'data/36-new-york/067-onondaga/2014/election_districts.shp'
 
 	# Add 069-ontario
-	ogr2ogr -sql "SELECT '2014' AS year, '36' AS state, '069' AS county, CONCAT('36069', CAST(JOINCODE AS character(10))) AS precinct, 'polygon' AS accuracy FROM BOE_Election_Districts" \
+	ogr2ogr -sql "SELECT '2015' AS year, '36' AS state, '069' AS county, CONCAT('36069', CAST(JOINCODE AS character(10))) AS precinct, 'polygon' AS accuracy FROM BOE_Election_Districts" \
 		-s_srs EPSG:2260 -t_srs EPSG:4326 -nln state -append -f GPKG $@ \
 		'data/36-new-york/069-ontario/2014/BOE_Election_Districts.shp'
-	ogr2ogr -sql "SELECT '2016' AS year, '36' AS state, '069' AS county, CONCAT('36069', CAST(JOINCODE AS character(10))) AS precinct, 'polygon' AS accuracy FROM BOE_Election_Districts" \
+	ogr2ogr -sql "SELECT '2017' AS year, '36' AS state, '069' AS county, CONCAT('36069', CAST(JOINCODE AS character(10))) AS precinct, 'polygon' AS accuracy FROM BOE_Election_Districts" \
 		-s_srs '+proj=tmerc +lat_0=40 +lon_0=-76.58333333333333 +k=0.9999375 +x_0=250000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=us-ft +no_defs' \
 		-t_srs EPSG:4326 -nln state -append -f GPKG $@ \
 		'/vsizip/data/36-new-york/069-ontario/2016/BOE_Election_Districts_201605180903412713.zip/BOE_Election_Districts.shp'
@@ -946,9 +1010,12 @@ out/36-new-york/state.gpkg: data/36-new-york/001-albany/2012/2012_EDs-Albany.shp
 	ogr2ogr -sql "SELECT '2008' AS year, '36' AS state, '073' AS county, CONCAT('36073', CAST(ID_ AS character(10))) AS precinct, 'polygon' AS accuracy FROM YATEVOTE" \
 		-s_srs EPSG:2260 -t_srs EPSG:4326 -nln state -append -f GPKG $@ \
 		'data/36-new-york/073-orleans/2008/YATEVOTE.SHP'
+	ogr2ogr -sql "SELECT '2008' AS year, '36' AS state, '073' AS county, CONCAT('36073', CAST(ID_ AS character(10))) AS precinct, 'polygon' AS accuracy FROM Ridgevote" \
+		-s_srs EPSG:2260 -t_srs EPSG:4326 -nln state -append -f GPKG $@ \
+		'data/36-new-york/073-orleans/2008/Ridgevote.shp'
 
 	# 075-oswego
-	ogr2ogr -sql "SELECT '2014' AS year, '36' AS state, '075' AS county, CONCAT('36075', CAST(Dist AS character(10))) AS precinct, 'polygon' AS accuracy FROM OswegoCoEleDist" \
+	ogr2ogr -sql "SELECT '2015' AS year, '36' AS state, '075' AS county, CONCAT('36075', CAST(Dist AS character(10))) AS precinct, 'polygon' AS accuracy FROM OswegoCoEleDist" \
 		-s_srs EPSG:2260 -t_srs EPSG:4326 -nln state -append -f GPKG $@ \
 		'data/36-new-york/075-oswego/2014/OswegoCoEleDist.shp'
 
@@ -970,7 +1037,7 @@ out/36-new-york/state.gpkg: data/36-new-york/001-albany/2012/2012_EDs-Albany.shp
 	ogr2ogr -sql "SELECT '2014' AS year, '36' AS state, '083' AS county, CONCAT('36083', CAST(ED AS character(10))) AS precinct, 'polygon' AS accuracy FROM cnty_ed" \
 		-s_srs EPSG:2260 -t_srs EPSG:4326 -nln state -append -f GPKG $@ \
 		'data/36-new-york/083-rensselaer/2014/cnty_ed.shp'
-	ogr2ogr -sql "SELECT '2016' AS year, '36' AS state, '083' AS county, CONCAT('36083', CAST(ED AS character(20))) AS precinct, 'polygon' AS accuracy FROM cnty_ed" \
+	ogr2ogr -sql "SELECT '2017' AS year, '36' AS state, '083' AS county, CONCAT('36083', CAST(ED AS character(20))) AS precinct, 'polygon' AS accuracy FROM cnty_ed" \
 		-s_srs EPSG:2260 -t_srs EPSG:4326 -nln state -append -f GPKG $@ \
 		'/vsizip/data/36-new-york/083-rensselaer/2016/ren-cnty_ed.zip/cnty_ed.shp'
 
@@ -1008,7 +1075,7 @@ out/36-new-york/state.gpkg: data/36-new-york/001-albany/2012/2012_EDs-Albany.shp
 		'data/36-new-york/093-schenectady/2012/2012_EDs-Schenectady_.shp'
 
 	# 095-schoharie
-	ogr2ogr -sql "SELECT '2012' AS year, '36' AS state, '095' AS county, CONCAT('36095', CAST(Dist_ AS character(10))) AS precinct, 'polygon' AS accuracy FROM \"ElectionDists\"" \
+	ogr2ogr -sql "SELECT '2013' AS year, '36' AS state, '095' AS county, CONCAT('36095', CAST(Dist_ AS character(10))) AS precinct, 'polygon' AS accuracy FROM \"ElectionDists\"" \
 		-s_srs EPSG:2260 -t_srs EPSG:4326 -nln state -append -f GPKG $@ \
 		'data/36-new-york/095-schoharie/2012/ElectionDists.shp'
 
@@ -1049,7 +1116,7 @@ out/36-new-york/state.gpkg: data/36-new-york/001-albany/2012/2012_EDs-Albany.shp
 	ogr2ogr -sql "SELECT '2012' AS year, '36' AS state, '115' AS county, CONCAT('36115', CAST(TOWN AS character(10)), CAST(DISTRICT AS character(10))) AS precinct, 'polygon' AS accuracy FROM \"2012_EDs-Washington\"" \
 		-s_srs EPSG:2260 -t_srs EPSG:4326 -nln state -append -f GPKG $@ \
 		'data/36-new-york/115-washington/2012/2012_EDs-Washington.shp'
-	ogr2ogr -sql "SELECT '2014' AS year, '36' AS state, '115' AS county, CONCAT('36115', CAST(TOWN AS character(10)), CAST(DISTRICT AS character(10))) AS precinct, 'polygon' AS accuracy FROM \"election_districts\"" \
+	ogr2ogr -sql "SELECT '2015' AS year, '36' AS state, '115' AS county, CONCAT('36115', CAST(TOWN AS character(10)), CAST(DISTRICT AS character(10))) AS precinct, 'polygon' AS accuracy FROM \"election_districts\"" \
 		-s_srs EPSG:2260 -t_srs EPSG:4326 -nln state -append -f GPKG $@ \
 		'data/36-new-york/115-washington/2014/election_districts.shp'
 

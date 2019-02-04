@@ -1,0 +1,3 @@
+<?xml version="1.0"?>
+<!--<!DOCTYPE metadata SYSTEM "http://www.esri.com/metadata/esriprof80.dtd">-->
+<metadata xml:lang="en"><Esri><MetaID>{C0326E23-C784-47FB-8127-61A881713BE5}</MetaID><CreaDate>20081205</CreaDate><CreaTime>14362600</CreaTime><SyncOnce>TRUE</SyncOnce><DataProperties><lineage><Process ToolSource="C:\Program Files\ArcGIS\ArcToolbox\Toolboxes\Data Management Tools.tbx\DefineProjection" Date="20081205" Time="143626">DefineProjection "W:\david\Voting Districts\Ridgevote.shp" GEOGCS['GCS_Clarke_1866',DATUM['D_Clarke_1866',SPHEROID['Clarke_1866',6378206.4,294.9786982]],PRIMEM['Greenwich',0.0],UNIT['Degree',0.0174532925199433]] "W:\david\Voting Districts\Ridgevote.shp"</Process></lineage></DataProperties></Esri></metadata>

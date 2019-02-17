@@ -1089,7 +1089,7 @@ out/36-new-york/state.gpkg: data/36-new-york/statewide/2010/tl_2012_36_vtd10.zip
 
 	# 103-suffolk
 	ogr2ogr -sql "SELECT '2012' AS year, '36' AS state, '103' AS county, CONCAT('36103', CAST(ED AS character(10))) AS precinct, 'polygon' AS accuracy FROM \"2012 ED Files\"" \
-		-s_srs EPSG:2260 -t_srs EPSG:4326 -nln state -append -f GPKG $@ \
+		-s_srs '+proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs' -t_srs EPSG:4326 -nln state -append -f GPKG $@ \
 		'data/36-new-york/103-suffolk/2012/2012 ED Files.shp'
 
 	# 107-tioga
